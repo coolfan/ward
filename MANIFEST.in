@@ -1,0 +1,3 @@
+graft rooms/templates
+graft rooms/static
+include rooms/rooms.sqlite
