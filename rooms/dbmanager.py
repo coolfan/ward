@@ -19,15 +19,10 @@ def define_entities(db: Database) -> None:
     #     netid = Required(str)
     #     favorites = Set(Room)
 
-<<<<<<< HEAD
-
-def connect(fname: str, dbtype: str="sqlite"):
-=======
 def connect(fname: str,
             dbtype: str="sqlite",
             create_db: bool = False,
             create_tables: bool = False) -> Database:
->>>>>>> backend
     db = Database()
     define_entities(db)
     db.bind(dbtype, filename=fname, create_db=create_db)
