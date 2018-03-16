@@ -1,7 +1,7 @@
-from pony.orm import Database, Required, Set
+from pony.orm import Database, Required
+from pony.orm import Set as PonySet
 
-
-def define_entities(db: Database):
+def define_entities(db: Database) -> None:
     class Room(db.Entity):
         # Location information
         college = Required(str)
@@ -19,10 +19,17 @@ def define_entities(db: Database):
     #     netid = Required(str)
     #     favorites = Set(Room)
 
+<<<<<<< HEAD
 
 def connect(fname: str, dbtype: str="sqlite"):
+=======
+def connect(fname: str,
+            dbtype: str="sqlite",
+            create_db: bool = False,
+            create_tables: bool = False) -> Database:
+>>>>>>> backend
     db = Database()
     define_entities(db)
-    db.bind(dbtype, filename=fname, create_db=True)
-    db.generate_mapping(create_tables=True)
+    db.bind(dbtype, filename=fname, create_db=create_db)
+    db.generate_mapping(create_tables=create_tables)
     return db
