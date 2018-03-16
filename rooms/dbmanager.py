@@ -1,4 +1,4 @@
-from pony.orm import Database, Required
+from pony.orm import Database, Required, Set
 
 
 def define_entities(db: Database):
@@ -15,8 +15,9 @@ def define_entities(db: Database):
         numrooms = Required(int)
         subfree = Required(bool)
 
-    
-
+    class User(db.Entity):
+        netid = Required(str)
+        favorites = Set(Room)
 
 def connect(fname: str, dbtype: str="sqlite"):
     db = Database()
