@@ -15,9 +15,9 @@ def define_entities(db: Database) -> None:
         numrooms = Required(int)
         subfree = Required(bool)
 
-    class User(db.Entity):
-        netid = Required(str)
-        favorites = PonySet(Room)
+    # class User(db.Entity):
+    #     netid = Required(str)
+    #     favorites = Set(Room)
 
 def connect(fname: str,
             dbtype: str="sqlite",
