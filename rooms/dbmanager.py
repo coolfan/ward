@@ -19,6 +19,7 @@ def define_entities(db: Database):
     #     netid = Required(str)
     #     favorites = Set(Room)
 
+
 def connect(fname: str, dbtype: str="sqlite"):
     db = Database()
     define_entities(db)
