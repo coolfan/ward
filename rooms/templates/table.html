@@ -5,6 +5,7 @@
     <title>Table</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
             crossorigin="anonymous"></script>
@@ -23,19 +24,24 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js"
             integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c"
             crossorigin="anonymous"></script>
+    <script defer src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script>
-    function favorite(id) {
-        var elem = $("#"+id);
-        var filled = elem.attr("data-prefix") === "fas";
-        if (filled) elem.attr("data-prefix", "far");
-        else elem.attr("data-prefix", "fas");
-    }
-</script>
+        function favorite(id) {
+            var elem = $("#" + id);
+            var filled = elem.attr("data-prefix") === "fas";
+            if (filled) elem.attr("data-prefix", "far");
+            else elem.attr("data-prefix", "fas");
+        }
+
+        $(document).ready(function () {
+            $('#roomsTable').DataTable();
+        });
+    </script>
 </head>
 <body>
 {% include 'navbar.html' %}
 
-<table class="table">
+<table class="table" id="roomsTable">
     <thead>
     <tr>
         <th scope="col"></th>
@@ -50,18 +56,19 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-        {#        <th scope="row">1</th>#}
-        <td><i id="0" class="far fa-star" onclick="favorite(this.id)"></i></td>
-        <td>Rockefeller</td>
-        <td>Witherspoon</td>
-        <td>2</td>
-        <td>206</td>
-        <td>120</td>
-        <td>1</td>
-        <td>1</td>
-        <td>N</td>
-    </tr>
+    {% for room in room_data %}
+        <tr>
+            <td><i id="{{ room['id'] }}" class="far fa-star" onclick="favorite(this.id)"></i></td>
+            <td>{{ room['college'] }}</td>
+            <td>{{ room['building'] }}</td>
+            <td>{{ room['floor'] }}</td>
+            <td>{{ room['roomnum'] }}</td>
+            <td>{{ room['sqft'] }}</td>
+            <td>{{ room['occupancy'] }}</td>
+            <td>{{ room['numrooms'] }}</td>
+            <td>{{ 'Y' if room['subfree'] else 'N' }}</td>
+        </tr>
+    {% endfor %}
     </tbody>
 </table>
 
