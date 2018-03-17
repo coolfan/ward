@@ -1,6 +1,7 @@
 from pony.orm import Database, Required
 from pony.orm import Set as PonySet
 
+
 def define_entities(db: Database) -> None:
     class Room(db.Entity):
         # Location information
@@ -15,12 +16,25 @@ def define_entities(db: Database) -> None:
         numrooms = Required(int)
         subfree = Required(bool)
 
-    # class User(db.Entity):
-    #     netid = Required(str)
-    #     favorites = Set(Room)
+        # Reverse mappings (mainly for pony.  don't remove!)
+        favorites = PonySet("FavoriteRoom")
+
+    class User(db.Entity):
+        netid = Required(str)
+        group = Required("Group")
+
+    class Group(db.Entity):
+        members = PonySet(User)
+        favorites = PonySet("FavoriteRoom")
+
+    class FavoriteRoom(db.Entity):
+        group = Required(Group)
+        room = Required(Room)
+        rank = Required(int)
+
 
 def connect(fname: str,
-            dbtype: str="sqlite",
+            dbtype: str = "sqlite",
             create_db: bool = False,
             create_tables: bool = False) -> Database:
     db = Database()
