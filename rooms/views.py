@@ -6,6 +6,9 @@ from rooms import app
 import rooms.dbmanager as dbm
 import rooms.conf as conf
 
+import rooms.query
+import rooms.favorite
+
 db = dbm.connect(conf.DB_NAME, conf.DB_TYPE)
 
 
