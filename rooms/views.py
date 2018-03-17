@@ -2,9 +2,14 @@ from flask import render_template
 from pony.orm import db_session
 from pony.orm import select
 
-from rooms import app
-import rooms.dbmanager as dbm
-import rooms.conf as conf
+from rooms import app, conf
+from rooms import dbmanager as dbm
+
+# DON'T REMOVE THESE!!!  They appear unused but need them for flask app
+# routings.
+import rooms.query
+import rooms.favorite
+import rooms.group
 
 db = dbm.connect(conf.DB_NAME, conf.DB_TYPE)
 

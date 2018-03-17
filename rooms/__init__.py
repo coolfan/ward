@@ -15,5 +15,6 @@ app.config.update(dict(
 
 app.config.from_envvar('ROOMS_SETTINGS', silent=True)
 
-
+import rooms.conf
+import rooms.dbmanager
 import rooms.views
