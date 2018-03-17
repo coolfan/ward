@@ -1,9 +1,8 @@
 from flask import logging
 from pony.orm import db_session, select
 
-from rooms import app, cas
-import rooms.conf as conf
-import rooms.dbmanager as dbm
+from rooms import app, cas, conf
+from rooms import dbmanager as dbm
 
 db = dbm.connect(conf.DB_NAME, conf.DB_TYPE)
 

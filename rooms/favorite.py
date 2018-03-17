@@ -1,17 +1,14 @@
 from flask import request, logging, jsonify, session, Response
 from pony.orm import db_session, select
 
-from rooms import app
-import rooms.cas as cas
-import rooms.conf as conf
-import rooms.dbmanager as dbm
+from rooms import app, cas, conf
+from rooms import dbmanager as dbm
 
 db = dbm.connect(conf.DB_NAME, conf.DB_TYPE)
 logger = logging.getLogger(conf.LOGGER)
 
 
 @app.route("/favorite", methods=["POST"])
-@cas.authenticated()
 @db_session
 def favorite() -> Response:
     """
@@ -36,7 +33,6 @@ def favorite() -> Response:
 
 
 @app.route("/unfavorite", methods=["POST"])
-@cas.authenticated()
 @db_session
 def unfavorite():
     """
@@ -59,7 +55,6 @@ def unfavorite():
 
 
 @app.route("/favorites", methods=["GET"])
-@cas.authenticated()
 @db_session
 def favorites():
     # TODO: return json list of rooms in your group's list

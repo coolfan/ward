@@ -5,7 +5,8 @@ from functools import lru_cache
 def is_logged_in() -> bool:
     """Returns if the user is authenticated with CAS"""
     # TODO: check CAS cookie and its TTL
-    return session.get("logged_in", False)
+    # return session.get("logged_in", False)
+    return False
 
 
 def authenticated():
