@@ -32,6 +32,9 @@ def define_entities(db: Database) -> None:
         room = Required(Room)
         rank = Required(int)
 
+    # TODO: Add reviews table
+    # TODO: Add group request table
+
 
 def connect(fname: str,
             dbtype: str = "sqlite",
