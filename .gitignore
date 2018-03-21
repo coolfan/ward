@@ -1,9 +1,6 @@
-<<<<<<< HEAD
 *.pyc
 .idea/
 .vagrant/
 venv/
 uploads/
-=======
 startup.sh
->>>>>>> Started reorganizing structure of app by creating seperate folders for favorite and search pages, starting to include rooms_data in search page
