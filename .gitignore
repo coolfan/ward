@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 *.pyc
 .idea/
 venv/
 startup.sh
+=======
+startup.sh
+>>>>>>> parent of 7677e81... Revert "Started reorganizing structure of app by creating seperate folders for favorite and search pages, starting to include rooms_data in search page"
