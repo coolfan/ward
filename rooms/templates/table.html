@@ -50,21 +50,18 @@
     </tr>
     </thead>
     <tbody>
+    <tr>
         {#        <th scope="row">1</th>#}
-        {% for room in room_data %}
-            <tr>
-                <td><i id="0" class="far fa-star" onclick="favorite(this.id)"></i></td>
-                <td>{{ room.college }}</td>
-                <td>{{ room.building }}</td>
-                <td>{{ room.floor }}</td>
-                <td>{{ room.roomnum }}</td>
-                <td>{{ room.sqft }}</td>
-                <td>{{ room.occupancy }}</td>
-                <td>{{ room.numrooms }}</td>
-                <td>{% if room.subfree %} Y {% else %} N {% endif %}</td>
-            </tr>
-        {% endfor %}
-
+        <td><i id="0" class="far fa-star" onclick="favorite(this.id)"></i></td>
+        <td>Rockefeller</td>
+        <td>Witherspoon</td>
+        <td>2</td>
+        <td>206</td>
+        <td>120</td>
+        <td>1</td>
+        <td>1</td>
+        <td>N</td>
+    </tr>
     </tbody>
 </table>
 
