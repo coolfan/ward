@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Table</title>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js"
+            integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l"
+            crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/regular.js"
+            integrity="sha384-t7yHmUlwFrLxHXNLstawVRBMeSLcXTbQ5hsd0ifzwGtN7ZF7RZ8ppM7Ldinuoiif"
+            crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js"
+            integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c"
+            crossorigin="anonymous"></script>
+
+    <script src="https://cdn.datatables.net/colreorder/1.4.1/js/dataTables.colReorder.min.js"></script>
+
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/colreorder/1.4.1/css/colReorder.dataTables.min.css">
+
+
+
+    <script>
+        function favorite(id) {
+            var elem = $("#" + id);
+            var filled = elem.attr("data-prefix") === "fas";
+            if (filled) elem.attr("data-prefix", "far");
+            else elem.attr("data-prefix", "fas");
+        }
+
+        $(document).ready(function () {
+            $('#roomsTable').DataTable({
+                searching: false,
+                colReorder: true
+            });
+        });
+    </script>
+</head>
+<body>
+{% include 'navbar.html' %}
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col"></th>
+        <th scope="col">College</th>
+        <th scope="col">Building</th>
+        <th scope="col">Floor</th>
+        <th scope="col">Room</th>
+        <th scope="col">Sqft</th>
+        <th scope="col">Occupancy</th>
+        <th scope="col"># of Rooms</th>
+        <th scope="col">Sub-Free</th>
+    </tr>
+    </thead>
+    <tbody>
+        {#        <th scope="row">1</th>#}
+        {% for room in room_data %}
+            <tr>
+                <td><i id="0" class="far fa-star" onclick="favorite(this.id)"></i></td>
+                <td>{{ room.college }}</td>
+                <td>{{ room.building }}</td>
+                <td>{{ room.floor }}</td>
+                <td>{{ room.roomnum }}</td>
+                <td>{{ room.sqft }}</td>
+                <td>{{ room.occupancy }}</td>
+                <td>{{ room.numrooms }}</td>
+                <td>{% if room.subfree %} Y {% else %} N {% endif %}</td>
+            </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+
+</body>
+
+</html>
