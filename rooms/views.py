@@ -15,4 +15,8 @@ blueprint = Blueprint("views", __name__)
 def table(db):
     query = select(r for r in db.Room)
     room_data = [r.to_dict() for r in query]
+<<<<<<< HEAD
     return render_template('search_page/table.html', room_data=room_data)
+=======
+    return render_template('search_page/table.html', room_data=room_data)
+>>>>>>> Revert "Revert "Started reorganizing structure of app by creating seperate folders for favorite and search pages, starting to include rooms_data in search page""
