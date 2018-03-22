@@ -2,3 +2,4 @@
 .idea/
 venv/
 startup.sh
+rooms/__pycache__/
