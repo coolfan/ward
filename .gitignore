@@ -4,3 +4,4 @@
 venv/
 uploads/
 startup.sh
+rooms/__pycache__/
