@@ -1,4 +1,4 @@
-from pony.orm import Database, Required
+from pony.orm import Database, Required, Optional, LongStr
 from pony.orm import Set as PonySet
 
 
@@ -18,23 +18,36 @@ def define_entities(db: Database) -> None:
 
         # Reverse mappings (mainly for pony.  don't remove!)
         favorites = PonySet("FavoriteRoom")
+        reviews = PonySet("Review", reverse="room")
 
     class User(db.Entity):
         netid = Required(str)
         group = Required("Group")
+        reviews = PonySet("Review", reverse="owner")
+        requests = PonySet("GroupRequest", reverse="from_user")
 
     class Group(db.Entity):
         members = PonySet(User)
         favorites = PonySet("FavoriteRoom")
+        requests = PonySet("GroupRequest", reverse="to_group")
 
     class FavoriteRoom(db.Entity):
         group = Required(Group)
         room = Required(Room)
         rank = Required(int)
 
-    # TODO: Add reviews table
-    # TODO: Add group request table
+    class GroupRequest(db.Entity):
+        from_user = Required(User)
+        to_group = Required(Group)
+        message = Optional(str)
+        status = Required(str)  # Pending, Approved, Denied
 
+    class Review(db.Entity):
+        owner = Required(User)
+        room = Required(Room)
+        rating = Required(int)
+        text = Optional(LongStr)
+        # pictures = PonySet(str)  # store pictures as list of file names
 
 def connect(fname: str,
             dbtype: str = "sqlite",
@@ -45,3 +58,7 @@ def connect(fname: str,
     db.bind(dbtype, filename=fname, create_db=create_db)
     db.generate_mapping(create_tables=create_tables)
     return db
+
+
+if __name__ == "__main__":
+    db = connect("rooms.sqlite", create_db=True, create_tables=True)
