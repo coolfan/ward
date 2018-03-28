@@ -26,6 +26,14 @@ def define_entities(db: Database) -> None:
         reviews = PonySet("Review", reverse="owner")
         requests = PonySet("GroupRequest", reverse="from_user")
 
+        @classmethod
+        def get_or_create(cls, **kwargs):
+            o = cls.get(**kwargs)
+            if o: return o
+
+            g = Group()
+            return cls(group=g, **kwargs)
+
     class Group(db.Entity):
         members = PonySet(User)
         favorites = PonySet("FavoriteRoom")

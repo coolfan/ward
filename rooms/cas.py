@@ -74,14 +74,17 @@ def validate(ticket: str) -> bool:
     :param ticket: ticket as returned by the CAS login url
     """
     url = construct_url("validate", service=SERVICE_URL+"login", ticket=ticket)
-    app.logger.debug(url)
     response = urllib.request.urlopen(url).readlines()  # returns 2 lines, first is yes, second is netid
-    app.logger.debug(response)
     if len(response) == 2 and b"yes" in response[0]:
-        session["CAS_NETID"] = response[1].split()
+        session["CAS_NETID"] = response[1].strip().decode()
         app.logger.debug("Validated session: %s" % session["CAS_NETID"])
         return True
     return False
+
+
+def netid():
+    """Returns the NETID of the currently logged in user"""
+    return session.get("CAS_NETID")
 
 
 def authenticated(function):
