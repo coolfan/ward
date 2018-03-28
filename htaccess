@@ -1,0 +1,7 @@
+# Note that the server will not automatically update this file from the repo.
+# if you make changes, manually place it at /n/fs/rooms/webdirectory/.htaccess
+
+RewriteEngine on
+
+RewriteRule ^index.cgi/(.*)$ - [S=1]
+RewriteRule ^(.*)$ index.cgi/$1 [QSA,L]

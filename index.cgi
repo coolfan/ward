@@ -1,4 +1,9 @@
 #!/n/fs/rooms/venv/bin/python
+
+# Note that the server will not automatically update this file from the repo.
+# you must place it at /n/fs/rooms/webdirectory/index.cgi
+
+
 import json
 import os
 import sys
