@@ -18,8 +18,14 @@ def favorite() -> Response:
         - roomid: id of the room to add to favorites list
     :return: Response(200) if successful
     """
+    if "roomid" not in request.args:
+        return Response("Missing roomid", 400)
     roomid = request.args.get("roomid")
+
+    if not db.Room.exists(id=roomid):
+        return Response("Invalid roomid", 422)
     room = db.Room[roomid]
+
     netid = cas.netid()
 
     user = db.User.get_or_create(netid=netid)
@@ -33,10 +39,11 @@ def favorite() -> Response:
         )
     else:
         app.logger.debug("%s attempted to favorite room %s again" % (netid, roomid))
-    return Response({'success':True}, 200, {'ContentType':'application/json'})
+    return jsonify({'success': True})
 
 
 @app.route("/unfavorite", methods=["GET"])
+@cas.authenticated
 @db_session
 def unfavorite():
     """
@@ -45,11 +52,16 @@ def unfavorite():
         - roomid: id of the room to remove from favorite list 
     :return: 
     """
+    if "roomid" not in request.args:
+        return Response("Missing roomid", 400)
     roomid = request.args.get("roomid")
+
+    if not db.Room.exists(id=roomid):
+        return Response("Invalid roomid", 422)
     room = db.Room[roomid]
 
     netid = cas.netid()
-    user = db.User.get(netid=netid)
+    user = db.User.get_or_create(netid=netid)
     group = user.group
 
     fav = db.FavoriteRoom.get(room=room, group=group)
@@ -64,10 +76,11 @@ def unfavorite():
     else:
         app.logger.debug("%s unfavorited room %s that was not favorite" % (netid, roomid))
 
-    return Response({'success':True}, 200, {'ContentType':'application/json'})
+    return jsonify({'success':True})
 
 
 @app.route("/favorites", methods=["GET"])
+@cas.authenticated
 @db_session
 def favorites():
     """
@@ -75,7 +88,7 @@ def favorites():
     :return: 
     """
     netid = cas.netid()
-    user = db.User.get(netid=netid)
+    user = db.User.get_or_create(netid=netid)
     group = user.group
 
     curr_faves = group.favorites.select()[:]
