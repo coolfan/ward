@@ -1,16 +1,17 @@
-from flask import request, logging, jsonify
+from flask import request, logging, jsonify, Blueprint
 from pony.orm import db_session, select
 
-from rooms import app
-import rooms.conf as conf
-import rooms.dbmanager as dbm
+from .conf import DB_NAME, DB_TYPE, LOGGER
+from .dbmanager import connect
 
-db = dbm.connect(conf.DB_NAME, conf.DB_TYPE)
+blueprint = Blueprint("query", __name__)
 
-logger = logging.getLogger(conf.LOGGER)
+db = connect(DB_NAME, DB_TYPE)
+
+logger = logging.getLogger(LOGGER)
 
 
-@app.route("/query", methods=["GET"])
+@blueprint.route("/query", methods=["GET"])
 @db_session
 def query():
     query_string = request.args.get("q")

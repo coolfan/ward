@@ -1,14 +1,16 @@
-from flask import request, logging, jsonify, session, Response
+from flask import request, logging, jsonify, session, Response, Blueprint
 from pony.orm import db_session, select
 
 from rooms import app, cas, conf
 from rooms import dbmanager as dbm
 
+blueprint = Blueprint("favorite", __name__)
+
 db = dbm.connect(conf.DB_NAME, conf.DB_TYPE)
 logger = logging.getLogger(conf.LOGGER)
 
 
-@app.route("/favorite", methods=["GET"])
+@blueprint.route("/favorite", methods=["GET"])
 @cas.authenticated
 @db_session
 def favorite() -> Response:
@@ -42,7 +44,7 @@ def favorite() -> Response:
     return jsonify({'success': True})
 
 
-@app.route("/unfavorite", methods=["GET"])
+@blueprint.route("/unfavorite", methods=["GET"])
 @cas.authenticated
 @db_session
 def unfavorite():
@@ -79,7 +81,7 @@ def unfavorite():
     return jsonify({'success':True})
 
 
-@app.route("/favorites", methods=["GET"])
+@blueprint.route("/favorites", methods=["GET"])
 @cas.authenticated
 @db_session
 def favorites():
