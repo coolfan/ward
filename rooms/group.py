@@ -10,7 +10,7 @@ logger = logging.getLogger(conf.LOGGER)
 
 
 @app.route("/request_group", methods=["POST"])
-@cas.authenticated()
+@cas.authenticated
 @db_session
 def request_group():
     # TODO: make new entry in group request table
