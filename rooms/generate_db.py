@@ -5,11 +5,11 @@ from pony.orm import db_session
 from dbmanager import connect
 
 
-db = connect("rooms.sqlite")
+db = connect("rooms.sqlite", create_db=True, create_tables=True)
 
 
 @db_session
-def load_roomsjs(fname="rooms.json"):
+def load_roomsjs(fname="../rooms.json"):
     with open(fname) as db_file:
         data = json.load(db_file)
         for row in data["rooms"]:
