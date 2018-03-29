@@ -48,7 +48,10 @@ def define_entities(db: Database) -> None:
         from_user = Required(User)
         to_group = Required(Group)
         message = Optional(str)
-        status = Required(str)  # Pending, Approved, Denied
+        status = Required(
+            str,
+            py_check=lambda s: s in {"Pending", "Approved", "Denied"}
+        )
 
     class Review(db.Entity):
         owner = Required(User)
