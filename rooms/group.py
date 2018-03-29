@@ -46,7 +46,6 @@ def request_group():
     other_user = db.User.get_or_create(netid=other_netid)
     other_group = other_user.group
 
-    # TODO: Check if I am already part of this group
     if other_group == my_user.group:
         return jsonify({"success": True})
 
