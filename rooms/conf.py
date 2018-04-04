@@ -1,9 +1,35 @@
+import os
+
+import logging
+
+# -----------------------------------------------------------------------------
+# GENERAL CONFIG
+# -----------------------------------------------------------------------------
+
+# SERVICE_URL = "http://rooms.cs.princeton.edu/"
+SERVICE_URL = "http://localhost:5000/"
+
+PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
+
 DB_NAME = "rooms.sqlite"
 DB_TYPE = "sqlite"
 
-LOGGER = "rooms_logger"
+# -----------------------------------------------------------------------------
+# LOGGING RELATED CONFIG
+# -----------------------------------------------------------------------------
 
+LOGGER = "rooms_logger"
+logger = logging.getLogger(LOGGER)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+handler = logging.FileHandler("rooms.log")
+handler.setLevel(level=logging.DEBUG)
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+
+
+# -----------------------------------------------------------------------------
+# CAS CONFIG
+# -----------------------------------------------------------------------------
 
 CAS_URL = "https://fed.princeton.edu/cas/"
-# SERVICE_URL = "http://rooms.cs.princeton.edu/"
-SERVICE_URL = "http://localhost:5000/"
