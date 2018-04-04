@@ -7,9 +7,9 @@ function favorite(id) {
 
 $(document).ready(function () {
             $('#roomsTable').DataTable({
+                pageResize: true,
                 searching: false,
                 colReorder: true,
-				lengthChange: true,
-				pageResize: true
+				lengthChange: true
             });
 });
