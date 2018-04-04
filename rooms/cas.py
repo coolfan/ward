@@ -2,8 +2,8 @@ import urllib.parse
 import urllib.request
 from functools import wraps
 
-from flask import redirect, Response, request, session, url_for, Blueprint, logging
-from rooms.conf import CAS_URL, SERVICE_URL, LOGGER
+from flask import redirect, Response, request, session, url_for, Blueprint, logging, current_app
+from rooms.conf import CAS_URL, LOGGER
 
 # Reference this https://github.com/cameronbwhite/Flask-CAS
 
@@ -36,7 +36,8 @@ def login():
     Then checks whether the CAS_TOKEN is valid using validate(token).
     :return: 
     """
-    redirect_url = construct_url("login", service=SERVICE_URL+"login")
+    service_url = current_app.config['SERVICE_URL']
+    redirect_url = construct_url("login", service=service_url+"login")
 
     if "ticket" in request.args:  # This means CAS has redirected back to us
         session["CAS_TOKEN"] = request.args["ticket"]
@@ -73,7 +74,8 @@ def validate(ticket: str) -> bool:
     Returns True if ticket represents a valid CAS session.
     :param ticket: ticket as returned by the CAS login url
     """
-    url = construct_url("validate", service=SERVICE_URL+"login", ticket=ticket)
+    service_url = current_app.config['SERVICE_URL']
+    url = construct_url("validate", service=service_url+"login", ticket=ticket)
     response = urllib.request.urlopen(url).readlines()  # returns 2 lines, first is yes, second is netid
     if len(response) == 2 and b"yes" in response[0]:
         session["CAS_NETID"] = response[1].strip().decode()

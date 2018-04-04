@@ -17,6 +17,7 @@ exec(open(activate_this).read(), dict(__file__=activate_this))
 from wsgiref.handlers import CGIHandler
 try:
     from rooms import app
+    app.config['SERVICE_URL'] = "http://rooms.cs.princeton.edu/"
     CGIHandler().run(app)
 except Exception as e:
     sys.stdout.write(str(e) + "\n")

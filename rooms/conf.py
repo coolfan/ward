@@ -5,10 +5,6 @@ import logging
 # -----------------------------------------------------------------------------
 # GENERAL CONFIG
 # -----------------------------------------------------------------------------
-
-# SERVICE_URL = "http://rooms.cs.princeton.edu/"
-SERVICE_URL = "http://localhost:5000/"
-
 PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
 
 DB_NAME = "rooms.sqlite"
