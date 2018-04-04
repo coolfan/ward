@@ -1,55 +1,46 @@
-{% include 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% include 'base.html' %}
+    <script src="{{url_for('static', filename='favorites.js')}}"></script>
+</head>
 <body>
 {% include 'navbar.html' %}
 
-<script>
-        function favorite(id) {
-            var elem = $("#" + id);
-            var filled = elem.attr("data-prefix") === "fas";
-            if (filled) elem.attr("data-prefix", "far");
-            else elem.attr("data-prefix", "fas");
-        }
-
-        $(document).ready(function () {
-            $('#roomsTable').DataTable({
-                searching: false,
-                colReorder: true
-            });
-        });
-</script>
-
-<table class="table table-hover" style="width:100%" id="roomsTable">
-    <thead>
-    <tr>
-        <th scope="col"></th>
-        <th scope="col">College</th>
-        <th scope="col">Building</th>
-        <th scope="col">Floor</th>
-        <th scope="col">Room</th>
-        <th scope="col">Sqft</th>
-        <th scope="col">Occupancy</th>
-        <th scope="col"># of Rooms</th>
-        <th scope="col">Sub-Free</th>
-    </tr>
-    </thead>
-    <tbody>
-        {#        <th scope="row">1</th>#}
-        {% for room in room_data %}
+<div class="container">
+    <div class="row">
+        <table class="table table-striped table-bordered" id="roomsTable" style="width:100%">
+            <thead>
             <tr>
-                <td><i id="0" class="far fa-star" onclick="favorite(this.id)"></i></td>
-                <td>{{ room.college }}</td>
-                <td>{{ room.building }}</td>
-                <td>{{ room.floor }}</td>
-                <td>{{ room.roomnum }}</td>
-                <td>{{ room.sqft }}</td>
-                <td>{{ room.occupancy }}</td>
-                <td>{{ room.numrooms }}</td>
-                <td>{% if room.subfree %} Y {% else %} N {% endif %}</td>
+                <th scope="col"></th>
+                <th scope="col">College</th>
+                <th scope="col">Building</th>
+                <th scope="col">Floor</th>
+                <th scope="col">Room</th>
+                <th scope="col">Sqft</th>
+                <th scope="col">Occupancy</th>
+                <th scope="col"># of Rooms</th>
+                <th scope="col">Sub-Free</th>
             </tr>
-        {% endfor %}
-
-    </tbody>
-</table>
+            </thead>
+            <tbody>
+            {% for room in room_data %}
+                <tr>
+                    <td><i id="{{ room['id'] }}" class="far fa-star" onclick="favorite(this.id)"></i></td>
+                    <td>{{ room['college'] }}</td>
+                    <td>{{ room['building'] }}</td>
+                    <td>{{ room['floor'] }}</td>
+                    <td>{{ room['roomnum'] }}</td>
+                    <td>{{ room['sqft'] }}</td>
+                    <td>{{ room['occupancy'] }}</td>
+                    <td>{{ room['numrooms'] }}</td>
+                    <td>{{ 'Y' if room['subfree'] else 'N' }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 
 </body>
 
