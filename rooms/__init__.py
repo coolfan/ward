@@ -10,7 +10,8 @@ app.config.update(dict(
     DATABASE=os.path.join(app.root_path, 'rooms.sqlite'),
     SECRET_KEY='cos333project_SeCrEtKeY',
     USERNAME='admin',
-    PASSWORD='admin'
+    PASSWORD='admin',
+    SERVICE_URL='http://localhost:5000/'
 ))
 
 app.config.from_envvar('ROOMS_SETTINGS', silent=True)
@@ -26,6 +27,9 @@ app.register_blueprint(group_blueprint)
 
 from rooms.query import blueprint as query_blueprint
 app.register_blueprint(query_blueprint)
+
+from rooms.reviews import blueprint as reviews_blueprint
+app.register_blueprint(reviews_blueprint)
 
 from rooms.views import blueprint as views_blueprint
 app.register_blueprint(views_blueprint)
