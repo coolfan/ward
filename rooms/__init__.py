@@ -15,6 +15,17 @@ app.config.update(dict(
 
 app.config.from_envvar('ROOMS_SETTINGS', silent=True)
 
-import rooms.conf
-import rooms.dbmanager
-import rooms.views
+from rooms.cas import blueprint as cas_blueprint
+app.register_blueprint(cas_blueprint)
+
+from rooms.favorite import blueprint as favorite_blueprint
+app.register_blueprint(favorite_blueprint)
+
+from rooms.group import blueprint as group_blueprint
+app.register_blueprint(group_blueprint)
+
+from rooms.query import blueprint as query_blueprint
+app.register_blueprint(query_blueprint)
+
+from rooms.views import blueprint as views_blueprint
+app.register_blueprint(views_blueprint)
