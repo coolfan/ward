@@ -5,7 +5,6 @@ import logging
 # -----------------------------------------------------------------------------
 # GENERAL CONFIG
 # -----------------------------------------------------------------------------
-PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
 
 DB_NAME = "rooms.sqlite"
 DB_TYPE = "sqlite"

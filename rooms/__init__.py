@@ -1,6 +1,10 @@
 import os
 from flask import Flask
 
+FLASK_APP_DIR = os.path.dirname(os.path.realpath(__file__))
+PROJECT_ROOT = os.path.split(FLASK_APP_DIR)[0]
+UPLOAD_DIR = os.path.join(PROJECT_ROOT, "uploads")
+
 app = Flask(__name__)             # create the application instance
 app.config.from_object(__name__)  # load config from this file , rooms.py
 
@@ -11,7 +15,8 @@ app.config.update(dict(
     SECRET_KEY='cos333project_SeCrEtKeY',
     USERNAME='admin',
     PASSWORD='admin',
-    SERVICE_URL='http://localhost:5000/'
+    SERVICE_URL='http://localhost:5000/',
+    UPLOAD_DIR=UPLOAD_DIR
 ))
 
 app.config.from_envvar('ROOMS_SETTINGS', silent=True)
