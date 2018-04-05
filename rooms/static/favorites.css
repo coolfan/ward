@@ -21,6 +21,11 @@ div.dataTables_length {
 
 th.dt-center, td.dt-center { text-align: center; }
 
+.table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>th {
+   background-color: #f2f5ff; // Choose your own color here
+ }
+
 /*Source for these 4 navbar things (Making the navbar bigger): https://bootstrapious.com/p/how-to-change-bootstrap-navbar-height*/
  /*.navbar {*/
   /*min-height: 80px;*/
