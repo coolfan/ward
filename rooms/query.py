@@ -16,6 +16,9 @@ logger = logging.getLogger(LOGGER)
 def query():
     query_string = request.args.get("q")
 
+    limit = int(request.args.get("limit", 50))
+    continue_from = int(request.args.get("continueFrom", 0))
+
     college = request.args.get("college")
     building = request.args.get("building")
     floor = request.args.get("floor")
@@ -38,10 +41,11 @@ def query():
         and (room.floor == floor or floor is None)
         and (room.roomnum == roomnum or roomnum is None)
 
-        and (room.sqft == sqft or sqft is None)
+        and (room.sqft >= sqft or sqft is None)
         and (room.occupancy == occupancy or occupancy is None)
         and (room.numrooms == numrooms or numrooms is None)
         and (room.subfree == subfree or subfree is None)
     )
     res = [room.to_dict() for room in res]
-    return jsonify(res)
+    limited = res[continue_from:continue_from+limit]
+    return jsonify(limited)
