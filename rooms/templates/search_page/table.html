@@ -3,36 +3,41 @@
 <head>
   {% include 'base.html' %}
     <script src="{{url_for('static', filename='favorites.js')}}"></script>
+    <link rel="stylesheet" href = "{{url_for('static', filename = 'favorites.css')}}">
 </head>
 <body>
 {% include 'navbar.html' %}
 
-<!--
 <div class="container">
-    <div class="row"> -->
-        <table class="table pageResize table-striped table-bordered" id="roomsTable" style="width:100%">
+    <div class="row">
+        <table class="table pageResize table-striped" id="roomsTable" style="width:100%">
             <thead>
             <tr>
                 <th scope="col"></th>
-                <th scope="col">College</th>
-                <th scope="col">Building</th>
-                <th scope="col">Floor</th>
-                <th scope="col">Room</th>
-                <th scope="col">Sqft</th>
-                <th scope="col">Occupancy</th>
-                <th scope="col"># of Rooms</th>
-                <th scope="col">Sub-Free</th>
+                <th scope="col" style="margin-right: -10px">College</th> <!--The non-breaking spaces are for alignment. Bite me. -->
+                <th scope="col" style="text-align:right">Building</th>
+                <th scope="col" style="text-align:right">Floor</th>
+                <th scope="col" style="text-align:right">Room</th>
+                <th scope="col" style="text-align:right">Sqft</th>
+                <th scope="col" style="text-align:right">Occupancy</th>
+                <th scope="col" style="text-align:right"># of Rooms</th>
+                <th scope="col" style="text-align:right">Sub-Free</th>
             </tr>
             </thead>
             <tbody>
             {% for room in room_data[0:50] %}
                 <tr>
-                    <td><i id="{{ room['id'] }}" class="far fa-star" onclick="favorite(this.id)"></i></td>
-                    <td>{{ room['college'] }}</td>
+                    <td id="{{ room['id'] }}"  onclick="favorite(this.id)">
+                        <span class="fa-stack" style="margin-bottom: -10px"> <!--More allignment control here. I'll try to save all the margin handling for the end, as it can get broken super easy-->
+                            <i id="{{ room['id']}}star" class="far fa-star fa-stack-1x yellowstar"></i>
+                            <i class="far fa-star fa-stack-1x blackstar"></i>
+                        </span>
+                    </td>
+                    <td >{{ room['college'] }}</td>
                     <td>{{ room['building'] }}</td>
                     <td>{{ room['floor'] }}</td>
                     <td>{{ room['roomnum'] }}</td>
-                    <td>{{ room['sqft'] }}</td>
+                    <td>{{ room['sqft'] }}</td>s
                     <td>{{ room['occupancy'] }}</td>
                     <td>{{ room['numrooms'] }}</td>
                     <td>{{ 'Y' if room['subfree'] else 'N' }}</td>
@@ -40,9 +45,8 @@
             {% endfor %}
             </tbody>
         </table>
-<!--
     </div>
-</div> -->
+</div>
 
 </body>
 

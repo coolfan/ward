@@ -1,0 +1,20 @@
+div.dataTables_length {
+    display: none;
+}
+
+.yellowstar {
+    color:yellow;
+    /*background-color:black;*/
+    /*-webkit-text-stroke-width: 5px;*/
+    /*-webkit-text-stroke-color: black;*/
+    /*text-shadow: 0px 0px 3px #000;*/
+    font-size: 26px;
+}
+
+.blackstar {
+    color:black;
+    -webkit-text-stroke-width: 1px;
+    font-size: 24px;
+}
+
+th.dt-center, td.dt-center { text-align: center; }
