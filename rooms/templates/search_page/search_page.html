@@ -2,16 +2,21 @@
 <html lang="en">
 <head>
     {% include 'base.html' %}
-    <script src="{{url_for('static', filename='favorites.js')}}"></script>
-    <link rel="stylesheet" href = "{{url_for('static', filename = 'favorites.css')}}">
+{#    <script src="{{url_for('static', filename='favorites.js')}}"></script>#}
+{#    <link rel="stylesheet" href = "{{url_for('static', filename = 'favorites.css')}}">#}
 </head>
 <body>
 {% include 'navbar.html' %}
 
-<div class="container" style="">
+<div class="container-fluid" style="">
     <div class="row">
-        <div class = ""
-        {% include 'search_page/table.html' %}
+        <div class="col col-sm-6">
+            Pizza
+{#            {% include 'search_page/table.html' %}#}
+        </div>
+        <div class="col col-sm-6">
+            {% include 'search_page/table_card.html' %}
+        </div>
     </div>
 </div>
 

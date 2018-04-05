@@ -1,4 +1,7 @@
-<table class="table pageResize table-striped" id="roomsTable" style="width:100%">
+{#<div class = "container">#}
+{#    <div class = "row">#}
+{#    <div class = "col pull-right">#}
+    <table class="table pageResize table-striped" id="roomsTable" style="width:100%">
             <thead>
             <tr>
                 <th scope="col"></th>
@@ -9,17 +12,14 @@
                 <th scope="col" style="text-align:right">Sqft</th>
                 <th scope="col" style="text-align:right">Occupancy</th>
                 <th scope="col" style="text-align:right"># of Rooms</th>
-                <th scope="col" style="text-align:right">Sub-Free</th>
+{#                <th scope="col" style="text-align:right">Sub-Free</th>#}
             </tr>
             </thead>
             <tbody>
             {% for room in room_data[0:50] %}
                 <tr>
                     <td id="{{ room['id'] }}"  onclick="favorite(this.id)">
-                        <span class="fa-stack" style="margin-bottom: -10px"> <!--More allignment control here. I'll try to save all the margin handling for the end, as it can get broken super easy-->
-                            <i id="{{ room['id']}}star" class="far fa-star fa-stack-1x yellowstar"></i>
-                            <i class="far fa-star fa-stack-1x blackstar"></i>
-                        </span>
+
                     </td>
                     <td >{{ room['college'] }}</td>
                     <td>{{ room['building'] }}</td>
@@ -28,8 +28,11 @@
                     <td>{{ room['sqft'] }}</td>
                     <td>{{ room['occupancy'] }}</td>
                     <td>{{ room['numrooms'] }}</td>
-                    <td>{{ 'Y' if room['subfree'] else 'N' }}</td> <!--I think this should be a search filter, it doesn't deserve its own collumn-->
+{#                    <td>{{ 'Y' if room['subfree'] else 'N' }}</td> <!--I think this should be a search filter, it doesn't deserve its own collumn-->#}
                 </tr>
             {% endfor %}
             </tbody>
-</table>
+    </table>
+{#    </div>#}
+{#    </div>#}
+{#</div>#}

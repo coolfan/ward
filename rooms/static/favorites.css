@@ -26,6 +26,10 @@ th.dt-center, td.dt-center { text-align: center; }
    background-color: #f2f5ff; // Choose your own color here
  }
 
+.fonted{
+    font-family:"Georgia",serif;
+    font-size: 16pt;
+}
 /*Source for these 4 navbar things (Making the navbar bigger): https://bootstrapious.com/p/how-to-change-bootstrap-navbar-height*/
  /*.navbar {*/
   /*min-height: 80px;*/

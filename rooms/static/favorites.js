@@ -13,9 +13,22 @@ function favorite(id) {
 
 $(document).ready(function () {
             $('#roomsTable').DataTable({
-                //searching: false,
-                //colReorder: true,
-				//lengthChange: true,
-				pageResize: true
+                pageResize: true,
+                searching: false,
+                lengthChange: true,
+                responsive: true,
+                "columns": [ //Don't allow them to order based on the favorite star
+                    { "className": "dt-center", "orderable": false },
+                    { "className": "dt-center"},
+                    { "className": "dt-center"},
+                    { "className": "dt-center"},
+                    { "className": "dt-center"},
+                    { "className": "dt-center"},
+                    { "className": "dt-center", "width": "12%"},
+                    { "className": "dt-center", "width": "12%"},
+                    // { "className": "dt-center", "width": "10%"}
+                ],
+                colReorder: true,
+                order: [[ 1, 'asc' ]]  //Starting order is collumn 1, which is college, in ascending order
             });
 });
