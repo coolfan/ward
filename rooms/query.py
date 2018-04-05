@@ -29,7 +29,7 @@ def query():
     numrooms = request.args.get("numrooms")
     subfree = request.args.get("subfree")
 
-    sqft = int(sqft) if sqft is not None else sqft
+    sqft = int(sqft) if sqft is not None else 0
     occupancy = int(occupancy) if occupancy else occupancy
     numrooms = int(numrooms) if numrooms else numrooms
     subfree = bool(subfree) if subfree else subfree
