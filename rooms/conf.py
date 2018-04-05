@@ -14,14 +14,6 @@ DB_TYPE = "sqlite"
 # -----------------------------------------------------------------------------
 
 LOGGER = "rooms_logger"
-logger = logging.getLogger(LOGGER)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-
-handler = logging.FileHandler("rooms.log")
-handler.setLevel(level=logging.DEBUG)
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-
 
 # -----------------------------------------------------------------------------
 # CAS CONFIG
