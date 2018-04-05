@@ -25,7 +25,7 @@ $(document).ready(function () {
                     { "className": "dt-center"},
                     { "className": "dt-center", "width": "12%"},
                     { "className": "dt-center", "width": "12%"},
-                    { "className": "dt-center", "width": "10%"
+                    { "className": "dt-center", "width": "10%"}
                 ],
                 colReorder: true,
                 order: [[ 1, 'asc' ]]  //Starting order is collumn 1, which is college, in ascending order
