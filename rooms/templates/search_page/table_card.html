@@ -7,47 +7,20 @@
 {#    </div>#}
 {#{% endfor %}#}
 
-{% for room in room_data[0:50] %}
+{% for room in room_data[0:500] %}
     <div class="card" style="width: 100%; margin-bottom: 5px">
         <div class="container-fluid" style="background-color: #f2f5ff">
-            <div class="card-body" style="padding: 10px;">
-                <div class = "row">
-                    <div class = "col-sm-2">
-                        <p class="card-text fonted">
-                        {{ room['building'] }} {{ room['roomnum'] }}
-                        </p>
-                    </div>
-                    <div class = "col-sm-2">
-                        <p class="card-text">
-                        {{ room['floor'] }}th Floor
-                        </p>
-                    </div>
-                    <div class = "col-sm-2">
-                        <p class="card-text">
-                            {{ room['sqft'] }} ft<sup>2</sup>
-                        </p>
-                    </div>
-                    <div class = "col-sm-2">
-                        <p class="card-text">
-                            {{ room['numrooms'] }} Rooms
-                        </p>
-                    </div>
-                    <div class = "col-sm-2">
-                        <p class="card-text">
-                        {{ room['college'] }}
-                        </p>
-                    </div>
-                    <div align="center" class = "col-sm-1">
-                        <span class="fa-stack" style="margin-bottom: -10px"> <!--More allignment control here. I'll try to save all the margin handling for the end, as it can get broken super easy-->
-                            <i id="{{ room['id']}}star" class="far fa-star fa-stack-1x yellowstar"></i>
-                            <i class="far fa-star fa-stack-1x blackstar"></i>
-                        </span>
-                    </div>
-                    <div class = "col-sm-1">
-                        <i class="fas fa-caret-down"></i>
-                    </div>
-                </div>
+            <div class="card-body fonted" style="padding: 10px;">
+                {% include 'cards/medium_card.html' %}
             </div>
         </div>
     </div>
 {% endfor %}
+
+
+{#                                    <i class="fas fa-chevron-down"></i>#}
+            {#                        <i class="fas fa-angle-double-down fa-lg" style="font-size: 23px"></i>#}
+{#                                    <span class="fa-stack"> <!--More allignment control here. I'll try to save all the margin handling for the end, as it can get broken super easy-->#}
+{#                                        <i class="fas fa-chevron-down fa-stack" data-fa-transform="right-10 down-8"></i>#}
+{#                                        <i class="fas fa-chevron-down fa-stack" data-fa-transform="left-8 down-15"></i>#}
+{#                                    </span>#}

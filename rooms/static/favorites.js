@@ -1,14 +1,14 @@
 function favorite(id) {
-    console.log('hi');
     var elem = $("#" + id + "star");
-    var filled = elem.attr("data-prefix") === "fas";
-    if (filled) {
-        elem.attr("data-prefix", "far");
+    // console.log(elem.attr("src"));
+    var empty = elem.attr("src") === "/static/star.png";
+    if (empty) {
+        elem.attr("src", "/static/starfill.png");
     }
     else {
-        elem.attr("data-prefix", "fas");
+        elem.attr("src", "/static/star.png");
     }
-
+    $.ajax({url:"favorites/"})
 }
 
 $(document).ready(function () {

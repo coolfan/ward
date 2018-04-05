@@ -28,7 +28,17 @@ th.dt-center, td.dt-center { text-align: center; }
 
 .fonted{
     font-family:"Georgia",serif;
-    font-size: 16pt;
+    font-size: 12pt;
+}
+
+.padding-0{
+    padding-right:0;
+    padding-left:0;
+}
+
+.card-text{
+    height:100%;
+    padding-top: 10px;
 }
 /*Source for these 4 navbar things (Making the navbar bigger): https://bootstrapious.com/p/how-to-change-bootstrap-navbar-height*/
  /*.navbar {*/

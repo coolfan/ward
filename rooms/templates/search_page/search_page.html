@@ -2,19 +2,19 @@
 <html lang="en">
 <head>
     {% include 'base.html' %}
-{#    <script src="{{url_for('static', filename='favorites.js')}}"></script>#}
-{#    <link rel="stylesheet" href = "{{url_for('static', filename = 'favorites.css')}}">#}
+    <script src="{{url_for('static', filename='favorites.js')}}"></script>
+    <link rel="stylesheet" href = "{{url_for('static', filename = 'favorites.css')}}">
 </head>
 <body>
 {% include 'navbar.html' %}
 
 <div class="container-fluid" style="">
     <div class="row">
-        <div class="col col-sm-6">
+        <div class="col col-sm-6 col-lg-7">
             Pizza
 {#            {% include 'search_page/table.html' %}#}
         </div>
-        <div class="col col-sm-6">
+        <div class="col col-sm-6 col-lg-5">
             {% include 'search_page/table_card.html' %}
         </div>
     </div>
