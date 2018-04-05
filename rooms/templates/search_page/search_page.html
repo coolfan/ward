@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'base.html' %}
+    <script src="{{url_for('static', filename='favorites.js')}}"></script>
+    <link rel="stylesheet" href = "{{url_for('static', filename = 'favorites.css')}}">
+</head>
+<body>
+{% include 'navbar.html' %}
+
+<div class="container" style="">
+    <div class="row">
+        {% include 'search_page/table.html' %}
+    </div>
+</div>
+
+</body>
+
+</html>
