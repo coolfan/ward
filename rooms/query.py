@@ -41,7 +41,7 @@ def query():
         and (room.floor == floor or floor is None)
         and (room.roomnum == roomnum or roomnum is None)
 
-        and (room.sqft >= sqft or sqft is None)
+        and (sqft is None or room.sqft >= sqft)
         and (room.occupancy == occupancy or occupancy is None)
         and (room.numrooms == numrooms or numrooms is None)
         and (room.subfree == subfree or subfree is None)
