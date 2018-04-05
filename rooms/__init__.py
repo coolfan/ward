@@ -6,7 +6,8 @@ from flask import Flask
 from .conf import LOGGER
 
 FLASK_APP_DIR = os.path.dirname(os.path.realpath(__file__))
-PROJECT_ROOT = os.path.split(FLASK_APP_DIR)[0]
+GIT_ROOT = os.path.split(FLASK_APP_DIR)[0]
+PROJECT_ROOT = os.path.split(GIT_ROOT)[0]
 UPLOAD_DIR = os.path.join(PROJECT_ROOT, "uploads")
 
 
