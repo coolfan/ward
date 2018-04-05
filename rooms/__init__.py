@@ -19,7 +19,7 @@ app.config.update(dict(
     UPLOAD_DIR=UPLOAD_DIR
 ))
 
-app.config.from_envvar('ROOMS_SETTINGS', silent=True)
+# app.config.from_envvar('ROOMS_SETTINGS', silent=True)
 
 from rooms.cas import blueprint as cas_blueprint
 app.register_blueprint(cas_blueprint)

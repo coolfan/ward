@@ -81,6 +81,14 @@ def unfavorite():
     return jsonify({'success':True})
 
 
+@blueprint.route("/reorder_favorites", methods=["POST"])
+@cas.authenticated
+@db_session
+def reorder_favorites():
+    favoriteid_list = request.get_json()
+    return jsonify({"success": True})
+
+
 @blueprint.route("/favorites", methods=["GET"])
 @cas.authenticated
 @db_session
