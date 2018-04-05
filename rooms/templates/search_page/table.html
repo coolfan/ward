@@ -40,7 +40,7 @@
                     <td>{{ room['sqft'] }}</td>
                     <td>{{ room['occupancy'] }}</td>
                     <td>{{ room['numrooms'] }}</td>
-                    <td>{{ 'Y' if room['subfree'] else 'N' }}</td>
+                    <td>{{ 'Y' if room['subfree'] else 'N' }}</td> <!--I think this should be a search filter, it doesn't deserve its own collumn-->
                 </tr>
             {% endfor %}
             </tbody>
