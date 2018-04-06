@@ -2,7 +2,7 @@ from flask import request, logging, jsonify, session, Response, Blueprint, abort
 from pony.orm import db_session, select
 
 from rooms import app, cas, conf
-from rooms import get_current_db
+import rooms.dbmanager as dbm
 
 blueprint = Blueprint("favorite", __name__)
 
@@ -11,15 +11,14 @@ logger = logging.getLogger(conf.LOGGER)
 
 @blueprint.route("/favorite", methods=["GET"])
 @cas.authenticated
-@db_session
-def favorite() -> Response:
+@dbm.use_app_db
+def favorite(db) -> Response:
     """
     Adds a room to favorites list of group to which the currently logged in
     user belongs.  Expects parameters in url params:
         - roomid: id of the room to add to favorites list
     :return: Response(200) if successful
     """
-    db = get_current_db()
     if "roomid" not in request.args:
         return Response("Missing roomid", 400)
     roomid = request.args.get("roomid")
@@ -46,15 +45,14 @@ def favorite() -> Response:
 
 @blueprint.route("/unfavorite", methods=["GET"])
 @cas.authenticated
-@db_session
-def unfavorite():
+@dbm.use_app_db
+def unfavorite(db):
     """
     Removes a room from favorites list of group to which the currently
     logged in user belongs.  Expects parameters in form data:
         - roomid: id of the room to remove from favorite list 
     :return: 
     """
-    db = get_current_db()
     if "roomid" not in request.args:
         return Response("Missing roomid", 400)
     roomid = request.args.get("roomid")
@@ -84,9 +82,8 @@ def unfavorite():
 
 @blueprint.route("/reorder_favorites", methods=["POST"])
 @cas.authenticated
-@db_session
-def reorder_favorites():
-    db = get_current_db()
+@dbm.use_app_db
+def reorder_favorites(db):
     netid = cas.netid()
     user = db.User.get_or_create(netid=netid)
 
@@ -108,13 +105,12 @@ def reorder_favorites():
 
 @blueprint.route("/favorites", methods=["GET"])
 @cas.authenticated
-@db_session
-def favorites():
+@dbm.use_app_db
+def favorites(db):
     """
     Return a list of the rooms in your favorites list, sorted by rank
     :return: 
     """
-    db = get_current_db()
     netid = cas.netid()
     user = db.User.get_or_create(netid=netid)
     group = user.group

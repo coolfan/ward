@@ -1,8 +1,12 @@
 import json
 from datetime import datetime
+from functools import wraps
 
+from flask import g
 from pony.orm import Database, Required, Optional, LongStr, Json, db_session, select
 from pony.orm import Set as PonySet
+
+from .conf import DB_NAME, DB_TYPE
 
 
 def define_entities(db: Database) -> None:
@@ -73,6 +77,18 @@ def define_entities(db: Database) -> None:
         draw_year = Required(int)  # Year the draw took place
         timefromstart = Required(int)  # number of seconds from the start of draw
         room = Required(Room)
+
+
+def use_app_db(func):
+    """Decorator for functions that use the app's db"""
+    @wraps(func)
+    @db_session
+    def wrapper(*args, **kwargs):
+        # check if db exists in the app's context
+        if not hasattr(g, "db_connection"):
+            g.db_connection = connect(DB_NAME, DB_TYPE)
+        return func(g.db_connection, *args, **kwargs)
+    return wrapper
 
 
 def connect(fname: str,
