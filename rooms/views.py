@@ -11,13 +11,12 @@ import rooms.cas
 import rooms.favorite
 import rooms.group
 
-db = dbm.connect(conf.DB_NAME, conf.DB_TYPE)
 blueprint = Blueprint("views", __name__)
 
 
 @blueprint.route("/")
-@db_session
-def table():
+@dbm.use_app_db
+def table(db):
     query = select(r for r in db.Room)
     room_data = [r.to_dict() for r in query]
     return render_template('table.html', room_data=room_data)
