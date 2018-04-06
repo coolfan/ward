@@ -1,95 +1,78 @@
-var card_mgr = {
-	card_queue: [],
-	bigcard_arr: [null, null],
-	bigcard_disp_arr: [null, null],
-	cur_bigcard1: true
-}
+var card_queue = []
 
-function to_header(val) {
-	return val.roomnum + " " + val.building
-}
+function display_bigcard(s) {
+	if (typeof display_bigcard.disp1 === "undefined") {
+		display_bigcard.disp1 = true
+	}
 
-function get_dom_id(val) {
-	return "card" + val.id
-}
-
-function display_bigcard(val) {
-	if (card_mgr.cur_bigcard1) {
-		card_mgr.bigcard_arr[0].text(to_header(val))
-		card_mgr.bigcard_disp_arr[0] = val
+	if (display_bigcard.disp1) {
+		$("#bigcard1_body").text(s)
 	} else {
-		card_mgr.bigcard_arr[1].text(to_header(val))
-		card_mgr.bigcard_disp_arr[1] = val
+		$("#bigcard2_body").text(s)
 	}
-	
-	card_mgr.cur_bigcard1 = !card_mgr.cur_bigcard1;
 
-	card_mgr.card_queue.push(val)
-	if (card_mgr.card_queue.length > 2) {
-		var ret = card_mgr.card_queue.shift()
-		$("#" + get_dom_id(ret)).click()
+	display_bigcard.disp1 = !display_bigcard.disp1
+}
+
+function undisplay_bigcard(s) {
+	if ($("#bigcard1_body").text() === s) {
+		$("#bigcard1_body").text("")
+		display_bigcard.disp1 = true
+	}
+
+	if ($("#bigcard2_body").text() === s) {
+		$("#bigcard2_body").text("")
+		display_bigcard.disp1 = false
 	}
 }
 
-function undisplay_bigcard(val) {
-	if (card_mgr.bigcard_disp_arr[0] !== null && card_mgr.bigcard_disp_arr[0].id === val.id) {
-		card_mgr.bigcard_arr[0].text("")
-		card_mgr.bigcard_disp_arr[0] = null
-		card_mgr.cur_bigcard1 = true
-	}
-
-	if (card_mgr.bigcard_disp_arr[1] !== null && card_mgr.bigcard_disp_arr[1].id === val.id) {
-		card_mgr.bigcard_arr[1].text("")
-		card_mgr.bigcard_disp_arr[1] = null
-		card_mgr.cur_bigcard1 = false
-	}
-
-	for (var i = 0; i < card_mgr.card_queue.length; i++) {
-		if (card_mgr.card_queue[i].id === val.id) {
-			card_mgr.card_queue.splice(i, 1)
-			break;
-		}
-	}
-}
-
-function get_card(val) {
+function get_card(s, id) {
 	var card = $("<div>").addClass("card")
 	var container_fluid = $("<div>").addClass("container-fluid")
 	var card_body = $("<div>").addClass("card-body")
 	var row = $("<div>").addClass("row")
 	var col = $("<div>").addClass("col-sm-12")
 	var text = $("<p>").addClass("card-text")
-	
-	text.append(to_header(val))
+	text.append(s)
 	col.append(text)
 	row.append(col)
 	card_body.append(row)
 	container_fluid.append(card_body)
 	card.append(container_fluid)
-	
+
 	card.css("margin-bottom", "10px")
-	val.bool_filled = false
+	card.bool_filled = false
 
 	card.click(function() {
-		if (val.bool_filled) {
-			card.css("backgroundColor", "white")
-			undisplay_bigcard(val)
+		if (card.bool_filled) {
+			card.css("background-color", "white")
+			undisplay_bigcard(s)
+			for (var i = 0; i < card_queue.length; i++) {
+				if (card_queue[i] === card) {
+					card_queue.splice(i, 1)
+					break;
+				}
+			}
 		} else {
-			card.css("backgroundColor", "#f2f5ff")
-			display_bigcard(val)
+			card.css("background-color", "#f2f5ff")
+			display_bigcard(s)
+			card_queue.push(card)
+			if (card_queue.length > 2) {
+				var ret = card_queue.shift()
+				ret.click()
+			}
 		}
-		val.bool_filled = !val.bool_filled
+		card.bool_filled = !card.bool_filled
 	});
-	card.attr("id", get_dom_id(val))
+
 	return card
 }
 
 $("#cards").ready(function() {
-	card_mgr.bigcard_arr = [$("#bigcard1_body"), $("#bigcard2_body")]
 	$.getJSON("/favorites", function(data) {
+		console.log(data)
 		$.each(data, function(i, val) {
-			var card = get_card(val)
-			$("#cards").append(get_card(val))
+			$("#cards").append(get_card(val.building + " " + val.roomnum, val.id))
 		});
 	});
 });
