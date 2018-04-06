@@ -103,6 +103,7 @@ function get_card(val) {
 $("#cards").ready(function() {
 	card_mgr.bigcard_arr = [$("#bigcard1_body"), $("#bigcard2_body")]
 	$.getJSON("/favorites", function(data) {
+		console.log(data)
 		$.each(data, function(i, val) {
 			var card = get_card(val)
 			$("#cards").append(get_card(val))
