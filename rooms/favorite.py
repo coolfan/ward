@@ -1,12 +1,11 @@
-from flask import request, logging, jsonify, session, Response, Blueprint
+from flask import request, logging, jsonify, session, Response, Blueprint, abort
 from pony.orm import db_session, select
 
 from rooms import app, cas, conf
-from rooms import dbmanager as dbm
+from rooms import get_current_db
 
 blueprint = Blueprint("favorite", __name__)
 
-db = dbm.connect(conf.DB_NAME, conf.DB_TYPE)
 logger = logging.getLogger(conf.LOGGER)
 
 
@@ -20,6 +19,7 @@ def favorite() -> Response:
         - roomid: id of the room to add to favorites list
     :return: Response(200) if successful
     """
+    db = get_current_db()
     if "roomid" not in request.args:
         return Response("Missing roomid", 400)
     roomid = request.args.get("roomid")
@@ -54,6 +54,7 @@ def unfavorite():
         - roomid: id of the room to remove from favorite list 
     :return: 
     """
+    db = get_current_db()
     if "roomid" not in request.args:
         return Response("Missing roomid", 400)
     roomid = request.args.get("roomid")
@@ -85,7 +86,23 @@ def unfavorite():
 @cas.authenticated
 @db_session
 def reorder_favorites():
+    db = get_current_db()
+    netid = cas.netid()
+    user = db.User.get_or_create(netid=netid)
+
     favoriteid_list = request.get_json()
+    actual_favoriteid_list = db.FavoriteRoom.select(group=user.group)
+    if set(favoriteid_list) != set(actual_favoriteid_list):
+        abort(400)
+
+    faverooms = [db.FavoriteRoom.get(id=fid) for fid in favoriteid_list]
+    for faveroom in faverooms:
+        if faveroom is None or faveroom.group != user.group:
+            abort(403)
+
+    for newrank, faveroom in faverooms:
+        faveroom.rank = newrank
+
     return jsonify({"success": True})
 
 
@@ -97,6 +114,7 @@ def favorites():
     Return a list of the rooms in your favorites list, sorted by rank
     :return: 
     """
+    db = get_current_db()
     netid = cas.netid()
     user = db.User.get_or_create(netid=netid)
     group = user.group

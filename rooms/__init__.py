@@ -1,9 +1,10 @@
 import os
 
 import logging
-from flask import Flask
+from flask import Flask, g
 
-from .conf import LOGGER
+from .conf import LOGGER, DB_TYPE, DB_NAME
+from .dbmanager import connect
 
 FLASK_APP_DIR = os.path.dirname(os.path.realpath(__file__))
 GIT_ROOT = os.path.split(FLASK_APP_DIR)[0]
@@ -33,7 +34,21 @@ app.config.update(dict(
     UPLOAD_DIR=UPLOAD_DIR
 ))
 
-# app.config.from_envvar('ROOMS_SETTINGS', silent=True)
+
+def get_current_db():
+    if hasattr(g, "db_connection"):
+        g.db_connection = connect(DB_NAME, DB_TYPE)
+    return g.db_connection
+
+#
+@app.teardown_appcontext
+def close_db_connection(error):
+    if hasattr(g, "db_connection"):
+        g.db_connection.disconnect()
+
+# -----------------------------------------------------------------------------
+# Register the blueprints
+# -----------------------------------------------------------------------------
 
 from rooms.cas import blueprint as cas_blueprint
 app.register_blueprint(cas_blueprint)

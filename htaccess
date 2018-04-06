@@ -1,7 +1,14 @@
 # Note that the server will not automatically update this file from the repo.
 # if you make changes, manually place it at /n/fs/rooms/webdirectory/.htaccess
 
-RewriteEngine on
+# This was the original, single threaded .htaccess
+# RewriteEngine on
 
-RewriteRule ^index.cgi/(.*)$ - [S=1]
-RewriteRule ^(.*)$ index.cgi/$1 [QSA,L]
+# RewriteRule ^index.cgi/(.*)$ - [S=1]
+# RewriteRule ^(.*)$ index.cgi/$1 [QSA,L]
+
+
+# New attempt at multithreading WSGI with Passenger Phusion
+PassengerEnabled on
+PassengerAppRoot /n/fs/rooms/COS333
+
