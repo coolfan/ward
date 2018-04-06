@@ -20,3 +20,7 @@ def table(db):
 @blueprint.route("/favorites_page")
 def favorites():
     return render_template('favorites_page/favorites_page.html')
+
+@blueprint.route("/reviews_page")
+def reviews():
+    return render_template('reviews_page/reviews_page.html')
