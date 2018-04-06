@@ -1,5 +1,4 @@
 var card_mgr = {
-	fav_order: [],
 	card_queue: [],
 	bigcard_arr: [null, null],
 	bigcard_disp_arr: [null, null],
@@ -8,22 +7,6 @@ var card_mgr = {
 
 function to_header(val) {
 	return val.roomnum + " " + val.building
-}
-
-function build_bigcard_inner(val) {
-	var header = $("<p>").addClass("col").addClass("col-sm-3")
-	header.text(to_header(val))
-
-	var occupancy = $("<p>").addClass("col").addClass("col-sm-3")
-	occupancy.text("Occupancy: " + val.occupancy)
-
-	var floor = $("<p>").addClass("col").addClass("col-sm-3")
-	floor.text("Floor: " + val.floor)
-
-	var subfree = $("<p>").addClass("col").addClass("col-sm-3")
-	subfree.text("Sub-Free: " + (val.subfree ? "Yes" : "No"))
-
-	return [header, occupancy, floor, subfree]
 }
 
 function get_dom_id(val) {
@@ -120,11 +103,9 @@ function get_card(val) {
 $("#cards").ready(function() {
 	card_mgr.bigcard_arr = [$("#bigcard1_body"), $("#bigcard2_body")]
 	$.getJSON("/favorites", function(data) {
-		console.log(data)
 		$.each(data, function(i, val) {
 			var card = get_card(val)
 			$("#cards").append(get_card(val))
-			card_mgr.fav_order.push(val.id)
 		});
 	});
 
