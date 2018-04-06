@@ -12,13 +12,11 @@ PROJECT_ROOT = os.path.split(GIT_ROOT)[0]
 UPLOAD_DIR = os.path.join(PROJECT_ROOT, "uploads")
 
 
-logger = logging.getLogger(LOGGER)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-
 handler = logging.FileHandler(os.path.join(PROJECT_ROOT, "rooms.log"))
 handler.setLevel(level=logging.DEBUG)
 handler.setFormatter(formatter)
-logger.addHandler(handler)
+logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)             # create the application instance
 app.config.from_object(__name__)  # load config from this file , rooms.py
@@ -34,6 +32,7 @@ app.config.update(dict(
     UPLOAD_DIR=UPLOAD_DIR
 ))
 
+app.logger.addHandler(handler)
 
 def get_current_db():
     if hasattr(g, "db_connection"):
