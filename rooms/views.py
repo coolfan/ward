@@ -16,3 +16,7 @@ def table(db):
     query = select(r for r in db.Room)
     room_data = [r.to_dict() for r in query]
     return render_template('search_page/search_page.html', room_data=room_data)
+
+@blueprint.route("/favorites_page")
+def favorites():
+    return render_template('favorites_page/favorites_page.html')
