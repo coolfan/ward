@@ -1,16 +1,14 @@
 import os
 
-import flask
-from flask import request, logging, jsonify, session, Response, Blueprint, render_template, redirect, current_app
-from pony.orm import db_session, select
+from flask import request, logging, jsonify, session, Response, Blueprint, render_template, redirect, current_app, \
+    send_from_directory
 from werkzeug.utils import secure_filename
 
-from rooms import app, cas, conf
-from rooms import dbmanager as dbm
+from rooms import cas, conf
+import rooms.dbmanager as dbm
 
 blueprint = Blueprint("reviews", __name__)
 
-db = dbm.connect(conf.DB_NAME, conf.DB_TYPE)
 logger = logging.getLogger(conf.LOGGER)
 
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
@@ -26,10 +24,15 @@ def allowed_file(filename: str) -> bool:
            filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
+@blueprint.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(current_app.config['UPLOAD_FOLDER'], filename)
+
+
 @blueprint.route("/review", methods=["POST"])
 @cas.authenticated
-@db_session
-def review():
+@dbm.use_app_db
+def review(db):
     roomid = request.form['roomid']
     room = db.Room.get(id=roomid)
 
@@ -55,8 +58,8 @@ def review():
 
 @blueprint.route("/reviews", methods=["GET"])
 @cas.authenticated
-@db_session
-def reviews():
+@dbm.use_app_db
+def reviews(db):
     roomid = request.args.get("roomid")
     room = db.Room.get(id=roomid)
     room_reviews = room.reviews.select()

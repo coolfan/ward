@@ -1,8 +1,12 @@
 import json
 from datetime import datetime
+from functools import wraps
 
+from flask import g
 from pony.orm import Database, Required, Optional, LongStr, Json, db_session, select
 from pony.orm import Set as PonySet
+
+from .conf import DB_NAME, DB_TYPE
 
 
 def define_entities(db: Database) -> None:
@@ -75,6 +79,24 @@ def define_entities(db: Database) -> None:
         room = Required(Room)
 
 
+def get_app_db():
+    if not hasattr(g, "db_connection"):
+        g.db_connection = connect(DB_NAME, DB_TYPE)
+    return g.db_connection
+
+
+def use_app_db(func):
+    """Decorator for functions that use the app's db"""
+    @wraps(func)
+    @db_session
+    def wrapper(*args, **kwargs):
+        # check if db exists in the app's context
+        if not hasattr(g, "db_connection"):
+            g.db_connection = connect(DB_NAME, DB_TYPE)
+        return func(g.db_connection, *args, **kwargs)
+    return wrapper
+
+
 def connect(fname: str,
             dbtype: str = "sqlite",
             create_db: bool = False,
@@ -87,7 +109,7 @@ def connect(fname: str,
 
 
 @db_session
-def _load_roomsjs(fname="../rooms.json"):
+def _load_roomsjs(db, fname="../rooms.json"):
     with open(fname) as db_file:
         data = json.load(db_file)
         for row in data["rooms"]:
@@ -113,7 +135,7 @@ def is_number(s):
 
 
 @db_session
-def _load_drawtimes(fname="../roomdraw13.txt"):
+def _load_drawtimes(db, fname="../roomdraw13.txt"):
     num_rooms_rejected = 0
     buildings = set(select(room.building for room in db.Room))
     with open(fname) as r:
@@ -149,6 +171,7 @@ def _load_drawtimes(fname="../roomdraw13.txt"):
 
 
 if __name__ == "__main__":
-    db = connect("rooms.sqlite", create_db=True, create_tables=True)
+    # db = connect("rooms.sqlite", create_db=True, create_tables=True)
     # _load_roomsjs()
-    _load_drawtimes(fname="../roomdraw16.txt")
+    # _load_drawtimes(fname="../roomdraw16.txt")
+    pass

@@ -6,6 +6,20 @@
 </head>
 <body>
     <form method="POST" enctype="multipart/form-data" action="/review">
+        <input type="hidden" name="roomid" value="1795">
+        <br>
+        <label>
+            <input type="radio" name="rating" value="1">1<br>
+            <input type="radio" name="rating" value="2">2<br>
+            <input type="radio" name="rating" value="3">3<br>
+            <input type="radio" name="rating" value="4">4<br>
+            <input type="radio" name="rating" value="5" checked>5<br>
+        </label>
+        <label>
+            Review text
+            <input type="text" name="text">
+        </label>
+        <br>
         <input type="file" name="pictures" multiple="">
         <br>
         <input type="submit" value="submit">
