@@ -8,16 +8,21 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/" style="font-size: 25px">Table <span class="sr-only">(current)</span></a>
+        <ul class="navbar-nav mr-auto" id="nav_whole">
+            <li class="nav-item active" id="nav_table">
+                <a class="nav-link" href="/" style="font-size: 25px">Table <!--<span class="sr-only">(current)</span>--></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" id="nav_favorites">
                 <a class="nav-link" href="/favorites_page" style="font-size: 25px">Favorites</a>
             </li>
-			<li class="nav-item">
+			<li class="nav-item" id="nav_reviews">
 			    <a class="nav-link" href="/reviews_page" style="font-size: 25px">Review</a>
+			</li>
+			<li class="nav-item" id="nav_account">
+			    <a class="nav-link" href="/account_page" style="font-size: 25px">Account</a>
 			</li>
         </ul>
     </div>
 </nav>
+
+<script src="{{url_for('static', filename='navbar.js')}}"></script>
