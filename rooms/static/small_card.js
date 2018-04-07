@@ -49,12 +49,12 @@ function get_small_card(room){
                              style="height: 37px;width: 37px;padding-top: 2px">
                         </a>
                             
-                        <a class = "Double_down_anchor" data-toggle="collapse" href="">
-                            <img id = "{{ room['id']}}doubledown" 
-                                 class = "Double_down_img"
-                                 src = "/static/doubledown.png"
-                                 style="height: 37px;width: 37px;padding-top: 2px">
-                         </a>
+                        <!--<a class = "Double_down_anchor" data-toggle="collapse" href="">-->
+                            <!--<img id = "{{ room['id']}}doubledown" -->
+                                 <!--class = "Double_down_img"-->
+                                 <!--src = "/static/doubledown.png"-->
+                                 <!--style="height: 37px;width: 37px;padding-top: 2px">-->
+                         <!--</a>-->
                     </div>
                 </div>
             </div>
@@ -72,7 +72,7 @@ function get_small_card(room){
     let down_img  = $(html_card).find(".Down_img");
     let double_down_img  = $(html_card).find(".Double_down_img");
     let down_anchor  = $(html_card).find(".Down_anchor");
-    let double_down_anchor  = $(html_card).find(".Doulble_down_anchor");
+    // let double_down_anchor  = $(html_card).find(".Double_down_anchor");
 
     building_p.empty();
     building_p.text(room['building'] + " " + room['roomnum']);
@@ -98,7 +98,7 @@ function get_small_card(room){
     double_down_img.attr('id',room['id']+ 'doubledown');
 
     down_anchor.attr('href','#' + room['id'] + 'medium_card');
-    double_down_anchor.attr('href','#' + room['id'] + 'big_card');
+    // double_down_anchor.attr('href','#' + room['id'] + 'big_card');
 
     // sqft_p.attr('id','pizza');
     return html_card;

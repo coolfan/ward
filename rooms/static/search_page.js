@@ -17,7 +17,6 @@ function change_star_color(id) {
     }
 }
 
-
 function search_rooms(limit,continueFrom,college,building,roomnum,sqft,occupancy,numrooms,subfree){
     $.get({url:"/query",
         data:{
@@ -38,7 +37,7 @@ function search_rooms(limit,continueFrom,college,building,roomnum,sqft,occupancy
 
 function display_rooms(){
     $.each(rooms,function(i,room){
-       card = get_big_card(room);
+       card = get_medium_card(room);
        wrapped = wrap_cards(card);
        $(".Table_card").append(wrapped);
     });
