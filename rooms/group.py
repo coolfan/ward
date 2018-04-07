@@ -98,3 +98,14 @@ def approve_group(db):
     from_user.group = my_group
 
     return jsonify({"success": True})
+
+
+@blueprint.route("/my_group")
+@cas.authenticated
+@dbm.use_app_db
+def my_group(db):
+    netid = cas.netid()
+    my_user = db.User.get_or_create(netid=netid)
+    my_group = my_user.group
+    other_members = my_group.members.select(lambda user: user.netid != netid)
+    return jsonify([user.to_dict() for user in other_members])
