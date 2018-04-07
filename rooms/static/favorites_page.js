@@ -1,4 +1,5 @@
 var card_mgr = {
+	fav_order: []
 	card_queue: [],
 	bigcard_arr: [null, null],
 	bigcard_disp_arr: [null, null],
@@ -123,6 +124,7 @@ $("#cards").ready(function() {
 		$.each(data, function(i, val) {
 			var card = get_card(val)
 			$("#cards").append(get_card(val))
+			card_mgr.fav_order.append(val.id)
 		});
 	});
 });
