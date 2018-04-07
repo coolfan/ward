@@ -1,4 +1,5 @@
 var card_mgr = {
+	card_data_arr: [],
 	card_queue: [],
 	bigcard_arr: [null, null],
 	bigcard_disp_arr: [null, null],
@@ -11,6 +12,10 @@ function to_header(val) {
 
 function get_dom_id(val) {
 	return "card" + val.id
+}
+
+function get_room_id(s) {
+	return s.slice(4)
 }
 
 function build_bigcard_inner(val) {
@@ -68,7 +73,19 @@ function undisplay_bigcard(val) {
 	}
 }
 
+function card_onclick(card, val) {
+	if (val.bool_filled) {
+		card.css("backgroundColor", "white")
+		undisplay_bigcard(val)
+	} else {
+		card.css("backgroundColor", "#f2f5ff")
+		display_bigcard(val)
+	}
+	val.bool_filled = !val.bool_filled
+}
+
 function get_card(val) {
+	var li = $("<li>").attr("id", "elem" + val.id)
 	var card = $("<div>").addClass("card")
 	var container_fluid = $("<div>").addClass("container-fluid")
 	var card_body = $("<div>").addClass("card-body")
@@ -97,18 +114,38 @@ function get_card(val) {
 		val.bool_filled = !val.bool_filled
 	});
 	card.attr("id", get_dom_id(val))
-	return card
+
+	li.append(card)
+	return li
 }
 
-$("#cards").ready(function() {
+function get_new_order() {
+	var list = $($("#cards").children()[0]).children()
+	var ret = []
+	$.each(list, function(i, val) {
+		ret.push(get_room_id($(val).attr("id")))
+	})
+	
+	return ret
+}
+
+$(document).ready(function() {
 	card_mgr.bigcard_arr = [$("#bigcard1_body"), $("#bigcard2_body")]
+	var ul = $("<ul>").addClass("draggable no-bullets")
 	$.getJSON("/favorites", function(data) {
-		console.log(data)
 		$.each(data, function(i, val) {
 			var card = get_card(val)
-			$("#cards").append(get_card(val))
+			ul.append(get_card(val))
 		});
+		//card_mgr.card_data_arr[val.id] = val
 	});
+	$("#cards").append(ul)
+	ul.sortable({
+		stop: function(a, b, c) {
+			var order = get_new_order()
+			$.post("/reorder_favorites", order)
+		}
+	})
 
 	navbar_set("#nav_favorites")
 });

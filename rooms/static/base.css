@@ -40,6 +40,11 @@ th.dt-center, td.dt-center { text-align: center; }
     height:100%;
     padding-top: 10px;
 }
+
+.no-bullets {
+    list-style-type: none;
+}
+
 /*Source for these 4 navbar things (Making the navbar bigger): https://bootstrapious.com/p/how-to-change-bootstrap-navbar-height*/
  /*.navbar {*/
   /*min-height: 80px;*/
