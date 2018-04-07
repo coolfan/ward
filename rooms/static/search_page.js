@@ -1,15 +1,62 @@
+let rooms;
+
 function favorite(id) {
-    var elem = $("#" + id + "star");
-    // console.log(elem.attr("src"));
-    var empty = elem.attr("src") === "/static/star.png";
+    $.get({url:"/favorite", data:{roomid:id}, success: function(){
+        change_star_color(id)
+    }} );
+}
+
+function change_star_color(id) {
+    let elem = $("#" + id + "star");
+    let empty = elem.attr("src") === "/static/star.png";
     if (empty) {
         elem.attr("src", "/static/starfill.png");
     }
     else {
         elem.attr("src", "/static/star.png");
     }
-    $.ajax({url:"favorites/"})
 }
+
+
+function search_rooms(limit,continueFrom,college,building,roomnum,sqft,occupancy,numrooms,subfree){
+    $.get({url:"/query",
+        data:{
+            limit:limit,
+            continueFrom:continueFrom,
+            college:college,
+            building:building,
+            roomnum:roomnum,
+            sqft:sqft,
+            occupancy:occupancy,
+            numrooms:numrooms,
+            subfree:subfree},
+        success: function(new_rooms){
+            rooms = new_rooms;
+            display_rooms();
+    }});
+}
+
+function display_rooms(){
+    $.each(rooms,function(i,room){
+       card = get_big_card(room);
+       wrapped = wrap_cards(card);
+       $(".Table_card").append(wrapped);
+    });
+
+    // cards = get_medium_card(rooms[0]);
+    // wrapped = wrap_cards(cards);
+    // console.log(wrapped);
+
+    // $(".Table_card").append(wrapped);
+}
+
+$(document).ready(function (){
+    $.getJSON({url:"/query", data:{}, success: function(data){
+        rooms = data;
+        display_rooms();
+    }})
+});
+
 
 $(document).ready(function () {
     $('#roomsTable').DataTable({
