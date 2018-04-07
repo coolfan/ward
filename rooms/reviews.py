@@ -1,6 +1,7 @@
 import os
 
-from flask import request, logging, jsonify, session, Response, Blueprint, render_template, redirect, current_app
+from flask import request, logging, jsonify, session, Response, Blueprint, render_template, redirect, current_app, \
+    send_from_directory
 from werkzeug.utils import secure_filename
 
 from rooms import cas, conf
@@ -21,6 +22,11 @@ def test_review_page():
 def allowed_file(filename: str) -> bool:
     return "." in filename and \
            filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@blueprint.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(current_app.config['UPLOAD_FOLDER'], filename)
 
 
 @blueprint.route("/review", methods=["POST"])
