@@ -75,6 +75,7 @@ function get_group_card(val) {
 }
 
 function update_pending() {
+	$("#pending").empty()
 	$.get("/pending_requests", function(data) {
 		$.each(data, function(i, val) {
 			var card = get_pending_card(val)
@@ -84,6 +85,7 @@ function update_pending() {
 }
 
 function update_group() {
+	$("#members").empty()
 	$.get("/my_group", function(data) {
 		$.each(data, function(i, val) {
 			var card = get_pending_card(val)
