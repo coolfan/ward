@@ -12,11 +12,11 @@
   <body>
 	{% include 'navbar.html' %}
 
-	<form action="/review" method="POST">
-	  <input type="number" name="roomid" />
-	  <input type="number" name="rating" />
-	  <input type="text" name="text" />
-	  <input type="file" name="pictures" multiple />
+	<form action="/review" method="POST" enctype="multipart/form-data" id="review">
+	  <input type="number" name="roomid" id="roomid" />
+	  <input type="number" name="rating" id="rating" />
+	  <input type="text" name="text" id="text" />
+	  <input type="file" name="pictures" id="pictures" multiple="multiple" />
 	  <input type="submit" />
 	</form>
 	
