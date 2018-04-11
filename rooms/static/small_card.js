@@ -70,9 +70,10 @@ function get_small_card(room){
     let star_div = $(html_card).find(".Stardiv");
     let star_img  = $(html_card).find(".Star_img");
     let down_img  = $(html_card).find(".Down_img");
-    let double_down_img  = $(html_card).find(".Double_down_img");
+    // let double_down_img  = $(html_card).find(".Double_down_img");
     let down_anchor  = $(html_card).find(".Down_anchor");
     // let double_down_anchor  = $(html_card).find(".Double_down_anchor");
+
 
     building_p.empty();
     building_p.text(room['building'] + " " + room['roomnum']);
@@ -95,12 +96,13 @@ function get_small_card(room){
 
     star_img.attr('id',room['id']+ 'star');
     down_img.attr('id',room['id']+ 'down');
-    double_down_img.attr('id',room['id']+ 'doubledown');
+    // double_down_img.attr('id',room['id']+ 'doubledown');
 
     down_anchor.attr('href','#' + room['id'] + 'medium_card');
-    // double_down_anchor.attr('href','#' + room['id'] + 'big_card');
+    down_anchor.click(function(){
+        load_reviews(room['id']);
+    });
 
-    // sqft_p.attr('id','pizza');
     return html_card;
 }
 

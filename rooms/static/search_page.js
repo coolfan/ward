@@ -17,6 +17,24 @@ function change_star_color(id) {
     }
 }
 
+function reviews(roomid){
+    let card = $('#' + roomid + 'card');
+    let table = card.find('.Reviews_table');
+
+    $.get({
+        url:"/reviews",
+        data:{
+            roomid: roomid
+        },
+        success : function(reviews){
+
+        }
+    });
+}
+
+// function load_rewviews(){
+//     table
+// }
 function search_rooms(limit,continueFrom,college,building,roomnum,sqft,occupancy,numrooms,subfree){
     $.get({url:"/query",
         data:{
@@ -38,7 +56,7 @@ function search_rooms(limit,continueFrom,college,building,roomnum,sqft,occupancy
 function display_rooms(){
     $.each(rooms,function(i,room){
        card = get_medium_card(room);
-       wrapped = wrap_cards(card);
+       wrapped = wrap_cards(card,room['id']);
        $(".Table_card").append(wrapped);
     });
 
