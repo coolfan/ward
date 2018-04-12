@@ -20,5 +20,7 @@ try:
     app.config['SERVICE_URL'] = "http://rooms.cs.princeton.edu/"
     CGIHandler().run(app)
 except Exception as e:
+    print("Content-Type: text/plain")
+    print()
     sys.stdout.write(str(e) + "\n")
     sys.stdout.write(traceback.format_exc() + "\n")

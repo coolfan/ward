@@ -2,18 +2,17 @@ from flask import request, logging, jsonify, Blueprint
 from pony.orm import db_session, select
 
 from .conf import DB_NAME, DB_TYPE, LOGGER
-from .dbmanager import connect
+import rooms.dbmanager as dbm
+from rooms import cas
 
 blueprint = Blueprint("query", __name__)
-
-db = connect(DB_NAME, DB_TYPE)
 
 logger = logging.getLogger(LOGGER)
 
 
 @blueprint.route("/query", methods=["GET"])
-@db_session
-def query():
+@dbm.use_app_db
+def query(db):
     query_string = request.args.get("q")
 
     limit = int(request.args.get("limit", 50))
@@ -47,5 +46,16 @@ def query():
         and (room.subfree == subfree or subfree is None)
     )
     res = [room.to_dict() for room in res]
+
+    # get the ids of logged in user's favorite user
+    fave_roomids = set()
+    if cas.netid() is not None:
+        netid = cas.netid()
+        group = db.User.get_or_create(netid=netid).group
+        fave_roomids = {fav.room.id for fav in group.favorites.select()}
+
     limited = res[continue_from:continue_from+limit]
+    for room in limited:
+        room['favorited'] = (room['id'] in fave_roomids)
+
     return jsonify(limited)

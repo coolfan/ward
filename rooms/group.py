@@ -1,18 +1,17 @@
 from flask import logging, Blueprint, request, jsonify, Response
-from pony.orm import db_session, select
+from pony.orm import select
 
 from rooms import cas, conf
 from rooms import dbmanager as dbm
 
 blueprint = Blueprint("group", __name__)
-db = dbm.connect(conf.DB_NAME, conf.DB_TYPE)
 logger = logging.getLogger(conf.LOGGER)
 
 
 @blueprint.route("/pending_requests")
 @cas.authenticated
-@db_session
-def pending_requests():
+@dbm.use_app_db
+def pending_requests(db):
     my_netid = cas.netid()
     my_user = db.User.get_or_create(netid=my_netid)
     my_group = my_user.group
@@ -32,8 +31,8 @@ def pending_requests():
 
 @blueprint.route("/request_group", methods=["GET"])
 @cas.authenticated
-@db_session
-def request_group():
+@dbm.use_app_db
+def request_group(db):
     """
     Sends a request to join the group of another person. 
     """
@@ -61,8 +60,8 @@ def request_group():
 
 @blueprint.route("/approve_group", methods=["GET"])
 @cas.authenticated
-@db_session
-def approve_group():
+@dbm.use_app_db
+def approve_group(db):
     """"""
     # Check for presence of required parameters
     if "request_id" not in request.args:
@@ -99,3 +98,14 @@ def approve_group():
     from_user.group = my_group
 
     return jsonify({"success": True})
+
+
+@blueprint.route("/my_group")
+@cas.authenticated
+@dbm.use_app_db
+def my_group(db):
+    netid = cas.netid()
+    my_user = db.User.get_or_create(netid=netid)
+    my_group = my_user.group
+    other_members = my_group.members.select(lambda user: user.netid != netid)
+    return jsonify([user.to_dict() for user in other_members])
