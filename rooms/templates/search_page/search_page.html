@@ -7,7 +7,8 @@
     <script src="{{url_for('static', filename='medium_card.js')}}"></script>
     <script src="{{url_for('static', filename='big_card.js')}}"></script>
     <script src="{{url_for('static', filename='card_wrapper.js')}}"></script>
-
+    <script src="{{url_for('static', filename='form_manager.js')}}"></script>
+    
     <link rel="stylesheet" href = "{{url_for('static', filename = 'base.css')}}">
 </head>
 <body>
@@ -16,7 +17,7 @@
 <div class="container-fluid" style="">
     <div class="row">
         <div class="col col-sm-6 col-lg-7">
-            Pizza
+            {% include 'search_page/search_bar.html' %}
 {#            {% include 'search_page/table_depricated.html' %}#}
         </div>
         <div class="col col-sm-6 col-lg-5 Table_card">
