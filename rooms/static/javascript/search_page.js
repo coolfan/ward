@@ -95,5 +95,7 @@ $(document).ready(function () {
 
     setup_form();
 
+    setup_form();
+
 	navbar_set("#nav_table")
 });
