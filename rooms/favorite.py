@@ -1,19 +1,18 @@
-from flask import request, logging, jsonify, session, Response, Blueprint
+from flask import request, logging, jsonify, session, Response, Blueprint, abort
 from pony.orm import db_session, select
 
 from rooms import app, cas, conf
-from rooms import dbmanager as dbm
+import rooms.dbmanager as dbm
 
 blueprint = Blueprint("favorite", __name__)
 
-db = dbm.connect(conf.DB_NAME, conf.DB_TYPE)
 logger = logging.getLogger(conf.LOGGER)
 
 
 @blueprint.route("/favorite", methods=["GET"])
 @cas.authenticated
-@db_session
-def favorite() -> Response:
+@dbm.use_app_db
+def favorite(db) -> Response:
     """
     Adds a room to favorites list of group to which the currently logged in
     user belongs.  Expects parameters in url params:
@@ -46,8 +45,8 @@ def favorite() -> Response:
 
 @blueprint.route("/unfavorite", methods=["GET"])
 @cas.authenticated
-@db_session
-def unfavorite():
+@dbm.use_app_db
+def unfavorite(db):
     """
     Removes a room from favorites list of group to which the currently
     logged in user belongs.  Expects parameters in form data:
@@ -83,16 +82,31 @@ def unfavorite():
 
 @blueprint.route("/reorder_favorites", methods=["POST"])
 @cas.authenticated
-@db_session
-def reorder_favorites():
+@dbm.use_app_db
+def reorder_favorites(db):
+    netid = cas.netid()
+    user = db.User.get_or_create(netid=netid)
+
     favoriteid_list = request.get_json()
+    actual_favoriteid_list = db.FavoriteRoom.select(group=user.group)
+    if set(favoriteid_list) != set(actual_favoriteid_list):
+        abort(400)
+
+    faverooms = [db.FavoriteRoom.get(id=fid) for fid in favoriteid_list]
+    for faveroom in faverooms:
+        if faveroom is None or faveroom.group != user.group:
+            abort(403)
+
+    for newrank, faveroom in faverooms:
+        faveroom.rank = newrank
+
     return jsonify({"success": True})
 
 
 @blueprint.route("/favorites", methods=["GET"])
 @cas.authenticated
-@db_session
-def favorites():
+@dbm.use_app_db
+def favorites(db):
     """
     Return a list of the rooms in your favorites list, sorted by rank
     :return: 
