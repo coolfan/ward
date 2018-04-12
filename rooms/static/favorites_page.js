@@ -85,67 +85,67 @@ function card_onclick(card, val) {
 }
 
 function get_card(val) {
-	var li = $("<li>").attr("id", "elem" + val.id)
-	var card = $("<div>").addClass("card")
-	var container_fluid = $("<div>").addClass("container-fluid")
-	var card_body = $("<div>").addClass("card-body")
-	var row = $("<div>").addClass("row")
-	var col = $("<div>").addClass("col-sm-12")
-	var text = $("<p>").addClass("card-text")
+	let li = $("<li>").attr("id", "elem" + val.id);
+	let card = $("<div>").addClass("card");
+	var container_fluid = $("<div>").addClass("container-fluid");
+	var card_body = $("<div>").addClass("card-body");
+	var row = $("<div>").addClass("row");
+	var col = $("<div>").addClass("col-sm-12");
+	var text = $("<p>").addClass("card-text");
 	
-	text.append(to_header(val))
-	col.append(text)
-	row.append(col)
-	card_body.append(row)
-	container_fluid.append(card_body)
-	card.append(container_fluid)
+	text.append(to_header(val));
+	col.append(text);
+	row.append(col);
+	card_body.append(row);
+	container_fluid.append(card_body);
+	card.append(container_fluid);
 	
-	card.css("margin-bottom", "10px")
-	val.bool_filled = false
+	card.css("margin-bottom", "10px");
+	val.bool_filled = false;
 
 	card.click(function() {
 		if (val.bool_filled) {
-			card.css("backgroundColor", "white")
+			card.css("backgroundColor", "white");
 			undisplay_bigcard(val)
 		} else {
-			card.css("backgroundColor", "#f2f5ff")
+			card.css("backgroundColor", "#f2f5ff");
 			display_bigcard(val)
 		}
 		val.bool_filled = !val.bool_filled
 	});
-	card.attr("id", get_dom_id(val))
+	card.attr("id", get_dom_id(val));
 
-	li.append(card)
+	li.append(card);
 	return li
 }
 
 function get_new_order() {
-	var list = $($("#cards").children()[0]).children()
-	var ret = []
+	let list = $($("#cards").children()[0]).children();
+	let ret = [];
 	$.each(list, function(i, val) {
 		ret.push(get_room_id($(val).attr("id")))
-	})
+	});
 	
 	return ret
 }
 
 $(document).ready(function() {
-	card_mgr.bigcard_arr = [$("#bigcard1_body"), $("#bigcard2_body")]
-	var ul = $("<ul>").addClass("draggable no-bullets")
+	card_mgr.bigcard_arr = [$("#bigcard1_body"), $("#bigcard2_body")];
+	let ul = $("<ul>").addClass("draggable no-bullets");
 	$.getJSON("/favorites", function(data) {
 		$.each(data, function(i, val) {
-			var card = get_card(val)
+			let card = get_card(val);
 			ul.append(get_card(val))
 		});
 		//card_mgr.card_data_arr[val.id] = val
 	});
-	$("#cards").append(ul)
+	$("#cards").append(ul);
 	ul.sortable({
 		stop: function(a, b, c) {
 			var order = get_new_order()
 			$.post("/reorder_favorites", order)
 		}
-	})
+	});
 
 	navbar_set("#nav_favorites")
 });

@@ -54,6 +54,8 @@ function search_rooms(limit,continueFrom,college,building,roomnum,sqft,occupancy
 }
 
 function display_rooms(){
+    $(".Table_card").empty();
+
     $.each(rooms,function(i,room){
        card = get_medium_card(room);
        wrapped = wrap_cards(card,room['id']);
@@ -95,6 +97,8 @@ $(document).ready(function () {
         colReorder: true,
         order: [[ 1, 'asc' ]]  //Starting order is collumn 1, which is college, in ascending order
     });
+
+    setup_form();
 
 	navbar_set("#nav_table")
 });
