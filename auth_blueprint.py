@@ -1,14 +1,21 @@
 from flask import Blueprint
 from rooms import cas, conf
 from rooms import dbmanager as dbm
+from functools import wraps
 
 class AuthBlueprint(Blueprint):
     def auth_route(self, rule, **options):
         """
-        Automates adding CAS and db to a route decorator.
+        Creates a decorator for a CAS authenticated user in the database.
         """
-        route_decorator = self.route(rule, **options)
-        def decorator(f):
-            routed_f = route_decorator(f)
-            return cas.authenticated(dbm.use_app_db(routed_f))
-        return decorator
+        def wrapper(f):
+            @self.route(rule, **options)
+            @cas.authenticated
+            @dbm.use_app_db
+            @wraps(f)
+            def wrapped(*args, **kwargs): # name??
+                my_netid = cas.netid()
+                my_user = db.User.get_or_create(netid=my_netid)
+                return f(my_netid, my_user, *args, **kwargs)
+            return wrapped
+        return wrapper

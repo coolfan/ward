@@ -10,9 +10,7 @@ logger = logging.getLogger(conf.LOGGER)
 
 
 @blueprint.auth_route("/pending_requests")
-def pending_requests(db):
-    my_netid = cas.netid()
-    my_user = db.User.get_or_create(netid=my_netid)
+def pending_requests(my_netid, my_user, db):
     my_group = my_user.group
 
     pending_requests = select(
@@ -29,12 +27,10 @@ def pending_requests(db):
 
 
 @blueprint.auth_route("/request_group", methods=["GET"])
-def request_group(db):
+def request_group(my_netid, my_user, db):
     """
     Sends a request to join the group of another person.
     """
-    my_netid = cas.netid()
-    my_user = db.User.get_or_create(netid=my_netid)
 
     message = request.args.get("message", "")
 
@@ -56,7 +52,7 @@ def request_group(db):
 
 
 @blueprint.auth_route("/approve_group", methods=["GET"])
-def approve_group(db):
+def approve_group(my_netid, my_user, db):
     """"""
     # Check for presence of required parameters
     if "request_id" not in request.args:
@@ -74,8 +70,6 @@ def approve_group(db):
     if action not in {"accept", "reject"}:
         return Response("Invalid action: must be one of {'accept', 'reject'}", 422)
 
-    my_netid = cas.netid()
-    my_user = db.User.get_or_create(netid=my_netid)
     my_group = my_user.group
 
     if group_request.to_group != my_group:
@@ -96,9 +90,7 @@ def approve_group(db):
 
 
 @blueprint.auth_route("/my_group")
-def my_group(db):
-    netid = cas.netid()
-    my_user = db.User.get_or_create(netid=netid)
+def my_group(netid, my_user, db):
     my_group = my_user.group
     other_members = my_group.members.select(lambda user: user.netid != netid)
     return jsonify([user.to_dict() for user in other_members])
