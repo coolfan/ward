@@ -1,3 +1,4 @@
+import json
 import os
 
 from flask import request, logging, jsonify, session, Response, Blueprint, render_template, redirect, current_app, \
@@ -43,7 +44,7 @@ def review(db):
     text = request.form.get('text')
 
     review = db.Review(owner=user, room=room, rating=rating, text=text)
-    review.pictures = []
+    pictures = []
 
     uploaded_pictures = request.files.getlist('pictures')
     upload_folder = current_app.config['UPLOAD_DIR']
@@ -52,7 +53,8 @@ def review(db):
             filename = secure_filename(picture.filename)
             filepath = os.path.join(upload_folder, filename)
             picture.save(filepath)
-            review.pictures.append(filename)
+            pictures.append(filename)
+    review.pictures = json.dumps(pictures)
     return jsonify({"success": True})
 
 
@@ -67,6 +69,7 @@ def reviews(db):
     for r in room_reviews:
         d = r.to_dict()
         d['text'] = r.text
+        d['pictures'] = json.loads(r.pictures)
         review_dicts.append(d)
     return jsonify(review_dicts)
 

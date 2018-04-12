@@ -73,7 +73,7 @@ def define_entities(db: Database) -> None:
         room = Required(Room)
         rating = Required(int)
         text = Optional(LongStr)
-        pictures = Optional(Json)  # store pictures as list of file names? vs storing as raw bytes
+        pictures = Optional(str)  # store pictures as list of file names? vs storing as raw bytes
 
     class RoomDraw(db.Entity):
         draw_year = Required(int)  # Year the draw took place
