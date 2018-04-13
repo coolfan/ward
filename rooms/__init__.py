@@ -5,13 +5,6 @@ from flask import Flask, g
 
 from .conf import LOGGER, DB_TYPE, DB_NAME
 
-from rooms.cas import blueprint as cas_blueprint
-from rooms.favorite import blueprint as favorite_blueprint
-from rooms.group import blueprint as group_blueprint
-from rooms.query import blueprint as query_blueprint
-from rooms.reviews import blueprint as reviews_blueprint
-from rooms.views import blueprint as views_blueprint
-
 from rooms.flask_extensions import ExtendedJSONEncoder
 
 FLASK_APP_DIR = os.path.dirname(os.path.realpath(__file__))
@@ -45,6 +38,13 @@ app.logger.addHandler(handler)
 # -----------------------------------------------------------------------------
 # Register the blueprints
 # -----------------------------------------------------------------------------
+
+from rooms.cas import blueprint as cas_blueprint
+from rooms.favorite import blueprint as favorite_blueprint
+from rooms.group import blueprint as group_blueprint
+from rooms.query import blueprint as query_blueprint
+from rooms.reviews import blueprint as reviews_blueprint
+from rooms.views import blueprint as views_blueprint
 
 app.register_blueprint(cas_blueprint)
 
