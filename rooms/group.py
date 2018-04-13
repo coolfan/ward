@@ -64,13 +64,15 @@ def approve_group(user, db):
     group_request = db.GroupRequest.get(id=request_id)
 
     if action not in {"accept", "reject"}:
-        return Response("Invalid action: must be one of {'accept', 'reject'}", 422)
+        message = "Invalid action: must be one of {'accept', 'reject'}"
+        return Response(message, 422)
 
     if group_request.to_group != user.group:
         return Response("You are not in this group.", 403)
 
     if group_request.status == "Approved":
-        return Response("This request has been approved or cancelled", 410)
+        message = "This request has been approved or cancelled"
+        return Response(message, 410)
 
     if action == "reject":
         group_request.status = "Denied"
@@ -87,7 +89,9 @@ def approve_group(user, db):
 def my_group(my_user, db):
     my_group = my_user.group
     my_netid = my_user.netid
+
     other_members = my_group.members.select(
         lambda other_user: other_user.netid == my_netid
         )
+
     return jsonify(other_members)
