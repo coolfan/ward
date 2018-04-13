@@ -37,7 +37,7 @@ def request_group(my_netid, my_user, db):
     other_netid = request.args.get("other_netid")
     other_user = db.User.get_or_create(netid=other_netid)
     other_group = other_user.group
-
+    
     if other_group == my_user.group:
         return jsonify({"success": True})
 
