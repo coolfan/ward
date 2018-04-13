@@ -10,7 +10,7 @@ logger = logging.getLogger(conf.LOGGER)
 
 
 @blueprint.auth_route("/pending_requests")
-def pending_requests(my_netid, my_user, db):
+def pending_requests(my_user, db):
     my_group = my_user.group
 
     pending_requests = select(
@@ -23,7 +23,7 @@ def pending_requests(my_netid, my_user, db):
 
 
 @blueprint.auth_route("/request_group", methods=["GET"])
-def request_group(my_netid, my_user, db):
+def request_group(my_user, db):
     """
     Sends a request to join the group of another person.
     """
@@ -48,7 +48,7 @@ def request_group(my_netid, my_user, db):
 
 
 @blueprint.auth_route("/approve_group", methods=["GET"])
-def approve_group(my_netid, my_user, db):
+def approve_group(my_user, db):
     """"""
     # Check for presence of required parameters
     if "request_id" not in request.args:
@@ -86,7 +86,8 @@ def approve_group(my_netid, my_user, db):
 
 
 @blueprint.auth_route("/my_group")
-def my_group(netid, my_user, db):
+def my_group(my_user, db):
     my_group = my_user.group
+    netid = my_user.netid
     other_members = my_group.members.select(lambda user: user.netid != netid)
     return jsonify(other_members)
