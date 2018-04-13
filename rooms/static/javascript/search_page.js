@@ -92,11 +92,6 @@ $(document).ready(function () {
     //     colReorder: true,
     //     order: [[ 1, 'asc' ]]  //Starting order is collumn 1, which is college, in ascending order
     // });
-<<<<<<< bd51a51747713477a00420789c71f76ca0d79836:rooms/static/javascript/search_page.js
-
-    setup_form();
-=======
->>>>>>> Random work on searching:rooms/static/javascript/search_page.js
 
     setup_form();
 
