@@ -54,3 +54,6 @@ app.register_blueprint(reviews_blueprint)
 
 from rooms.views import blueprint as views_blueprint
 app.register_blueprint(views_blueprint)
+
+from rooms.flask_extensions import ExtendedJSONEncoder
+app.json_encoder = ExtendedJSONEncoder
