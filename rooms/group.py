@@ -1,6 +1,6 @@
 from flask import logging, request, jsonify, Response
 from pony.orm import select
-from flask_extensions import AuthBlueprint
+from rooms.flask_extensions import AuthBlueprint
 
 from rooms import cas, conf
 from rooms import dbmanager as dbm
