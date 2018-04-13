@@ -18,8 +18,8 @@ class AuthBlueprint(Blueprint):
             @wraps(f)
             def wrapped(db, *args, **kwargs): # name??
                 my_netid = cas.netid()
-                my_user = db.User.get_or_create(netid=my_netid)
-                return f(my_netid, my_user, db, *args, **kwargs)
+                user = db.User.get_or_create(netid=my_netid)
+                return f(user, db, *args, **kwargs)
             return wrapped
         return wrapper
 
@@ -31,7 +31,6 @@ class ExtendedJSONEncoder(JSONEncoder):
     """
     @dbm.use_app_db
     def default(db, self, o): # correct place?
-        print("HI", db, self, o)
         if isinstance(o, PonyQuery):
             return list(o)
         elif isinstance(o, db.GroupRequest):
