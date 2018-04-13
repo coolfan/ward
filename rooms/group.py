@@ -48,7 +48,7 @@ def request_group(my_user, db):
 
 
 @blueprint.auth_route("/approve_group", methods=["GET"])
-def approve_group(my_user, db):
+def approve_group(user, db):
     """"""
     # Check for presence of required parameters
     if "request_id" not in request.args:
@@ -66,9 +66,7 @@ def approve_group(my_user, db):
     if action not in {"accept", "reject"}:
         return Response("Invalid action: must be one of {'accept', 'reject'}", 422)
 
-    my_group = my_user.group
-
-    if group_request.to_group != my_group:
+    if group_request.to_group != user.group:
         return Response("You are not in this group.", 403)
 
     if group_request.status == "Approved":
@@ -80,7 +78,7 @@ def approve_group(my_user, db):
 
     group_request.status = "Approved"
     from_user = group_request.from_user
-    from_user.group = my_group
+    from_user.group = user.group
 
     return jsonify({"success": True})
 
@@ -88,6 +86,8 @@ def approve_group(my_user, db):
 @blueprint.auth_route("/my_group")
 def my_group(my_user, db):
     my_group = my_user.group
-    netid = my_user.netid
-    other_members = my_group.members.select(lambda user: user.netid != netid)
+    my_netid = my_user.netid
+    other_members = my_group.members.select(
+        lambda other_user: other_user.netid == my_netid
+        )
     return jsonify(other_members)
