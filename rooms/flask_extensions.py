@@ -19,3 +19,10 @@ class AuthBlueprint(Blueprint):
                 return f(my_netid, my_user, *args, **kwargs)
             return wrapped
         return wrapper
+# 
+# from flask.json import JSONEncoder
+# class ExtendedJSONEncoder(JSONEncoder):
+#     @dbm.use_app_db
+#     def default(self, o):
+#         if isinstance(o, db.GroupRequest):
+#
