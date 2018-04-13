@@ -18,10 +18,6 @@ def pending_requests(my_netid, my_user, db):
         if req.to_group == my_group
         and req.status == "Pending"
     )
-    # 
-    # pending_requests = [req.to_dict() for req in pending_requests]
-    # for req in pending_requests:
-    #     req["from_user"] = db.User[req["from_user"]].netid
 
     return jsonify(pending_requests)
 
