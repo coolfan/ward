@@ -17,13 +17,16 @@ def table(db):
     room_data = [r.to_dict() for r in query]
     return render_template('search_page/search_page.html', room_data=room_data)
 
+
 @blueprint.route("/favorites_page")
 def favorites():
     return render_template('favorites_page/favorites_page.html')
 
+
 @blueprint.route("/reviews_page")
 def reviews():
     return render_template('reviews_page/reviews_page.html')
+
 
 @blueprint.route("/account_page")
 def account():
