@@ -1,5 +1,8 @@
 *.pyc
+*.sqlite
 .idea/
 .vagrant/
 venv/
 uploads/
+startup.sh
+rooms/__pycache__/

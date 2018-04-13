@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'base.html' %}
+    <script src="{{url_for('static', filename='search_page.js')}}"></script>
+    <script src="{{url_for('static', filename='small_card.js')}}"></script>
+    <script src="{{url_for('static', filename='medium_card.js')}}"></script>
+    <script src="{{url_for('static', filename='big_card.js')}}"></script>
+    <script src="{{url_for('static', filename='card_wrapper.js')}}"></script>
+
+    <link rel="stylesheet" href = "{{url_for('static', filename = 'base.css')}}">
+</head>
+<body>
+{% include 'navbar.html' %}
+
+<div class="container-fluid" style="">
+    <div class="row">
+        <div class="col col-sm-6 col-lg-7">
+            Pizza
+{#            {% include 'search_page/table_depricated.html' %}#}
+        </div>
+        <div class="col col-sm-6 col-lg-5 Table_card">
+{#            {% include 'search_page/table_card.html' %}#}
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

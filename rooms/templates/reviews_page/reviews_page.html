@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+	{% include 'base.html' %}
+	<script src="{{url_for('static', filename='reviews_page.js')}}"></script>
+	<link rel="stylesheet" href="{{url_for('static', filename = 'base.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename = 'reviews_page.css')}}">
+  </head>
+
+  <body>
+	{% include 'navbar.html' %}
+
+	<form action="/review" method="POST" enctype="multipart/form-data" id="review">
+	  <input type="number" name="roomid" id="roomid" />
+	  <input type="number" name="rating" id="rating" />
+	  <input type="text" name="text" id="text" />
+	  <input type="file" name="pictures" id="pictures" multiple="multiple" />
+	  <input type="submit" />
+	</form>
+	
+  </body>
+
+</html>
