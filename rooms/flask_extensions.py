@@ -6,6 +6,7 @@ from pony.orm.core import Query as PonyQuery
 from pony.orm.core import Entity as PonyEntity
 from flask.json import JSONEncoder
 
+
 class AuthBlueprint(Blueprint):
     def auth_route(self, rule, **options):
         """
@@ -17,7 +18,7 @@ class AuthBlueprint(Blueprint):
             @cas.authenticated
             @dbm.use_app_db
             @wraps(f)
-            def wrapped(db, *args, **kwargs): # name??
+            def wrapped(db, *args, **kwargs):
                 my_netid = cas.netid()
                 user = db.User.get_or_create(netid=my_netid)
                 return f(user, db, *args, **kwargs)
