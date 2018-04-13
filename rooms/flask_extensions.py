@@ -13,13 +13,13 @@ class AuthBlueprint(Blueprint):
             @cas.authenticated
             @dbm.use_app_db
             @wraps(f)
-            def wrapped(*args, **kwargs): # name??
+            def wrapped(db, *args, **kwargs): # name??
                 my_netid = cas.netid()
                 my_user = db.User.get_or_create(netid=my_netid)
-                return f(my_netid, my_user, *args, **kwargs)
+                return f(my_netid, my_user, db, *args, **kwargs)
             return wrapped
         return wrapper
-# 
+#
 # from flask.json import JSONEncoder
 # class ExtendedJSONEncoder(JSONEncoder):
 #     @dbm.use_app_db

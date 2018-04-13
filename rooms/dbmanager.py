@@ -2,6 +2,7 @@ import json
 import os
 from datetime import datetime, timedelta
 from functools import wraps
+from numbers import Integral
 
 from flask import g
 import numpy as np
@@ -143,12 +144,7 @@ def _load_roomsjs(db, fname="../rooms.json"):
 
 
 def is_number(s):
-    try:
-        int(s)
-        return True
-    except:
-        return False
-
+    return isinstance(s, Integral)
 
 @db_session
 def _load_drawtimes(db, fname="../roomdraw13.txt"):
