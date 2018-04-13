@@ -188,7 +188,8 @@ def _load_drawtimes(db, fname="roomdraw13.txt"):
 
 
 if __name__ == "__main__":
-    db = connect("rooms.sqlite", create_db=True, create_tables=True)
-    _load_roomsjs(db)
-    _load_drawtimes(db, fname="roomdraw16.txt")
+    # uncomment this and run python -m rooms.dbmanager from the first directory...
+    # db = connect("rooms.sqlite", create_db=True, create_tables=True)
+    # _load_roomsjs(db)
+    # _load_drawtimes(db, fname="roomdraw16.txt")
     pass
