@@ -49,7 +49,6 @@ function get_medium_card(room){
     occupancy_p.empty();
     occupancy_p.text([room['occupancy'] + " people"]);
 
-    console.log(room['id'] + 'medium_card');
     let ans = medium_collapse_div.attr('id', room['id'] + 'medium_card');
     let div_again = $('#' + room['id'] + 'medium_card');
 

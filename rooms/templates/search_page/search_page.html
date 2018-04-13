@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     {% include 'base.html' %}
-    <script src="{{url_for('static', filename='search_page.js')}}"></script>
-    <script src="{{url_for('static', filename='small_card.js')}}"></script>
-    <script src="{{url_for('static', filename='medium_card.js')}}"></script>
-    <script src="{{url_for('static', filename='big_card.js')}}"></script>
-    <script src="{{url_for('static', filename='card_wrapper.js')}}"></script>
-    <script src="{{url_for('static', filename='form_manager.js')}}"></script>
-    
+    <script src="{{url_for('static', filename='javascript/search_page.js')}}"></script>
+    <script src="{{url_for('static', filename='javascript/small_card.js')}}"></script>
+    <script src="{{url_for('static', filename='javascript/medium_card.js')}}"></script>
+    <script src="{{url_for('static', filename='javascript/big_card.js')}}"></script>
+    <script src="{{url_for('static', filename='javascript/card_wrapper.js')}}"></script>
+    <script src="{{url_for('static', filename='javascript/form_manager.js')}}"></script>
+
     <link rel="stylesheet" href = "{{url_for('static', filename = 'base.css')}}">
 </head>
 <body>
@@ -18,10 +18,9 @@
     <div class="row">
         <div class="col col-sm-6 col-lg-7">
             {% include 'search_page/search_bar.html' %}
-{#            {% include 'search_page/table_depricated.html' %}#}
         </div>
         <div class="col col-sm-6 col-lg-5 Table_card">
-{#            {% include 'search_page/table_card.html' %}#}
+            {# Cards are dynamically inserted here using jquery #}
         </div>
     </div>
 </div>

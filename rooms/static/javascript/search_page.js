@@ -1,4 +1,4 @@
-let rooms;
+let rooms; //All the rooms currently being displayed
 
 function favorite(id) {
     $.get({url:"/favorite", data:{roomid:id}, success: function(){
@@ -62,11 +62,6 @@ function display_rooms(){
        $(".Table_card").append(wrapped);
     });
 
-    // cards = get_medium_card(rooms[0]);
-    // wrapped = wrap_cards(cards);
-    // console.log(wrapped);
-
-    // $(".Table_card").append(wrapped);
 }
 
 $(document).ready(function (){
@@ -78,25 +73,25 @@ $(document).ready(function (){
 
 
 $(document).ready(function () {
-    $('#roomsTable').DataTable({
-        pageResize: true,
-        searching: false,
-        lengthChange: true,
-        responsive: true,
-        "columns": [ //Don't allow them to order based on the favorite star
-            { "className": "dt-center", "orderable": false },
-            { "className": "dt-center"},
-            { "className": "dt-center"},
-            { "className": "dt-center"},
-            { "className": "dt-center"},
-            { "className": "dt-center"},
-            { "className": "dt-center", "width": "12%"},
-            { "className": "dt-center", "width": "12%"},
-            // { "className": "dt-center", "width": "10%"}
-        ],
-        colReorder: true,
-        order: [[ 1, 'asc' ]]  //Starting order is collumn 1, which is college, in ascending order
-    });
+    // $('#roomsTable').DataTable({
+    //     pageResize: true,
+    //     searching: false,
+    //     lengthChange: true,
+    //     responsive: true,
+    //     "columns": [ //Don't allow them to order based on the favorite star
+    //         { "className": "dt-center", "orderable": false },
+    //         { "className": "dt-center"},
+    //         { "className": "dt-center"},
+    //         { "className": "dt-center"},
+    //         { "className": "dt-center"},
+    //         { "className": "dt-center"},
+    //         { "className": "dt-center", "width": "12%"},
+    //         { "className": "dt-center", "width": "12%"},
+    //         // { "className": "dt-center", "width": "10%"}
+    //     ],
+    //     colReorder: true,
+    //     order: [[ 1, 'asc' ]]  //Starting order is collumn 1, which is college, in ascending order
+    // });
 
     setup_form();
 
