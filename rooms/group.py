@@ -18,10 +18,10 @@ def pending_requests(my_netid, my_user, db):
         if req.to_group == my_group
         and req.status == "Pending"
     )
-
-    pending_requests = [req.to_dict() for req in pending_requests]
-    for req in pending_requests:
-        req["from_user"] = db.User[req["from_user"]].netid
+    # 
+    # pending_requests = [req.to_dict() for req in pending_requests]
+    # for req in pending_requests:
+    #     req["from_user"] = db.User[req["from_user"]].netid
 
     return jsonify(pending_requests)
 
@@ -37,7 +37,7 @@ def request_group(my_netid, my_user, db):
     other_netid = request.args.get("other_netid")
     other_user = db.User.get_or_create(netid=other_netid)
     other_group = other_user.group
-    
+
     if other_group == my_user.group:
         return jsonify({"success": True})
 
