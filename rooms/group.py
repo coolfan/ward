@@ -89,4 +89,4 @@ def approve_group(my_netid, my_user, db):
 def my_group(netid, my_user, db):
     my_group = my_user.group
     other_members = my_group.members.select(lambda user: user.netid != netid)
-    return jsonify([user.to_dict() for user in other_members])
+    return jsonify(other_members)
