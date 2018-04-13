@@ -6,7 +6,8 @@ from numbers import Integral
 
 from flask import g
 import numpy as np
-from pony.orm import Database, Required, Optional, LongStr, Json, db_session, select
+from pony.orm import Database, Required, Optional, LongStr, Json, \
+    db_session, select
 from pony.orm import Set as PonySet
 
 from .conf import DB_NAME, DB_TYPE
@@ -126,7 +127,7 @@ def connect(fname: str = None,
 
 
 @db_session
-def _load_roomsjs(db, fname="../rooms.json"):
+def _load_roomsjs(db, fname="rooms.json"):
     with open(fname) as db_file:
         data = json.load(db_file)
         for row in data["rooms"]:
@@ -147,13 +148,15 @@ def is_number(s):
     return isinstance(s, Integral)
 
 @db_session
-def _load_drawtimes(db, fname="../roomdraw13.txt"):
+def _load_drawtimes(db, fname="roomdraw13.txt"):
+    # TODO: Use csv to do this more nicely
     num_rooms_rejected = 0
     buildings = set(select(room.building for room in db.Room))
     with open(fname) as r:
         data = [l.strip().split("\t")[:3] for l in r]
+        time_format = "%b %d, %Y %H:%M:%S %p"
         data = [
-            (row[0], row[1], datetime.strptime(row[2], "%b %d, %Y %H:%M:%S %p"))
+            (row[0], row[1], datetime.strptime(row[2], time_format))
             for row in data
         ]
         draw_start = min(row[2] for row in data)
@@ -168,7 +171,7 @@ def _load_drawtimes(db, fname="../roomdraw13.txt"):
             if building == "FORBES":
                 building = "Forbes College"
             else:
-                building = building[0].upper() + building[1:].lower() + " Hall"
+                building = building.capitalize() + " Hall"
 
             room = db.Room.get(building=building, roomnum=roomnum)
             if room is None:
@@ -186,6 +189,6 @@ def _load_drawtimes(db, fname="../roomdraw13.txt"):
 
 if __name__ == "__main__":
     # db = connect("rooms.sqlite", create_db=True, create_tables=True)
-    # _load_roomsjs()
-    # _load_drawtimes(fname="../roomdraw16.txt")
+    # _load_roomsjs(db)
+    # _load_drawtimes(db, fname="roomdraw16.txt")
     pass
