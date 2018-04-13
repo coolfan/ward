@@ -102,7 +102,7 @@ def use_app_db(func):
     return wrapper
 
 
-def connect(fname: str=None,
+def connect(fname: str = None,
             create_db: bool = False,
             create_tables: bool = False) -> Database:
     db = Database()
