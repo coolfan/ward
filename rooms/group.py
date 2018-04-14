@@ -91,7 +91,7 @@ def my_group(my_user, db):
     my_netid = my_user.netid
 
     other_members = my_group.members.select(
-        lambda other_user: other_user.netid == my_netid
+        lambda other_user: other_user.netid != my_netid
         )
 
     return jsonify(other_members)
