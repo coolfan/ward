@@ -100,7 +100,7 @@ function get_small_card(room){
 
     down_anchor.attr('href','#' + room['id'] + 'medium_card');
     down_anchor.click(function(){
-        load_reviews(room['id']);
+        load_reviews(room['id']); //Currently not implemented
     });
 
     return html_card;
