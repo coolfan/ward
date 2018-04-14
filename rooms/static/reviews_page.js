@@ -1,15 +1,15 @@
 $(document).ready(function() {
 	navbar_set("#nav_reviews")
-	/*$("#review").submit(function(e) {
-		e.preventDefault()
-		var roomid = $("#roomid").val()
-		var rating = $("#rating").val()
-		var text = $("#text").val()
-		var file = $("#pictures").val()
-		var filename = $("#pictures")[0].value
-		console.log(filename)
-		$.post("/review", {roomid: roomid, rating: rating, text: text, pictures: file}, function() {
-			$("#review")[0].reset()
+	
+	$("#button").click(function() {
+		$.get("/query", {building: $("#building").val(), roomnum: $("#roomnum").val()}, function(data) {
+			if (data.length > 0) {
+				$("#roomid").val(data[0].id)
+				$("#review").submit()
+				$("#review")[0].reset()
+			} else {
+				alert("Room does not exist!")
+			}
 		})
-	})*/
+	})
 })
