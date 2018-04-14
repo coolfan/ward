@@ -1,11 +1,8 @@
 import json
 import os
-from datetime import datetime, timedelta
 from functools import wraps
-from numbers import Integral
 
 from flask import g
-import numpy as np
 from pony.orm import Database, Required, Optional, LongStr, Json, \
     db_session, select
 from pony.orm import Set as PonySet

@@ -18,6 +18,7 @@ def query(db):
     limit = int(request.args.get("limit", 50))
     continue_from = int(request.args.get("continueFrom", 0))
 
+    # TODO: automate how this is done
     college = request.args.get("college")
     building = request.args.get("building")
     floor = request.args.get("floor")

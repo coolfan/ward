@@ -43,6 +43,7 @@ def review(db):
     rating = request.form.get('rating')
     text = request.form.get('text')
 
+    # TODO: # automate this with the rating attributes
     review = db.Review(owner=user, room=room, rating=rating, text=text)
     pictures = []
 

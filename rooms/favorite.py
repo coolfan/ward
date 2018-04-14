@@ -90,8 +90,9 @@ def reorder_favorites(db):
     user = db.User.get_or_create(netid=netid)
 
     favoriteid_list = request.get_json()
-    actual_favoriteid_list = db.FavoriteRoom.select(group=user.group)
-    if set(favoriteid_list) != set(actual_favoriteid_list):
+    real_favoriteid_ls = select(room for room in db.FavoriteRoom if
+                                room.group == user.group)
+    if set(favoriteid_list) != set(real_favoriteid_list):
         abort(400)
 
     faverooms = [db.FavoriteRoom.get(id=fid) for fid in favoriteid_list]
@@ -99,7 +100,7 @@ def reorder_favorites(db):
         if faveroom is None or faveroom.group != user.group:
             abort(403)
 
-    for newrank, faveroom in faverooms:
+    for newrank, faveroom in enumerate(faverooms): # this should fix things??
         faveroom.rank = newrank
 
     return jsonify({"success": True})
