@@ -10,11 +10,6 @@ function setup_form() {
     let num_rooms_input = $("#num_rooms_input");
     let floor_input = $("#floor_input");
 
-    // //Get neccessary data
-    // $.get("/buildings", function (data) {
-    //     buildings = data;
-    // });
-
     //Fill in data
     for (let college in buildings) {
         let option = $(`<option></option>`);
@@ -23,7 +18,6 @@ function setup_form() {
 
         draw_type_select.appendChild(option);
     }
-
 
     //Change elements behavior
     draw_type_select.click(function () {
@@ -78,11 +72,6 @@ function setup_form() {
             room_query["floor"] = floor
         }
 
-
-        console.log(floor)
-        $.get("/query", room_query, function (data) {
-            rooms = data;
-            display_rooms();
-        })
+        search_rooms(room_query);
     })
 }
