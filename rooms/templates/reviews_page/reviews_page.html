@@ -22,11 +22,38 @@
 		  </div>
 		</div>
 		<input type="hidden" name="roomid" id="roomid" />
+
+
 		<div class="form-group row">
 		  <div class="col col-sm-12">
-			<input class="form-control" type="number" name="rating" id="rating" placeholder="Rating 1-5" />
+			<label class="form-text" for="rc-buttons">
+			  Room Rating: 
+			</label>
+			<div name="rc-buttons" class="btn-group btn-group-toggle" data-toggle="buttons">
+			  <label class="btn btn-outline-secondary">
+				<input type="radio" name="ratings-choice" id="rc-1" autocomplete="off"> 1
+			  </label>
+			  <label class="btn btn-outline-secondary">
+				<input type="radio" name="ratings-choice" id="rc-2" autocomplete="off"> 2
+			  </label>
+			  <label class="btn btn-outline-secondary">
+				<input type="radio" name="ratings-choice" id="rc-3" autocomplete="off"> 3
+			  </label>
+			  <label class="btn btn-outline-secondary">
+				<input type="radio" name="ratings-choice" id="rc-4" autocomplete="off"> 4
+			  </label>
+			  <label class="btn btn-outline-secondary">
+				<input type="radio" name="ratings-choice" id="rc-5" autocomplete="off"> 5
+			  </label>
+			</div>
 		  </div>
 		</div>
+
+		<!--<div class="form-group row">
+		  <div class="col col-sm-12">-->
+			<input class="form-control" type="hidden" name="rating" id="rating" placeholder="Rating 1-5" />
+		  <!--</div>
+		</div>-->
 		<div class="form-group row">
 		  <div class="col col-sm-12">
 			<textarea class="form-control" name="text" id="text" placeholder="Comments"></textarea>
