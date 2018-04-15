@@ -32,21 +32,9 @@ function reviews(roomid){
     });
 }
 
-// function load_rewviews(){
-//     table
-// }
-function search_rooms(limit,continueFrom,college,building,roomnum,sqft,occupancy,numrooms,subfree){
+function search_rooms(room_query){
     $.get({url:"/query",
-        data:{
-            limit:limit,
-            continueFrom:continueFrom,
-            college:college,
-            building:building,
-            roomnum:roomnum,
-            sqft:sqft,
-            occupancy:occupancy,
-            numrooms:numrooms,
-            subfree:subfree},
+        data:{room_query},
         success: function(new_rooms){
             rooms = new_rooms;
             display_rooms();
@@ -64,36 +52,46 @@ function display_rooms(){
 
 }
 
-$(document).ready(function (){
-    $.getJSON({url:"/query", data:{}, success: function(data){
-        rooms = data;
-        display_rooms();
-    }})
-});
-
-
 $(document).ready(function () {
-    // $('#roomsTable').DataTable({
-    //     pageResize: true,
-    //     searching: false,
-    //     lengthChange: true,
-    //     responsive: true,
-    //     "columns": [ //Don't allow them to order based on the favorite star
-    //         { "className": "dt-center", "orderable": false },
-    //         { "className": "dt-center"},
-    //         { "className": "dt-center"},
-    //         { "className": "dt-center"},
-    //         { "className": "dt-center"},
-    //         { "className": "dt-center"},
-    //         { "className": "dt-center", "width": "12%"},
-    //         { "className": "dt-center", "width": "12%"},
-    //         // { "className": "dt-center", "width": "10%"}
-    //     ],
-    //     colReorder: true,
-    //     order: [[ 1, 'asc' ]]  //Starting order is collumn 1, which is college, in ascending order
-    // });
-
+    search_rooms({});
     setup_form();
 
 	navbar_set("#nav_table")
+});
+
+
+$(function () {
+    $('.Table_card').endlessScroll({
+        // pagesToKeep: 10,
+        fireOnce: true,
+        insertBefore: ".Table_card div:first",
+        insertAfter: ".Table_card div:last",
+        callback: function(firesequence,pageSequence,scrollDirection){
+            if (scrollDirection === 'next'){
+
+            }
+        },
+        // content: function (i, p) {
+        //     // console.log(i, p)
+        //     return '<li>' + p + '</li>'
+        // },
+        ceaseFire: function (i) {
+            if (i >= 10) {
+                return true;
+            }
+        },
+        intervalFrequency: 5
+    });
+
+    $('#images').scrollTop(101);
+    var images = $("ul#images").clone().find("li");
+    $('#images').endlessScroll({
+        pagesToKeep: 5,
+        inflowPixels: 100,
+        fireDelay: 10,
+        content: function (i, p, d) {
+            console.log(i, p, d)
+            return images.eq(Math.floor(Math.random() * 8))[0].outerHTML;
+        }
+    });
 });
