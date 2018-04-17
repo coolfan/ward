@@ -1,6 +1,8 @@
+*.ipynb
 *.pyc
 *cpython-36.pyc
 .idea/
+.ipynb_checkpoints/
 .vagrant/
 venv/
 uploads/
