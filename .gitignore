@@ -1,6 +1,8 @@
+*.ipynb
 *.pyc
 *.sqlite
 .idea/
+.ipynb_checkpoints/
 .vagrant/
 venv/
 uploads/
