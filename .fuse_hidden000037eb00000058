@@ -1,5 +1,0 @@
-#!/bin/bash
-bash
-source venv/bin/activate
-fish
-python3 -m flask run &
