@@ -1,4 +1,3 @@
-let rooms; //All the rooms currently being displayed
 
 function favorite(id) {
     $.get({url:"/favorite", data:{roomid:id}, success: function(){
@@ -32,25 +31,59 @@ function reviews(roomid){
     });
 }
 
+let rooms; //All the rooms currently being displayed
+let prev_query = {};
+let amount_displayed = 0;
+let LOADED_PER_QUERY = 50;
+let done_loading = false;
+
 function search_rooms(room_query){
+    room_query["limit"] = LOADED_PER_QUERY;
+
     $.get({url:"/query",
-        data:{room_query},
+        data:room_query,
         success: function(new_rooms){
-            rooms = new_rooms;
-            display_rooms();
+            clear_rooms();
+            add_rooms(new_rooms);
+
+            prev_query = room_query;
+            amount_displayed = 0;
+            done_loading = false;
+
+            amount_displayed = new_rooms.length;
     }});
 }
 
-function display_rooms(){
-    $(".Table_card").empty();
+function load_more_rooms(){
+    let room_query = prev_query;
 
-    $.each(rooms,function(i,room){
+    room_query["continueFrom"] = amount_displayed;
+    room_query["limit"] = LOADED_PER_QUERY;
+
+     $.get({url:"/query",
+        data: room_query,
+        success: function(new_rooms){
+            add_rooms(new_rooms);
+
+            amount_displayed += new_rooms.length;
+            if(new_rooms.length === 0){
+                done_loading = true;
+            }
+    }});
+}
+
+function clear_rooms(){
+    $(".Table_card").empty();
+}
+
+function add_rooms(rooms){
+     $.each(rooms,function(i,room){
        card = get_medium_card(room);
        wrapped = wrap_cards(card,room['id']);
        $(".Table_card").append(wrapped);
     });
-
 }
+
 
 $(document).ready(function () {
     search_rooms({});
@@ -59,39 +92,41 @@ $(document).ready(function () {
 	navbar_set("#nav_table")
 });
 
-
+//http://fredwu.github.io/jquery-endless-scroll/js/jquery.endless-scroll.js (This is where the endless scroll stuff came from)
 $(function () {
     $('.Table_card').endlessScroll({
-        // pagesToKeep: 10,
-        fireOnce: true,
+        // pagesToKeep: 2,
+        pagesToKeep:null,
+        inflowPixels: 100,
+        fireDelay: 1000,
+        content: true,
+        // fireOnce: true,
+        loader: "<p>...</p>",
         insertBefore: ".Table_card div:first",
         insertAfter: ".Table_card div:last",
         callback: function(firesequence,pageSequence,scrollDirection){
             if (scrollDirection === 'next'){
-
+                console.log('Trying to load more rooms');
+                load_more_rooms();
             }
         },
-        // content: function (i, p) {
-        //     // console.log(i, p)
-        //     return '<li>' + p + '</li>'
-        // },
-        ceaseFire: function (i) {
-            if (i >= 10) {
-                return true;
+        ceaseFire : function(firesequence,pageSequence,scrollDirection){
+            if (scrollDirection === 'next'){
+                return done_loading;
             }
         },
         intervalFrequency: 5
     });
-
-    $('#images').scrollTop(101);
-    var images = $("ul#images").clone().find("li");
-    $('#images').endlessScroll({
-        pagesToKeep: 5,
-        inflowPixels: 100,
-        fireDelay: 10,
-        content: function (i, p, d) {
-            console.log(i, p, d)
-            return images.eq(Math.floor(Math.random() * 8))[0].outerHTML;
-        }
-    });
+    //
+    // $('#images').scrollTop(101);
+    // var images = $("ul#images").clone().find("li");
+    // $('#images').endlessScroll({
+    //     pagesToKeep: 5,
+    //     inflowPixels: 100,
+    //     fireDelay: 10,
+    //     content: function (i, p, d) {
+    //         console.log(i, p, d)
+    //         return images.eq(Math.floor(Math.random() * 8))[0].outerHTML;
+    //     }
+    // });
 });

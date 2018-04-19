@@ -16,7 +16,7 @@ function get_small_card(room){
                     </div>
                     <div class = "col-sm-3 padding-0">
                         <p class="card-text Sqft">
-
+                            
                         </p>
                     </div>
                 </div>
@@ -35,26 +35,29 @@ function get_small_card(room){
 
                         </p>
                     </div>
-                    <div align="center" class = "col-sm-2 padding-0 Stardiv">
-                        <img id = "{{ room['id']}}star"
-                             class="Star_img"
-                             src = "/static/star.png"
-                             style="height: 37px;width: 37px;padding-top: 2px">
+                    
+                    <div class = "col-sm-2 padding-0">
+                    
                     </div>
+                    
+                    <!--<div align="center" class = "col-sm-2 padding-0 Stardiv">-->
+
+                    <!--</div>-->
                     <div align="center" class = "col-sm-4">
+                        <span class = "Stardiv padding-0">
+                            <img id = "{{ room['id']}}star"
+                                 class="Star_img"
+                                 src = "/static/star.png"
+                                 style="height: 37px;width: 37px;padding-top: 2px">
+                        </span>
+                             
                         <a class = "Down_anchor" data-toggle="collapse" href="">
                              <img id = "{{ room['id']}}down"
                              class = "Down_img"
                              src = "/static/down.png"
                              style="height: 37px;width: 37px;padding-top: 2px">
                         </a>
-                            
-                        <!--<a class = "Double_down_anchor" data-toggle="collapse" href="">-->
-                            <!--<img id = "{{ room['id']}}doubledown" -->
-                                 <!--class = "Double_down_img"-->
-                                 <!--src = "/static/doubledown.png"-->
-                                 <!--style="height: 37px;width: 37px;padding-top: 2px">-->
-                         <!--</a>-->
+                   
                     </div>
                 </div>
             </div>
@@ -79,10 +82,30 @@ function get_small_card(room){
     building_p.text(room['building'] + " " + room['roomnum']);
 
     floor_p.empty();
-    floor_p.text(room['floor'] + "th Floor");
+
+
+    let suffix = "";
+
+    switch(room['floor']){
+        case "1":
+            suffix = "st";
+            break;
+        case "2":
+            suffix = "nd";
+            break;
+        case "3":
+            suffix = "rd";
+            break;
+        default:
+            suffix = "th";
+    }
+
+    // console.log(suffix);
+
+    floor_p.text(room['floor'] + suffix + " Floor");
 
     sqft_p.empty();
-    sqft_p.append(room['sqft'] + `<sup>2</sup>`);
+    sqft_p.append(room['sqft'] + ` ft<sup>2</sup>`);
 
     numrooms_p.empty();
     numrooms_p.text(room['numrooms'] + " Rooms");

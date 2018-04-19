@@ -21,6 +21,7 @@ function get_medium_card(room){
                     
                     <div class = "row Reviews_table">
                         <table class="table table-dark">
+                      
                         <tbody>
                             <tr>
                                 <th scope="row">1</th>
@@ -40,6 +41,8 @@ function get_medium_card(room){
     let subfree_p = $(html_card).find(".Subfree");
     let occupancy_p = $(html_card).find(".Occupancy");
     let medium_collapse_div = $(html_card).find(".Medium_collapse");
+
+
     let reviews_table = $(html_card).find(".Reviews_table");
 
 

@@ -45,7 +45,6 @@ function setup_form() {
         let num_rooms = num_rooms_input.val();
         let floor = floor_input.val();
 
-
         let room_query = {};
 
         if (college !== ""){
