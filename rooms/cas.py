@@ -80,7 +80,7 @@ def validate(ticket: str) -> bool:
     url = construct_url("validate", service=service_url+"login", ticket=ticket)
 
     # returns 2 lines, first is yes, second is netid
-    response = urllib.request.urlopen(url).readlines()
+    response = urllib.request.urlopen(url).readlines() # this seems bad!??
 
     if len(response) == 2 and b"yes" in response[0]:
         session["CAS_NETID"] = response[1].strip().decode()
