@@ -38,6 +38,7 @@ app.logger.addHandler(handler)
 # -----------------------------------------------------------------------------
 # Register the blueprints
 # -----------------------------------------------------------------------------
+from . import dbmanager
 
 from rooms.cas import blueprint as cas_blueprint
 from rooms.favorite import blueprint as favorite_blueprint
