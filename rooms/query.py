@@ -10,6 +10,13 @@ blueprint = Blueprint("query", __name__)
 logger = logging.getLogger(LOGGER)
 
 
+@blueprint.route("/colleges", methods=["GET"])
+@dbm.use_app_db
+def colleges(db):
+    college_list = select(r.college for r in db.Room)[:]
+    return jsonify(college_list)
+
+
 @blueprint.route("/buildings", methods=["GET"])
 @dbm.use_app_db
 def buildings(db):
