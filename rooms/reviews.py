@@ -1,8 +1,8 @@
 import json
 import os
 
-from flask import request, logging, jsonify, session, Response, Blueprint, render_template, redirect, current_app, \
-    send_from_directory
+from flask import request, logging, jsonify, session, Response, Blueprint, \
+    render_template, redirect, current_app, send_from_directory
 from werkzeug.utils import secure_filename
 
 from rooms import cas, conf
@@ -43,6 +43,7 @@ def review(db):
     rating = request.form.get('rating')
     text = request.form.get('text')
 
+    # TODO: # automate this with the rating attributes
     review = db.Review(owner=user, room=room, rating=rating, text=text)
     pictures = []
 
@@ -72,4 +73,3 @@ def reviews(db):
         d['pictures'] = json.loads(r.pictures)
         review_dicts.append(d)
     return jsonify(review_dicts)
-

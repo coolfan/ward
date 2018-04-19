@@ -1,0 +1,53 @@
+<div class = "row">
+    <div class = "col-sm-6 padding-0">
+        <div class = "container-fluid padding-0">
+            <div class = "row">
+                <div align="center" class = "col-sm-6 padding-0">
+                    <p class="card-text">
+                    {{ room['building'] }} {{ room['roomnum'] }}
+                    </p>
+                </div>
+                <div class = "col-sm-3 padding-0">
+                    <p class="card-text">
+                    {{ room['floor'] }}th Floor
+                    </p>
+                </div>
+                <div class = "col-sm-3 padding-0">
+                    <p class="card-text">
+                        {{ room['sqft'] }} ft<sup>2</sup>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class = "col-sm-6 padding-0">
+        <div class = "container-fluid padding-0">
+            <div class = "row">
+                <div class = "col-sm-3 padding-0">
+                    <p class="card-text">
+                        {{ room['numrooms'] }} Rooms
+                    </p>
+                </div>
+                <div class = "col-sm-3 padding-0">
+                    <p class="card-text">
+                    {{ room['college'] }}
+                    </p>
+                </div>
+                <div align="center" class = "col-sm-2 padding-0" onclick="favorite({{ room['id'] }})">
+                    <img id = "{{ room['id']}}star"
+                         src = "{{url_for('static', filename = 'star.png')}}"
+                         style="height: 37px;width: 37px;padding-top: 2px">
+                </div>
+                <div align="center" class = "col-sm-4">
+                    <img id = "{{ room['id']}}down"
+                         src = "{{url_for('static', filename = 'down.png')}}"
+                         style="height: 37px;width: 37px;padding-top: 2px">
+                    <img id = "{{ room['id']}}doubledown"
+                         src = "{{url_for('static', filename = 'doubledown.png')}}"
+                         style="height: 37px;width: 37px;padding-top: 2px">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
