@@ -101,10 +101,11 @@ $(document).ready(function() {
 
 	$("#add_member_form").submit(function(e) {
 		e.preventDefault()
-		$.get("/request_group", {other_netid: $("#add_member").val()}, function() {
-			alert("Request has sent!");
+		var netid = $("#add_member").val()
+		$.get("/request_group", {other_netid: netid}, function() {
+			$("#notif").text("Request to " + netid + " has been sent!")
 		})
-		$("$add_member").val("")
+		$("#add_member").val("")
 	})
 
 	navbar_set("#nav_account")
