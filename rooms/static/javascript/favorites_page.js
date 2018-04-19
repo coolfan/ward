@@ -84,6 +84,29 @@ function card_onclick(card, val) {
 	val.bool_filled = !val.bool_filled
 }
 
+function get_empty_card() {
+	let li = $("<li>");
+	let card = $("<div>").addClass("card");
+	var container_fluid = $("<div>").addClass("container-fluid");
+	var card_body = $("<div>").addClass("card-body");
+	var row = $("<div>").addClass("row");
+	var col = $("<div>").addClass("col-sm-12");
+	var text = $("<p>").addClass("card-text");
+	
+	text.append("Sorry, you do not have any favorites yet. Try going to the search page and clicking on the stars!");
+	col.append(text);
+	row.append(col);
+	card_body.append(row);
+	container_fluid.append(card_body);
+	card.append(container_fluid);
+	
+	card.css("margin-bottom", "10px");
+
+	li.append(card);
+	return li
+
+}
+
 function get_card(val) {
 	let li = $("<li>").attr("id", "elem" + val.id);
 	let card = $("<div>").addClass("card");
@@ -133,10 +156,14 @@ $(document).ready(function() {
 	card_mgr.bigcard_arr = [$("#bigcard1_body"), $("#bigcard2_body")];
 	let ul = $("<ul>").addClass("draggable no-bullets");
 	$.getJSON("/favorites", function(data) {
-		$.each(data, function(i, val) {
-			let card = get_card(val);
-			ul.append(get_card(val))
-		});
+		if (data.length > 0) {
+			$.each(data, function(i, val) {
+				let card = get_card(val);
+				ul.append(get_card(val))
+			});
+		} else {
+			ul.append(get_empty_card())
+		}
 		//card_mgr.card_data_arr[val.id] = val
 	});
 	$("#cards").append(ul);
