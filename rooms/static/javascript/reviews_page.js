@@ -1,3 +1,23 @@
+function to_header(val) {
+	return val.roomnum + " " + val.building
+}
+
+function build_bigcard_inner(val) {
+	var header = $("<p>").addClass("col").addClass("col-sm-3")
+	header.text(to_header(val))
+
+	var occupancy = $("<p>").addClass("col").addClass("col-sm-3")
+	occupancy.text("Occupancy: " + val.occupancy)
+
+	var floor = $("<p>").addClass("col").addClass("col-sm-3")
+	floor.text("Floor: " + val.floor)
+
+	var subfree = $("<p>").addClass("col").addClass("col-sm-3")
+	subfree.text("Sub-Free: " + (val.subfree ? "Yes" : "No"))
+
+	return [header, occupancy, floor, subfree]
+}
+
 $(document).ready(function() {
 	navbar_set("#nav_reviews")
 
@@ -5,6 +25,21 @@ $(document).ready(function() {
 		$.each(data, function(i, val) {
 			var option = $("<option>").text(val)
 			$("#building").append(option)
+		})
+	})
+
+	$("#roomnum").change(function() {
+		var building = $("#building").val()
+		var roomnum = $("#roomnum").val()
+
+		$.get("/query", {building: building, roomnum: roomnum}, function(data) {
+			if (data.length > 0) {
+				var info = build_bigcard_inner(data[0])
+				$("#bigcard_body").empty()
+				$.each(info, function(i, val) {
+					$("#bigcard_body").append(val)
+				})
+			}
 		})
 	})
 	
@@ -25,7 +60,7 @@ $(document).ready(function() {
 				$("#review")[0].reset()
 				$("input[name=ratings-choice]:checked").removeAttr("checked")
 				$("label").removeClass("active")
-				
+				$("#bigcard_body").empty()
 			} else {
 				$("#notif").text("Please enter a valid room.")
 			}
