@@ -1,19 +1,16 @@
-from flask import logging, Blueprint, request, jsonify, Response
+from flask import logging, request, jsonify, Response
 from pony.orm import select
+from rooms.flask_extensions import AuthBlueprint
 
 from rooms import cas, conf
 from rooms import dbmanager as dbm
 
-blueprint = Blueprint("group", __name__)
+blueprint = AuthBlueprint("group", __name__)
 logger = logging.getLogger(conf.LOGGER)
 
 
-@blueprint.route("/pending_requests")
-@cas.authenticated
-@dbm.use_app_db
-def pending_requests(db):
-    my_netid = cas.netid()
-    my_user = db.User.get_or_create(netid=my_netid)
+@blueprint.auth_route("/pending_requests")
+def pending_requests(my_user, db):
     my_group = my_user.group
 
     pending_requests = select(
@@ -22,22 +19,14 @@ def pending_requests(db):
         and req.status == "Pending"
     )
 
-    pending_requests = [req.to_dict() for req in pending_requests]
-    for req in pending_requests:
-        req["from_user"] = db.User[req["from_user"]].netid
-
     return jsonify(pending_requests)
 
 
-@blueprint.route("/request_group", methods=["GET"])
-@cas.authenticated
-@dbm.use_app_db
-def request_group(db):
+@blueprint.auth_route("/request_group", methods=["GET"])
+def request_group(my_user, db):
     """
-    Sends a request to join the group of another person. 
+    Sends a request to join the group of another person.
     """
-    my_netid = cas.netid()
-    my_user = db.User.get_or_create(netid=my_netid)
 
     message = request.args.get("message", "")
 
@@ -58,10 +47,8 @@ def request_group(db):
     return jsonify({"success": True})
 
 
-@blueprint.route("/approve_group", methods=["GET"])
-@cas.authenticated
-@dbm.use_app_db
-def approve_group(db):
+@blueprint.auth_route("/approve_group", methods=["GET"])
+def approve_group(user, db):
     """"""
     # Check for presence of required parameters
     if "request_id" not in request.args:
@@ -77,17 +64,15 @@ def approve_group(db):
     group_request = db.GroupRequest.get(id=request_id)
 
     if action not in {"accept", "reject"}:
-        return Response("Invalid action: must be one of {'accept', 'reject'}", 422)
+        message = "Invalid action: must be one of {'accept', 'reject'}"
+        return Response(message, 422)
 
-    my_netid = cas.netid()
-    my_user = db.User.get_or_create(netid=my_netid)
-    my_group = my_user.group
-
-    if group_request.to_group != my_group:
+    if group_request.to_group != user.group:
         return Response("You are not in this group.", 403)
 
     if group_request.status == "Approved":
-        return Response("This request has been approved or cancelled", 410)
+        message = "This request has been approved or cancelled"
+        return Response(message, 410)
 
     if action == "reject":
         group_request.status = "Denied"
@@ -95,17 +80,18 @@ def approve_group(db):
 
     group_request.status = "Approved"
     from_user = group_request.from_user
-    from_user.group = my_group
+    from_user.group = user.group
 
     return jsonify({"success": True})
 
 
-@blueprint.route("/my_group")
-@cas.authenticated
-@dbm.use_app_db
-def my_group(db):
-    netid = cas.netid()
-    my_user = db.User.get_or_create(netid=netid)
+@blueprint.auth_route("/my_group")
+def my_group(my_user, db):
     my_group = my_user.group
-    other_members = my_group.members.select(lambda user: user.netid != netid)
-    return jsonify([user.to_dict() for user in other_members])
+    my_netid = my_user.netid
+
+    other_members = my_group.members.select(
+        lambda other_user: other_user.netid != my_netid
+        )
+
+    return jsonify(other_members)

@@ -1,11 +1,10 @@
 import json
 import os
-from datetime import datetime, timedelta
 from functools import wraps
 
 from flask import g
-import numpy as np
-from pony.orm import Database, Required, Optional, LongStr, Json, db_session, select
+from pony.orm import Database, Required, Optional, LongStr, Json, \
+    db_session, select
 from pony.orm import Set as PonySet
 
 from .conf import DB_NAME, DB_TYPE
@@ -44,7 +43,8 @@ def define_entities(db: Database) -> None:
         @classmethod
         def get_or_create(cls, **kwargs):
             o = cls.get(**kwargs)
-            if o: return o
+            if o:
+                return o
 
             g = Group()
             return cls(group=g, **kwargs)
@@ -73,13 +73,16 @@ def define_entities(db: Database) -> None:
         room = Required(Room)
         rating = Required(int)
         text = Optional(LongStr)
-        pictures = Optional(str)  # store pictures as list of file names? vs storing as raw bytes
+
+        # store pictures as list of file names? vs storing as raw bytes
+        pictures = Optional(str)
 
     class RoomDraw(db.Entity):
         draw_year = Required(int)  # Year the draw took place
 
         # timefromstart excludes weekends!!
-        timefromstart = Required(int)  # number of seconds from the start of draw
+        # timefromstart is the number of seconds from the start of draw
+        timefromstart = Required(int)
         room = Required(Room)
 
 
@@ -101,7 +104,7 @@ def use_app_db(func):
     return wrapper
 
 
-def connect(fname: str=None,
+def connect(fname: str = None,
             create_db: bool = False,
             create_tables: bool = False) -> Database:
     db = Database()
@@ -122,74 +125,3 @@ def connect(fname: str=None,
         )
         db.generate_mapping(create_tables=create_tables)
     return db
-
-
-@db_session
-def _load_roomsjs(db, fname="../rooms.json"):
-    with open(fname) as db_file:
-        data = json.load(db_file)
-        for row in data["rooms"]:
-            room = db.Room(
-                reserved=False,
-                college=row[0],
-                building=row[1],
-                floor=row[2],
-                roomnum=row[3],
-                sqft=int(row[4]),
-                occupancy=int(row[5]),
-                numrooms=int(row[6]),
-                subfree=(row[7] == "Y")
-            )
-
-
-def is_number(s):
-    try:
-        int(s)
-        return True
-    except:
-        return False
-
-
-@db_session
-def _load_drawtimes(db, fname="../roomdraw13.txt"):
-    num_rooms_rejected = 0
-    buildings = set(select(room.building for room in db.Room))
-    with open(fname) as r:
-        data = [l.strip().split("\t")[:3] for l in r]
-        data = [
-            (row[0], row[1], datetime.strptime(row[2], "%b %d, %Y %H:%M:%S %p"))
-            for row in data
-        ]
-        draw_start = min(row[2] for row in data)
-        for roomnum, building, draw_time in data:
-            draw_year = draw_time.year
-            delta = draw_time - draw_start
-            numweekdays = int(np.busday_count(draw_start, draw_time))
-            numweekenddays = delta.days - numweekdays
-            delta -= timedelta(numweekenddays, 0)
-            timefromstart = int(delta.total_seconds())
-
-            if building == "FORBES":
-                building = "Forbes College"
-            else:
-                building = building[0].upper() + building[1:].lower() + " Hall"
-
-            room = db.Room.get(building=building, roomnum=roomnum)
-            if room is None:
-                print(building, roomnum)
-                num_rooms_rejected += 1
-                continue
-            if not db.RoomDraw.exists(draw_year=draw_year, room=room):
-                db.RoomDraw(
-                    draw_year=str(draw_year),
-                    timefromstart=timefromstart,
-                    room=room
-                )
-    print("Rooms rejected: %d" % num_rooms_rejected)
-
-
-if __name__ == "__main__":
-    # db = connect("rooms.sqlite", create_db=True, create_tables=True)
-    # _load_roomsjs()
-    # _load_drawtimes(fname="../roomdraw16.txt")
-    pass

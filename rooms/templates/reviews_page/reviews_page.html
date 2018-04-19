@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+	{% include 'base.html' %}
+	<script src="{{url_for('static', filename='reviews_page.js')}}"></script>
+	<link rel="stylesheet" href="{{url_for('static', filename = 'base.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename = 'reviews_page.css')}}">
+  </head>
+
+  <body>
+	{% include 'navbar.html' %}
+	<div class="container">
+	  <form action="/review" method="POST" enctype="multipart/form-data" id="review" target="target">
+		<div class="form-group row">
+		  <div class="col col-sm-10">
+			<input class="form-control" type="text" name="building" id="building" placeholder="Building" />
+		  </div>
+		  <div class="col col-sm-2">
+			<input class="form-control" type="number" name="roomnum" id="roomnum" placeholder="Room Number" />
+		  </div>
+		</div>
+		<input type="hidden" name="roomid" id="roomid" />
+
+
+		<div class="form-group row">
+		  <div class="col col-sm-12">
+			<label class="form-text" for="rc-buttons">
+			  Room Rating: 
+			</label>
+			<div name="rc-buttons" class="btn-group btn-group-toggle" data-toggle="buttons">
+			  <label class="btn btn-outline-secondary">
+				<input type="radio" name="ratings-choice" id="rc-1" autocomplete="off"> 1
+			  </label>
+			  <label class="btn btn-outline-secondary">
+				<input type="radio" name="ratings-choice" id="rc-2" autocomplete="off"> 2
+			  </label>
+			  <label class="btn btn-outline-secondary">
+				<input type="radio" name="ratings-choice" id="rc-3" autocomplete="off"> 3
+			  </label>
+			  <label class="btn btn-outline-secondary">
+				<input type="radio" name="ratings-choice" id="rc-4" autocomplete="off"> 4
+			  </label>
+			  <label class="btn btn-outline-secondary">
+				<input type="radio" name="ratings-choice" id="rc-5" autocomplete="off"> 5
+			  </label>
+			</div>
+		  </div>
+		</div>
+
+		<!--<div class="form-group row">
+		  <div class="col col-sm-12">-->
+			<input class="form-control" type="hidden" name="rating" id="rating" placeholder="Rating 1-5" />
+		  <!--</div>
+		</div>-->
+		<div class="form-group row">
+		  <div class="col col-sm-12">
+			<textarea class="form-control" name="text" id="text" placeholder="Comments"></textarea>
+		  </div>
+		</div>
+		<div class="form-group row">
+		  <div class="col col-sm-12">
+			<input class="form-control" type="file" name="pictures" id="pictures" multiple="multiple" />
+		  </div>
+		</div>
+		<div class="form-group row">
+		  <div class="col col-sm-12">
+			<div class="btn btn-primary" id="button">Submit!</div>
+		  </div>
+		</div>
+	  </form>
+	</div>
+	<iframe name="target" style="width: 0px;height: 0px"></iframe>
+
+  </body>
+
+</html>

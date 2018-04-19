@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+	{% include 'base.html' %}
+	<script src="{{url_for('static', filename='account_page.js')}}"></script>
+	<link rel="stylesheet" href="{{url_for('static', filename = 'base.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename = 'account_page.css')}}">
+  </head>
+  
+  <body>
+	{% include 'navbar.html' %}
+
+	<div class="container-fluid">
+	  <div class="row" style="padding: 30px">
+		<div class="col col-sm-12">
+		  <form>
+			<input type="text" id="add_member" placeholder="Type in netid to add group member" style="width: 100%" />
+		  </form>
+		</div>
+	  </div>
+	  <div class="row">
+		<div class="col col-sm-6">
+		  <h3>Group Members:</h3>
+		</div>
+		<div class="col col-sm-6">
+		  <h3>Pending Requests:</h3>
+		</div>
+	  </div>
+
+	  <div class="row">
+		<div class="col col-sm-6 card_list" id="members">
+		  Test
+		</div>
+		<div class="col col-sm-6 card_list" id="pending">
+		  Hello
+		</div>
+	  </div>
+	</div>
+  </body>
+</html>
