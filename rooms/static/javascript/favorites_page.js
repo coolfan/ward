@@ -154,7 +154,7 @@ function get_new_order() {
 
 $(document).ready(function() {
 	card_mgr.bigcard_arr = [$("#bigcard1_body"), $("#bigcard2_body")];
-	let ul = $("<ul>").addClass("draggable no-bullets");
+	let ul = $("<ul>").addClass("draggable no-bullets padding-0");
 	$.getJSON("/favorites", function(data) {
 		if (data.length > 0) {
 			$.each(data, function(i, val) {
