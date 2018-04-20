@@ -77,6 +77,8 @@ function setup_form() {
 
 function fill_buildings() {
     let draw_type_select = $("#draw_type_select");
+    let building_select = $("#building_select");
+
     let college = draw_type_select.val();
 
     if (college === ""){
@@ -90,12 +92,16 @@ function fill_buildings() {
         },
         success: function (ans) {
             buildings = ans;
+            console.log('hi');
+            building_select.empty();
+            building_select.append('<option></option>');
 
             $.each(buildings, function (i, building) {
                 let option = $(`<option></option>`);
                 option.attr("value", building);
                 option.text(building);
 
+                console.log(building);
                 // console.log(college);
                 building_select.append(option);
             })

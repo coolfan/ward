@@ -145,8 +145,21 @@ function get_small_card(room){
     college_p.empty();
     college_p.text(room['college']);
 
+    star_div.attr("is_favorited", room['favorited']);
+
     star_div.click(function(){
-        favorite((room['id']));
+        let favorited = 'true' === star_div.attr("is_favorited");
+        console.log(typeof favorited);
+        console.log(!favorited);
+
+        if (favorited){
+            un_favorite((room['id']));
+        }
+        else{
+            favorite((room['id']));
+        }
+
+        star_div.attr("is_favorited",!favorited);
     });
 
     star_img.attr('id',room['id']+ 'star');
@@ -187,3 +200,17 @@ function get_small_card(room){
     return html_card;
 }
 
+function favorite_star(){
+    let favorited = 'true' === star_div.attr("is_favorited");
+    console.log(typeof favorited);
+    console.log(!favorited);
+
+    if (favorited){
+        un_favorite((room['id']));
+    }
+    else{
+        favorite((room['id']));
+    }
+
+    star_div.attr("is_favorited",!favorited);
+}

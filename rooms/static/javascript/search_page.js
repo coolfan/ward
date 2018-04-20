@@ -1,7 +1,15 @@
 function favorite(id) {
     $.get({
         url: "/favorite", data: {roomid: id}, success: function () {
-            change_star_color(id)
+            change_star_color(id);
+        }
+    });
+}
+
+function un_favorite(id){
+    $.get({
+        url: "/unfavorite", data: {roomid: id}, success: function () {
+            change_star_color(id);
         }
     });
 }
