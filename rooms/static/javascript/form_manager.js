@@ -1,4 +1,6 @@
 let buildings = {}; //A mapping between colleges and buildings
+let colleges = {};
+
 
 function setup_form() {
     let search_form = $("#search_form");
@@ -12,23 +14,19 @@ function setup_form() {
 
     //Fill in data
     $.get({
-        url: "/buildings",
+        url: "/colleges",
         success: function (ans) {
-            buildings = ans;
-            console.log(ans);
-            $.each(buildings, function(i,college) {
+            colleges = ans;
+            $.each(colleges, function (i, college) {
                 let option = $(`<option></option>`);
                 option.attr("value", college);
                 option.text(college);
-
-                console.log(college);
-                building_select.append(option);
-            })
+                draw_type_select.append(option);
+            });
         }
     });
 
-
-    $(".form-control").change(function() {
+    $(".form-control").change(function () {
         let college = draw_type_select.val();
         let subfree = check_subfree.val() === "off";
         let building = building_select.val();
@@ -65,24 +63,42 @@ function setup_form() {
         search_rooms(room_query);
     });
 
-
-    // //Change elements behavior
-    // draw_type_select.click(function () {
-    //     if (draw_type_select.val() !== "") {
-    //         $("#draw_type_fake_option").remove();
-    //     }
-    // });
-
     draw_type_select.change(function () {
-        college = draw_type_select.val();
-        for (let building in buildings[college]) {
-            let option = $(`<option></option>`);
-            option.attr("value", building);
-            option.text(building);
-        }
+        fill_buildings();
     });
+
+    fill_buildings();
 
     search_form.submit(function (e) {
         e.preventDefault();
     })
+}
+
+
+function fill_buildings() {
+    let draw_type_select = $("#draw_type_select");
+    let college = draw_type_select.val();
+
+    if (college === ""){
+        college = null;
+    }
+
+    $.get({
+        url: "/buildings",
+        data: {
+            college : college
+        },
+        success: function (ans) {
+            buildings = ans;
+
+            $.each(buildings, function (i, building) {
+                let option = $(`<option></option>`);
+                option.attr("value", building);
+                option.text(building);
+
+                // console.log(college);
+                building_select.append(option);
+            })
+        }
+    });
 }
