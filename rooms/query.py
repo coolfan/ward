@@ -1,5 +1,9 @@
-from flask import request, logging, jsonify, Blueprint
+import math
+
+from flask import request, logging, jsonify, Blueprint, current_app
+import numpy as np
 from pony.orm import db_session, select
+import scipy.stats
 
 from .conf import DB_NAME, DB_TYPE, LOGGER
 import rooms.dbmanager as dbm
@@ -29,6 +33,20 @@ def buildings(db):
 
     return jsonify(building_list)
 
+
+def likelihood(my_group, room) -> int:
+    my_time = my_group.timefromstart
+    if my_time is None: return 50
+    times = [d.timefromstart for d in room.drawings]
+    if len(times) == 0: return 50
+    mean = np.mean(times)
+    stddev = np.std(times)
+    current_app.logger.debug(f"Mean: {mean}, Std: {stddev}")
+    stddev = stddev if stddev > 0.0 else 10*60*60
+    prob = 1.0 - scipy.stats.norm.cdf(my_time, mean, stddev)
+    return int(prob * 100.0)
+
+
 @blueprint.route("/query", methods=["GET"])
 @dbm.use_app_db
 def query(db):
@@ -53,7 +71,7 @@ def query(db):
     numrooms = int(numrooms) if numrooms else numrooms
     subfree = bool(subfree) if subfree else subfree
 
-    res = select(
+    rooms = select(
         room for room in db.Room
         if (room.college == college or college is None)
         and (room.building == building or building is None)
@@ -64,18 +82,22 @@ def query(db):
         and (room.occupancy == occupancy or occupancy is None)
         and (room.numrooms == numrooms or numrooms is None)
         and (room.subfree == subfree or subfree is None)
-    )
-    res = [room.to_dict() for room in res]
+    )[:]
 
     # get the ids of logged in user's favorite user
     fave_roomids = set()
+    group = None
     if cas.netid() is not None:
         netid = cas.netid()
         group = db.User.get_or_create(netid=netid).group
         fave_roomids = {fav.room.id for fav in group.favorites.select()}
 
-    limited = res[continue_from:continue_from+limit]
+    limited = rooms[continue_from:continue_from+limit]
+    room_dicts = []
     for room in limited:
-        room['favorited'] = (room['id'] in fave_roomids)
+        d = room.to_dict()
+        d['favorited'] = d['id'] in fave_roomids
+        d['likelihood'] = likelihood(group, room) if group is not None and group.timefromstart is not None else None
+        room_dicts.append(d)
 
-    return jsonify(limited)
+    return jsonify(room_dicts)

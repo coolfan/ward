@@ -53,6 +53,7 @@ def define_entities(db: Database) -> None:
         members = PonySet(User)
         favorites = PonySet("FavoriteRoom")
         requests = PonySet("GroupRequest", reverse="to_group")
+        timefromstart = Optional(int)
 
     class FavoriteRoom(db.Entity):
         group = Required(Group)
