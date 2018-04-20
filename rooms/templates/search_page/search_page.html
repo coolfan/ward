@@ -8,6 +8,8 @@
     <script src="{{ url_for('static', filename='javascript/big_card.js') }}"></script>
     <script src="{{ url_for('static', filename='javascript/card_wrapper.js') }}"></script>
     <script src="{{ url_for('static', filename='javascript/form_manager.js') }}"></script>
+    <script src="{{ url_for('static', filename='javascript/sorting_controls.js') }}"></script>
+
 
     <link rel="stylesheet" href="{{ url_for('static', filename = 'base.css') }}">
 </head>
@@ -16,13 +18,13 @@
 
 <div class="container-fluid" style="">
     <div class="row">
-        <div class="col col-sm-6 col-lg-7">
+        <div class="col col-sm-6 col-lg-6">
             {% include 'search_page/search_bar.html' %}
         </div>
-        <div class="col col-sm-6 col-lg-5" style="overflow: auto; height: 100vh; max-height: 100vh">
+        <div class="col col-sm-6 col-lg-6" style="overflow: auto; height: 100vh; max-height: 100vh">
             <div class="container-fluid padding-0">
                 <div class="row" id="Sorting_controls">
-                    {# This is the sorting controls #}
+                    {% include 'search_page/sorting_controls.html' %}
 
                 </div>
 
