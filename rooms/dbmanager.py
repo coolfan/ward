@@ -1,90 +1,83 @@
-import json
 import os
 from functools import wraps
 
 from flask import g
-from pony.orm import Database, Required, Optional, LongStr, Json, \
-    db_session, select
-from pony.orm import Set as PonySet
-
-from .conf import DB_NAME, DB_TYPE
+from pony.orm import Database, Required, Optional, LongStr, db_session, PrimaryKey, Set
 
 
 def define_entities(db: Database) -> None:
     class Room(db.Entity):
-        # Some rooms are reserved for freshman, disabled, etc
-        # This changes year, to year however, so we will track all rooms we
-        # know about, and will simply not show reserved rooms in queries.
+        id = PrimaryKey(int, auto=True)
         reserved = Required(bool)
-
-        # Location information
         college = Required(str)
         building = Required(str)
         floor = Required(str)
         roomnum = Required(str)
-
-        # Details
         sqft = Required(int)
         occupancy = Required(int)
         numrooms = Required(int)
         subfree = Required(bool)
+        ranked_rooms = Set('RankedRoom')
+        reviews = Set('Review')
+        room_draws = Set('RoomDraw')
 
-        # Reverse mappings (mainly for pony.  don't remove!)
-        favorites = PonySet("FavoriteRoom")
-        reviews = PonySet("Review", reverse="room")
-        drawings = PonySet("RoomDraw", reverse="room")
+    class RankedRoom(db.Entity):
+        id = PrimaryKey(int, auto=True)
+        room = Required(Room)
+        ranked_room_list = Required('RankedRoomList')
+
+    class RankedRoomList(db.Entity):
+        id = PrimaryKey(int, auto=True)
+        ranked_rooms = Set(RankedRoom)
+        shared_with_users = Set('User')
+        shared_with_groups = Set('Group')
 
     class User(db.Entity):
-        netid = Required(str)
-        group = Required("Group")
-        reviews = PonySet("Review", reverse="owner")
-        requests = PonySet("GroupRequest", reverse="from_user")
-
-        @classmethod
-        def get_or_create(cls, **kwargs):
-            o = cls.get(**kwargs)
-            if o:
-                return o
-
-            g = Group()
-            return cls(group=g, **kwargs)
+        id = PrimaryKey(int, auto=True)
+        netid = Required(str, unique=True)
+        ranked_room_lists = Set(RankedRoomList)
+        groups = Set('Group')
+        requests_made = Set('GroupRequest')
+        reviews = Set('Review')
+        group_invites = Set('GroupInvite')
 
     class Group(db.Entity):
-        members = PonySet(User)
-        favorites = PonySet("FavoriteRoom")
-        requests = PonySet("GroupRequest", reverse="to_group")
+        id = PrimaryKey(int, auto=True)
+        members = Set(User)
+        name = Optional(str)
+        drawtype = Optional(str)
         timefromstart = Optional(int)
-
-    class FavoriteRoom(db.Entity):
-        group = Required(Group)
-        room = Required(Room)
-        rank = Required(int)
-
-    class GroupRequest(db.Entity):
-        from_user = Required(User)
-        to_group = Required(Group)
-        message = Optional(str)
-        status = Required(
-            str,
-            py_check=lambda s: s in {"Pending", "Approved", "Denied"}
-        )
+        ranked_room_lists = Set(RankedRoomList)
+        group_requests = Set('GroupRequest')
+        invites_made = Set('GroupInvite')
 
     class Review(db.Entity):
-        owner = Required(User)
+        id = PrimaryKey(int, auto=True)
+        user = Required(User)
         room = Required(Room)
         rating = Required(int)
         text = Optional(LongStr)
-
-        # store pictures as list of file names? vs storing as raw bytes
         pictures = Optional(str)
 
     class RoomDraw(db.Entity):
-        draw_year = Required(int)  # Year the draw took place
-
-        # timefromstart excludes weekends!!
-        # timefromstart is the number of seconds from the start of draw
+        id = PrimaryKey(int, auto=True)
+        draw_year = Required(int)
         timefromstart = Required(int)
         room = Required(Room)
+
+    class GroupRequest(db.Entity):
+        id = PrimaryKey(int, auto=True)
+        message = Optional(str)
+        from_user = Required(User)
+        status = Required(str, py_check=lambda s: s in {"Pending", "Approved", "Denied"})
+        to_group = Required(Group)
+
+    class GroupInvite(db.Entity):
+        id = PrimaryKey(int, auto=True)
+        to_user = Required(User)
+        from_group = Required(Group)
+        message = Optional(str)
+        status = Required(str, py_check=lambda s: s in {"Pending", "Approved", "Denied"})
 
 
 def get_app_db():
