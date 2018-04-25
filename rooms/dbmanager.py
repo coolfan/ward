@@ -40,6 +40,12 @@ def define_entities(db: Database) -> None:
         requests_made = Set('GroupRequest')
         reviews = Set('Review')
         group_invites = Set('GroupInvite')
+        @classmethod
+        def get_or_create(cls, **kwargs):
+            o = cls.get(**kwargs)
+            if o:
+                return o
+            return cls(**kwargs)
 
     class Group(db.Entity):
         id = PrimaryKey(int, auto=True)

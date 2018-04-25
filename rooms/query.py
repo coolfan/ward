@@ -34,8 +34,10 @@ def buildings(db):
     return jsonify(building_list)
 
 
-def likelihood(my_group, room) -> int:
-    my_time = my_group.timefromstart
+def likelihood(my_groups, room) -> int:
+    # TODO: This crashes!  make it look for the draw group corresponding to the room
+    if len(my_groups) == 0: return 50
+    my_time = my_groups.timefromstart
     if my_time is None: return 50
     times = [d.timefromstart for d in room.drawings]
     if len(times) == 0: return 50
@@ -54,6 +56,7 @@ def query(db):
 
     limit = int(request.args.get("limit", 50))
     continue_from = int(request.args.get("continueFrom", 0))
+    order_by = request.args.get("orderBy", "college")
 
     # TODO: automate how this is done
     college = request.args.get("college")
@@ -86,18 +89,19 @@ def query(db):
 
     # get the ids of logged in user's favorite user
     fave_roomids = set()
-    group = None
+    groups = []
     if cas.netid() is not None:
         netid = cas.netid()
-        group = db.User.get_or_create(netid=netid).group
-        fave_roomids = {fav.room.id for fav in group.favorites.select()}
+        groups = db.User.get_or_create(netid=netid).groups
+        fave_roomids = {fav.room.id for fav in groups.ranked_room_lists.ranked_rooms}
 
     limited = rooms[continue_from:continue_from+limit]
     room_dicts = []
     for room in limited:
         d = room.to_dict()
         d['favorited'] = d['id'] in fave_roomids
-        d['likelihood'] = likelihood(group, room) if group is not None and group.timefromstart is not None else None
+        d['likelihood'] = likelihood(groups, room)
         room_dicts.append(d)
+    room_dicts.sort(key=lambda d: d[order_by])
 
     return jsonify(room_dicts)
