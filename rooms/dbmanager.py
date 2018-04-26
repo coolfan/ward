@@ -2,7 +2,7 @@ import os
 from functools import wraps
 
 from flask import g
-from pony.orm import Database, Required, Optional, LongStr, db_session, PrimaryKey, Set
+from pony.orm import Database, Required, Optional, LongStr, db_session, PrimaryKey, Set, exists
 
 
 def define_entities(db: Database) -> None:
@@ -25,12 +25,28 @@ def define_entities(db: Database) -> None:
         id = PrimaryKey(int, auto=True)
         room = Required(Room)
         ranked_room_list = Required('RankedRoomList')
+        rank = Required(int)
 
     class RankedRoomList(db.Entity):
         id = PrimaryKey(int, auto=True)
+        name = Optional(str)
         ranked_rooms = Set(RankedRoom)
         shared_with_users = Set('User')
         shared_with_groups = Set('Group')
+
+        def __len__(self):
+            return len(self.ranked_rooms)
+
+        def __contains__(self, item):
+            if isinstance(item, Room):
+                for rr in self.ranked_rooms:
+                    if rr.room == item: return True
+            return False
+
+        def get_by_room(self, room):
+            for rr in self.ranked_rooms:
+                if rr.room == room: return rr
+            return None
 
     class User(db.Entity):
         id = PrimaryKey(int, auto=True)
@@ -40,12 +56,18 @@ def define_entities(db: Database) -> None:
         requests_made = Set('GroupRequest')
         reviews = Set('Review')
         group_invites = Set('GroupInvite')
+
         @classmethod
         def get_or_create(cls, **kwargs):
             o = cls.get(**kwargs)
             if o:
                 return o
-            return cls(**kwargs)
+            u = cls(**kwargs)
+            u.ranked_room_lists.create(name="Personal Favorites")
+            return u
+
+        def getfavoritelist(self):
+            return self.ranked_room_lists.select()[:][0]
 
     class Group(db.Entity):
         id = PrimaryKey(int, auto=True)

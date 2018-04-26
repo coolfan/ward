@@ -1,5 +1,5 @@
 from flask import request, logging, jsonify, session, Response, Blueprint, \
-    abort
+    abort, current_app
 from pony.orm import db_session, select
 
 from rooms import app, cas, conf
@@ -23,6 +23,7 @@ def favorite(db) -> Response:
     if "roomid" not in request.args:
         return Response("Missing roomid", 400)
     roomid = request.args.get("roomid")
+    current_app.logger.debug(f"favorite received room id {roomid}")
 
     if not db.Room.exists(id=roomid):
         return Response("Invalid roomid", 422)
@@ -31,16 +32,18 @@ def favorite(db) -> Response:
     netid = cas.netid()
 
     user = db.User.get_or_create(netid=netid)
-    group = user.group
 
-    if db.FavoriteRoom.get(group=group, room=room) is None:
-        app.logger.debug(f"{netid} has favorited room {roomid}")
-        curr_faves = group.favorites
-        fav = db.FavoriteRoom(
-            group=group, room=room, rank=len(curr_faves)
-        )
+    # User must have a personal favorites list!
+    # TODO: generalize this process
+    ranked_room_list = user.getfavoritelist()
+
+    if room in ranked_room_list:
+        current_app.logger.debug("Favoriting an already favorite room")
     else:
-        app.logger.debug(f"{netid} attempted to favorite room {roomid} again")
+        fav = db.RankedRoom(
+            room=room, rank=len(ranked_room_list), ranked_room_list=ranked_room_list
+        )
+
     return jsonify({'success': True})
 
 
@@ -64,20 +67,18 @@ def unfavorite(db):
 
     netid = cas.netid()
     user = db.User.get_or_create(netid=netid)
-    group = user.group
 
-    fav = db.FavoriteRoom.get(room=room, group=group)
-    if fav is not None:
-        app.logger.debug(f"{netid} unfavorited room {roomid}")
-        deleted_rank = fav.rank
-        fav.delete()
-
-        for fav in group.favorites:
-            if fav.rank > deleted_rank:
-                fav.rank -= 1
+    ranked_room_list = user.getfavoritelist()
+    if room in ranked_room_list:
+        rr = ranked_room_list.get_by_room(room)
+        current_app.logger.debug(f"Deleting ranked room {rr}")
+        deleted_rank = rr.rank
+        rr.delete()
+        for rr in ranked_room_list.ranked_rooms:
+            if rr.rank > deleted_rank:
+                rr.rank -= 1
     else:
-        debug_msg = f"{netid} unfavorited room {roomid} that was not favorite"
-        app.logger.debug(debug_msg)
+        current_app.logger.debug("Unfavoriting a non favorite room")
 
     return jsonify({'success': True})
 
@@ -90,7 +91,7 @@ def reorder_favorites(db):
     user = db.User.get_or_create(netid=netid)
 
     favoriteid_list = request.get_json()
-    real_favoriteid_ls = select(room for room in db.FavoriteRoom if
+    real_favoriteid_list = select(room for room in db.FavoriteRoom if
                                 room.group == user.group)
     if set(favoriteid_list) != set(real_favoriteid_list):
         abort(400)
@@ -116,9 +117,23 @@ def favorites(db):
     """
     netid = cas.netid()
     user = db.User.get_or_create(netid=netid)
-    group = user.group
+    groups = user.groups
 
-    curr_faves = group.favorites.select()[:]
-    curr_faves.sort(key=lambda fav: fav.rank)
-    rooms = [fave.room.to_dict() for fave in curr_faves]
-    return jsonify(rooms)
+    lists = dict()
+    for group in groups:
+        # Even though DB allows multiple lists per group--logically we will only allow 1
+        ranked_room_lists = group.ranked_room_lists.select()[:]
+
+        # Select all the ranked rooms in the list
+        ranked_room_list = ranked_room_lists[0].ranked_rooms.select()[:]
+
+        # Sort by rank
+        ranked_room_list.sort(key=lambda ranked_room: ranked_room.rank)
+
+        name = group.name if group.name else f"Group {group.id}"
+        lists[name] = [ranked_room.room.to_dict() for ranked_room in ranked_room_list]
+
+    rrl = user.getfavoritelist()
+    lists["Personal Favorites"] = [rr.room.to_dict() for rr in rrl.ranked_rooms.select()]
+
+    return jsonify(lists)
