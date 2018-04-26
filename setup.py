@@ -5,6 +5,6 @@ setup(
     packages=['rooms'],
     include_package_data=True,
     install_requires=[
-        'flask', 'pony'
+        'flask', 'pony', 'flask-login'
     ],
 )

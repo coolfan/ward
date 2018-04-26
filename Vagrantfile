@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
         sudo apt-get install -y python3.6
         curl https://bootstrap.pypa.io/ez_setup.py -o - | sudo python3.6 && sudo python3.6 -m easy_install pip
 
-        sudo pip3 install flask pony
+        sudo pip3 install flask pony flask-login
 
         # Start in /vagrant instead of /home/vagrant
         if ! grep -Fxq "cd /vagrant" /home/vagrant/.bashrc
