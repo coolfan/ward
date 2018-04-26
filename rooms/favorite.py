@@ -125,6 +125,7 @@ def favorites(db):
     for group in groups:
         # Even though DB allows multiple lists per group--logically we will only allow 1
         ranked_room_lists = group.ranked_room_lists.select()[:]
+        if len(ranked_room_lists) == 0: continue
 
         # Select all the ranked rooms in the list
         ranked_room_list = ranked_room_lists[0].ranked_rooms.select()[:]
