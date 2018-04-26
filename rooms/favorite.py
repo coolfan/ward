@@ -1,19 +1,17 @@
-from flask import request, logging, jsonify, session, Response, Blueprint, \
-    abort
+from flask import request, logging, jsonify, session, Response, abort
+from rooms.flask_extensions import AuthBlueprint
 from pony.orm import db_session, select
 
 from rooms import app, cas, conf
 import rooms.dbmanager as dbm
 
-blueprint = Blueprint("favorite", __name__)
+blueprint = AuthBlueprint("favorite", __name__)
 
 logger = logging.getLogger(conf.LOGGER)
 
 
-@blueprint.route("/favorite", methods=["GET"])
-@cas.authenticated
-@dbm.use_app_db
-def favorite(db) -> Response:
+@blueprint.auth_route("/favorite", methods=["GET"])
+def favorite(user, db) -> Response:
     """
     Adds a room to favorites list of group to which the currently logged in
     user belongs.  Expects parameters in url params:
@@ -30,7 +28,6 @@ def favorite(db) -> Response:
 
     netid = cas.netid()
 
-    user = db.User.get_or_create(netid=netid)
     group = user.group
 
     if db.FavoriteRoom.get(group=group, room=room) is None:
@@ -44,10 +41,8 @@ def favorite(db) -> Response:
     return jsonify({'success': True})
 
 
-@blueprint.route("/unfavorite", methods=["GET"])
-@cas.authenticated
-@dbm.use_app_db
-def unfavorite(db):
+@blueprint.auth_route("/unfavorite", methods=["GET"])
+def unfavorite(user, db):
     """
     Removes a room from favorites list of group to which the currently
     logged in user belongs.  Expects parameters in form data:
@@ -63,7 +58,6 @@ def unfavorite(db):
     room = db.Room[roomid]
 
     netid = cas.netid()
-    user = db.User.get_or_create(netid=netid)
     group = user.group
 
     fav = db.FavoriteRoom.get(room=room, group=group)
@@ -82,12 +76,9 @@ def unfavorite(db):
     return jsonify({'success': True})
 
 
-@blueprint.route("/reorder_favorites", methods=["POST"])
-@cas.authenticated
-@dbm.use_app_db
-def reorder_favorites(db):
+@blueprint.auth_route("/reorder_favorites", methods=["POST"])
+def reorder_favorites(user, db):
     netid = cas.netid()
-    user = db.User.get_or_create(netid=netid)
 
     favoriteid_list = request.get_json()
     real_favoriteid_ls = select(room for room in db.FavoriteRoom if
@@ -106,16 +97,13 @@ def reorder_favorites(db):
     return jsonify({"success": True})
 
 
-@blueprint.route("/favorites", methods=["GET"])
-@cas.authenticated
-@dbm.use_app_db
-def favorites(db):
+@blueprint.auth_route("/favorites", methods=["GET"])
+def favorites(user, db):
     """
     Return a list of the rooms in your favorites list, sorted by rank
     :return:
     """
     netid = cas.netid()
-    user = db.User.get_or_create(netid=netid)
     group = user.group
 
     curr_faves = group.favorites.select()[:]

@@ -60,3 +60,10 @@ app.register_blueprint(reviews_blueprint)
 app.register_blueprint(views_blueprint)
 
 app.json_encoder = ExtendedJSONEncoder
+
+from rooms.cas_login import login_manager
+from rooms.cas_login import blueprint as cas_login_blueprint
+
+login_manager.init_app(app)
+
+app.register_blueprint(cas_login_blueprint)
