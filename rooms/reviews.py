@@ -7,7 +7,8 @@ from pony.orm import flush
 from werkzeug.utils import secure_filename
 
 import rooms.dbmanager as dbm
-from rooms import cas, conf
+from rooms import conf
+from flask_login import current_user, login_required
 
 blueprint = Blueprint("reviews", __name__)
 
@@ -22,20 +23,20 @@ def allowed_file(filename: str) -> bool:
 
 
 @blueprint.route('/uploads/<filename>')
-@cas.authenticated
+@login_required
 def uploaded_file(filename):
     return send_from_directory(current_app.config['UPLOAD_DIR'], filename)
 
 
 @blueprint.route("/review", methods=["POST"])
-@cas.authenticated
+@login_required
 @dbm.use_app_db
 def review(db):
     roomid = request.form['roomid']
     room = db.Room.get(id=roomid)
 
-    netid = cas.netid()
-    user = db.User.get_or_create(netid=netid)
+    netid = current_user.id
+    user = current_user.data
 
     rating = request.form.get('rating')
     text = request.form.get('text')
@@ -60,7 +61,7 @@ def review(db):
 
 
 @blueprint.route("/reviews", methods=["GET"])
-@cas.authenticated
+@login_required
 @dbm.use_app_db
 def reviews(db):
     roomid = request.args.get("roomid")

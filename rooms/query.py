@@ -1,9 +1,8 @@
 from flask import request, logging, jsonify, Blueprint
 from pony.orm import db_session, select
-
+from flask_login import current_user
 from .conf import DB_NAME, DB_TYPE, LOGGER
 import rooms.dbmanager as dbm
-from rooms import cas
 
 blueprint = Blueprint("query", __name__)
 
@@ -69,8 +68,8 @@ def query(db):
 
     # get the ids of logged in user's favorite user
     fave_roomids = set()
-    if cas.netid() is not None:
-        netid = cas.netid()
+    if current_user is not None:
+        netid = current_user.id
         group = db.User.get_or_create(netid=netid).group
         fave_roomids = {fav.room.id for fav in group.favorites.select()}
 

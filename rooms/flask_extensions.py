@@ -1,30 +1,29 @@
 from flask import Blueprint
-from rooms import cas, conf
+from rooms import conf
 from rooms import dbmanager as dbm
 from functools import wraps
 from pony.orm.core import Query as PonyQuery
 from pony.orm.core import Entity as PonyEntity
 from flask.json import JSONEncoder
+from flask_login import current_user, login_required
 
 
-class AuthBlueprint(Blueprint):
-    def auth_route(self, rule, **options):
-        """
-        Creates a decorator for a CAS authenticated user in the
-        database.
-        """
-        def wrapper(f):
-            @self.route(rule, **options)
-            @cas.authenticated
-            @dbm.use_app_db
-            @wraps(f)
-            def wrapped(db, *args, **kwargs):
-                my_netid = cas.netid()
-                user = db.User.get_or_create(netid=my_netid)
-                return f(user, db, *args, **kwargs)
-            return wrapped
-        return wrapper
-
+# class AuthBlueprint(Blueprint):
+#     def auth_route(self, rule, **options):
+#         """
+#         Creates a decorator for a CAS authenticated user in the
+#         database.
+#         """
+#         def wrapper(f):
+#             @self.route(rule, **options)
+#             @login_required
+#             @dbm.use_app_db
+#             @wraps(f)
+#             def wrapped(db, *args, **kwargs):
+#                 return f(current_user.data, db, *args, **kwargs)
+#             return wrapped
+#         return wrapper
+#
 
 class ExtendedJSONEncoder(JSONEncoder):
     def default(self, o):

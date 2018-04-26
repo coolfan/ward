@@ -3,7 +3,8 @@
 import urllib.parse
 import urllib.request
 from rooms import dbmanager as dbm
-from flask import jsonify, Blueprint, current_app, request, session, logging
+from flask import jsonify, Blueprint, current_app, request, \
+    session, logging, redirect
 import flask_login
 from flask_login import current_user, login_required
 from rooms.conf import CAS_URL, LOGGER
@@ -39,18 +40,18 @@ class User(flask_login.UserMixin):
 def user_loader(netid):
     return User(netid)
 
-
-@login_manager.request_loader
-def load_user_from_request(request):
-    if 'ticket' in request.args:
-        ticket = request.args['ticket']
-        service_url = current_app.config['SERVICE_URL']
-        redirect_url = construct_url("login", service=request.base_url,
-                                     ticket = ticket)
-        
-        if netid is not None:  # ensure token validity
-            return User(netid)
-    return None
+#
+# @login_manager.request_loader
+# def load_user_from_request(request):
+#     if 'ticket' in request.args:
+#         ticket = request.args['ticket']
+#         service_url = current_app.config['SERVICE_URL']
+#         redirect_url = construct_url("login", service=request.base_url,
+#                                      ticket = ticket)
+#
+#         if netid is not None:  # ensure token validity
+#             return User(netid)
+#     return None
 
 
 def validate(ticket: str) -> bool:
@@ -59,7 +60,7 @@ def validate(ticket: str) -> bool:
     :param ticket: ticket as returned by the CAS login url
     """
     service_url = current_app.config['SERVICE_URL']
-    url = construct_url("validate", service=service_url+"login2", ticket=ticket)
+    url = construct_url("validate", service=service_url+"login", ticket=ticket)
 
     # returns 2 lines, first is yes, second is netid
     response = urllib.request.urlopen(url).readlines() # this seems bad!??
@@ -99,34 +100,14 @@ def login(redirect_url = '/'):
     :return:
     """
     service_url = current_app.config['SERVICE_URL']
-    redirect_url = construct_url("login", service=service_url+"login2")
+    redirect_url = construct_url("login", service=service_url+"login")
     if 'ticket' in request.args:
         ticket = request.args["ticket"]
         # There is a token already, but we might not trust it
         netid = validate(ticket)
         if netid is not None:  # ensure token validity
             flask_login.login_user(User(netid))
+            return redirect(session["next"])
         else:
             return jsonify({'success': False})  #TODO: LOGOUT
     return redirect(redirect_url)
-
-
-
-@blueprint.route("/protected2")
-@login_required
-def protected2():
-    return jsonify(current_user.data)
-
-
-
-def authenticated(function):
-    """Decorator for functions that require CAS authentication"""
-    @wraps(function)
-    def wrap(*args, **kwargs):
-        if not current_user.is_authenticated:
-            session['CAS_AFTER_LOGIN_SESSION_URL'] = request.path
-            return login()
-        else:
-            return function(*args, **kwargs)
-
-    return wrap

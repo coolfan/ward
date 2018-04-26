@@ -30,6 +30,7 @@ app.config.update(dict(
     USERNAME='admin',
     PASSWORD='admin',
     SERVICE_URL='http://localhost:5000/',
+    USE_SESSION_FOR_NEXT = True,
     UPLOAD_DIR=UPLOAD_DIR
 ))
 
@@ -40,14 +41,11 @@ app.logger.addHandler(handler)
 # -----------------------------------------------------------------------------
 from . import dbmanager
 
-from rooms.cas import blueprint as cas_blueprint
 from rooms.favorite import blueprint as favorite_blueprint
 from rooms.group import blueprint as group_blueprint
 from rooms.query import blueprint as query_blueprint
 from rooms.reviews import blueprint as reviews_blueprint
 from rooms.views import blueprint as views_blueprint
-
-app.register_blueprint(cas_blueprint)
 
 app.register_blueprint(favorite_blueprint)
 
@@ -63,7 +61,7 @@ app.json_encoder = ExtendedJSONEncoder
 
 from rooms.cas_login import login_manager
 from rooms.cas_login import blueprint as cas_login_blueprint
-
+login_manager.login_view = "cas_login.login"
 login_manager.init_app(app)
 
 app.register_blueprint(cas_login_blueprint)

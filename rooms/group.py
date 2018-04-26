@@ -1,17 +1,19 @@
-from flask import logging, request, jsonify, Response
+from flask import logging, request, jsonify, Response, Blueprint
 from pony.orm import select
-from rooms.flask_extensions import AuthBlueprint
 
-from rooms import cas, conf
+from flask_login import current_user, login_required
+from rooms import conf
 from rooms import dbmanager as dbm
 
-blueprint = AuthBlueprint("group", __name__)
+blueprint = Blueprint("group", __name__)
 logger = logging.getLogger(conf.LOGGER)
 
 
-@blueprint.auth_route("/pending_requests")
-def pending_requests(my_user, db):
-    my_group = my_user.group
+@blueprint.route("/pending_requests")
+@login_required
+@dbm.use_app_db
+def pending_requests(db):
+    my_group = current_user.data.group
 
     pending_requests = select(
         req for req in db.GroupRequest
@@ -22,8 +24,10 @@ def pending_requests(my_user, db):
     return jsonify(pending_requests)
 
 
-@blueprint.auth_route("/request_group", methods=["GET"])
-def request_group(my_user, db):
+@blueprint.route("/request_group", methods=["GET"])
+@login_required
+@dbm.use_app_db
+def request_group(db):
     """
     Sends a request to join the group of another person.
     """
@@ -34,11 +38,11 @@ def request_group(my_user, db):
     other_user = db.User.get_or_create(netid=other_netid)
     other_group = other_user.group
 
-    if other_group == my_user.group:
+    if other_group == current_user.data.group:
         return jsonify({"success": True})
 
     group_request = db.GroupRequest(
-        from_user=my_user,
+        from_user=current_user.data,
         to_group=other_group,
         message=message,
         status="Pending"
@@ -47,8 +51,10 @@ def request_group(my_user, db):
     return jsonify({"success": True})
 
 
-@blueprint.auth_route("/approve_group", methods=["GET"])
-def approve_group(user, db):
+@blueprint.route("/approve_group", methods=["GET"])
+@login_required
+@dbm.use_app_db
+def approve_group(db):
     """"""
     # Check for presence of required parameters
     if "request_id" not in request.args:
@@ -67,7 +73,7 @@ def approve_group(user, db):
         message = "Invalid action: must be one of {'accept', 'reject'}"
         return Response(message, 422)
 
-    if group_request.to_group != user.group:
+    if group_request.to_group != current_user.data.group:
         return Response("You are not in this group.", 403)
 
     if group_request.status == "Approved":
@@ -80,15 +86,17 @@ def approve_group(user, db):
 
     group_request.status = "Approved"
     from_user = group_request.from_user
-    from_user.group = user.group
+    from_user.group = current_user.data.group
 
     return jsonify({"success": True})
 
 
-@blueprint.auth_route("/my_group")
-def my_group(my_user, db):
-    my_group = my_user.group
-    my_netid = my_user.netid
+@blueprint.route("/my_group")
+@login_required
+@dbm.use_app_db
+def my_group(db):
+    my_group = current_user.data.group
+    my_netid = current_user.id
 
     other_members = my_group.members.select(
         lambda other_user: other_user.netid != my_netid

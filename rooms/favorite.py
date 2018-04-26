@@ -1,17 +1,20 @@
-from flask import request, logging, jsonify, session, Response, abort
-from rooms.flask_extensions import AuthBlueprint
-from pony.orm import db_session, select
+from flask import request, logging, jsonify, session, Response, abort, \
+    Blueprint
 
-from rooms import app, cas, conf
+from pony.orm import db_session, select
+from flask_login import current_user, login_required
+from rooms import app, conf
 import rooms.dbmanager as dbm
 
-blueprint = AuthBlueprint("favorite", __name__)
+blueprint = Blueprint("favorite", __name__)
 
 logger = logging.getLogger(conf.LOGGER)
 
 
-@blueprint.auth_route("/favorite", methods=["GET"])
-def favorite(user, db) -> Response:
+@blueprint.route("/favorite", methods=["GET"])
+@login_required
+@dbm.use_app_db
+def favorite(db) -> Response:
     """
     Adds a room to favorites list of group to which the currently logged in
     user belongs.  Expects parameters in url params:
@@ -26,9 +29,8 @@ def favorite(user, db) -> Response:
         return Response("Invalid roomid", 422)
     room = db.Room[roomid]
 
-    netid = cas.netid()
-
-    group = user.group
+    netid = current_user.id
+    group = current_user.data.group
 
     if db.FavoriteRoom.get(group=group, room=room) is None:
         app.logger.debug(f"{netid} has favorited room {roomid}")
@@ -41,8 +43,10 @@ def favorite(user, db) -> Response:
     return jsonify({'success': True})
 
 
-@blueprint.auth_route("/unfavorite", methods=["GET"])
-def unfavorite(user, db):
+@blueprint.route("/unfavorite", methods=["GET"])
+@login_required
+@dbm.use_app_db
+def unfavorite(db):
     """
     Removes a room from favorites list of group to which the currently
     logged in user belongs.  Expects parameters in form data:
@@ -57,8 +61,8 @@ def unfavorite(user, db):
         return Response("Invalid roomid", 422)
     room = db.Room[roomid]
 
-    netid = cas.netid()
-    group = user.group
+    netid = current_user.id
+    group = current_user.data.group
 
     fav = db.FavoriteRoom.get(room=room, group=group)
     if fav is not None:
@@ -76,9 +80,11 @@ def unfavorite(user, db):
     return jsonify({'success': True})
 
 
-@blueprint.auth_route("/reorder_favorites", methods=["POST"])
-def reorder_favorites(user, db):
-    netid = cas.netid()
+@blueprint.route("/reorder_favorites", methods=["POST"])
+@login_required
+@dbm.use_app_db
+def reorder_favorites(db):
+    netid = current_user.id
 
     favoriteid_list = request.get_json()
     real_favoriteid_ls = select(room for room in db.FavoriteRoom if
@@ -97,14 +103,16 @@ def reorder_favorites(user, db):
     return jsonify({"success": True})
 
 
-@blueprint.auth_route("/favorites", methods=["GET"])
-def favorites(user, db):
+@blueprint.route("/favorites", methods=["GET"])
+@login_required
+@dbm.use_app_db
+def favorites(db):
     """
     Return a list of the rooms in your favorites list, sorted by rank
     :return:
     """
-    netid = cas.netid()
-    group = user.group
+    netid = current_user.id
+    group = current_user.data.group
 
     curr_faves = group.favorites.select()[:]
     curr_faves.sort(key=lambda fav: fav.rank)

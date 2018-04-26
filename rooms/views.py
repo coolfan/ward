@@ -4,14 +4,14 @@ from flask import render_template, Blueprint, jsonify, current_app
 from pony.orm import select
 
 from rooms import dbmanager as dbm
-from rooms import cas
+from flask_login import current_user, login_required
 
 blueprint = Blueprint("views", __name__)
 
 
 @blueprint.route("/")
 @dbm.use_app_db
-@cas.authenticated
+@login_required
 def table(db):
     query = select(r for r in db.Room)
     room_data = [r.to_dict() for r in query]
