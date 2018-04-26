@@ -19,7 +19,6 @@ function get_reviews_card(reviews) {
 
 	})
 
-	col.append(text);
 	row.append(col);
 	card_body.append(row);
 	container_fluid.append(card_body);
