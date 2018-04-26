@@ -39,6 +39,10 @@ $(document).ready(function() {
 				$.each(info, function(i, val) {
 					$("#bigcard_body").append(val)
 				})
+				
+				$.get("/reviews", {roomid: data[0].id}, function(data) {
+					$("#bigcard_body").append(get_reviews_card(data))
+				})
 			}
 		})
 	})
