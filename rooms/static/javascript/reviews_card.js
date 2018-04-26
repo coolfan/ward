@@ -1,26 +1,32 @@
 function get_reviews_card(reviews) {
-	var card = $("<div>").addClass("card");
+	var card = $("<div>").addClass("card w-100");
 	var container_fluid = $("<div>").addClass("container-fluid");
 	var card_body = $("<div>").addClass("card-body");
-	var row = $("<div>").addClass("row");
-	var col = $("<div>").addClass("col-sm-12");
-	
 	$.each(reviews, function(i, val) {
-		var rating = $("<h6>").text(val.rating)
-		var comment = $("<p>").text(val.text)
-
+		var row = $("<div>").addClass("row");
+		var col = $("<div>").addClass("col-sm-12");
+		var rating = $("<h6>").text("Rating: " + val.rating)
 		col.append(rating)
+		row.append(col)
+		card_body.append(row)
+
+		row = $("<div>").addClass("row");
+		col = $("<div>").addClass("col-sm-12");
+		var comment = $("<p>").text("Comments: " + val.text)
 		col.append(comment)
+		row.append(col)
+		card_body.append(row)
 
 		$.each(val.pictures, function(i, url) {
-			var img = $("<img>").attr("src", url)
+			row = $("<div>").addClass("row");
+			col = $("<div>").addClass("col-sm-12");
+			var img = $("<img>").attr("src", url).attr("style", "max-width: 100%; max-height: 100%")
 			col.append(img)
+			row.append(col)
+			card_body.append(row)
 		})
-
 	})
-
-	row.append(col);
-	card_body.append(row);
+	
 	container_fluid.append(card_body);
 	card.append(container_fluid);
 
