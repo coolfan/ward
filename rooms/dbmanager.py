@@ -34,9 +34,6 @@ def define_entities(db: Database) -> None:
         shared_with_users = Set('User')
         shared_with_groups = Set('Group')
 
-        def __len__(self):
-            return len(self.ranked_rooms)
-
         def __contains__(self, item):
             if isinstance(item, Room):
                 for rr in self.ranked_rooms:

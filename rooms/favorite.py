@@ -41,7 +41,9 @@ def favorite(db) -> Response:
         current_app.logger.debug("Favoriting an already favorite room")
     else:
         fav = db.RankedRoom(
-            room=room, rank=len(ranked_room_list), ranked_room_list=ranked_room_list
+            room=room,
+            rank=len(ranked_room_list.ranked_rooms),
+            ranked_room_list=ranked_room_list
         )
 
     return jsonify({'success': True})
