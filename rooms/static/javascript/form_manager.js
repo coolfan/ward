@@ -94,10 +94,13 @@ function fill_buildings() {
 
     let data = {};
     data['college'] = college;
+    console.log("d");
+    console.log(data);
 
     $.get({
         url: "/buildings",
         data: data,
+        traditional: true,
         success: function (ans) {
             // buildings = ans;
             building_select.empty();
