@@ -40,6 +40,7 @@ def query(db):
 
     limit = int(request.args.get("limit", 50))
     continue_from = int(request.args.get("continueFrom", 0))
+    order_by = request.args.get("orderBy", "id")
 
     # TODO: automate how this is done
     colleges = request.args.getlist("college")
@@ -83,6 +84,7 @@ def query(db):
         group = db.User.get_or_create(netid=netid).group
         fave_roomids = {fav.room.id for fav in group.favorites.select()}
 
+    res.sort(key=lambda room_dict: room_dict[order_by] if order_by != "sqft" else -room_dict["sqft"])
     limited = res[continue_from:continue_from+limit]
     for room in limited:
         room['favorited'] = (room['id'] in fave_roomids)
