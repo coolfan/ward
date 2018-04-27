@@ -41,6 +41,9 @@ function display_bigcard(val) {
 	$.each(build_bigcard_inner(val), function(i, elem) {
 		card_mgr.bigcard_arr[index].append(elem)
 	})
+	$.get("/reviews", {roomid: val.id}, function(data) {
+		card_mgr.bigcard_arr[index].append(get_reviews_card(data))
+	})
 	card_mgr.bigcard_disp_arr[index] = val
 	
 	card_mgr.cur_bigcard1 = !card_mgr.cur_bigcard1;
