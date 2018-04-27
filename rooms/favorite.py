@@ -1,5 +1,7 @@
+import json
+
 from flask import request, logging, jsonify, session, Response, Blueprint, \
-    abort
+    abort, current_app
 from pony.orm import db_session, select
 
 from rooms import app, cas, conf
@@ -89,16 +91,19 @@ def reorder_favorites(db):
     netid = cas.netid()
     user = db.User.get_or_create(netid=netid)
 
-    favoriteid_list = request.get_json()
-    real_favoriteid_ls = select(room for room in db.FavoriteRoom if
-                                room.group == user.group)
-    if set(favoriteid_list) != set(real_favoriteid_list):
+    roomid_list = json.loads(request.get_data())["data"]
+    roomid_list = [int(roomid) for roomid in roomid_list]
+
+    real_roomid_list = select(
+        faveroom.room.id
+        for faveroom in db.FavoriteRoom
+        if faveroom.group == user.group
+    )
+    if set(roomid_list) != set(real_roomid_list):
         abort(400)
 
-    faverooms = [db.FavoriteRoom.get(id=fid) for fid in favoriteid_list]
-    for faveroom in faverooms:
-        if faveroom is None or faveroom.group != user.group:
-            abort(403)
+    faverooms = select(fr for fr in db.FavoriteRoom if fr.group == user.group)[:]
+    faverooms.sort(key=lambda fr: roomid_list.index(fr.room.id))
 
     for newrank, faveroom in enumerate(faverooms): # this should fix things??
         faveroom.rank = newrank
