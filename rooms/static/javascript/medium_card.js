@@ -42,10 +42,6 @@ function get_medium_card(room){
     let occupancy_p = $(html_card).find(".Occupancy");
     let medium_collapse_div = $(html_card).find(".Medium_collapse");
 
-
-    let reviews_table = $(html_card).find(".Reviews_table");
-
-
     subfree_p.empty();
     subfree_p.text(room['subfree'] ? "Subfree" : "");
 
@@ -57,3 +53,11 @@ function get_medium_card(room){
 
     return [small_card,html_card];
 }   
+
+function load_reviews(roomid) {
+	let reviews_table = $("#" + roomid + "card").find(".Reviews_table");
+	$.get("/reviews", {roomid: roomid}, function(data) {
+		reviews_table.empty()
+		reviews_table.append(get_reviews_card(data))
+	})
+}
