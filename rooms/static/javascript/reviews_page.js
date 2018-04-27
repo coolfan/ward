@@ -21,12 +21,74 @@ function build_bigcard_inner(val) {
 $(document).ready(function() {
 	navbar_set("#nav_reviews")
 
-	$.get("/buildings", function(data) {
-		$.each(data, function(i, val) {
-			var option = $("<option>").text(val)
-			$("#building").append(option)
-		})
-	})
+	// $.get("/buildings", function(data) {
+	// 	$.each(data, function(i, val) {
+	// 		var option = $("<option>").text(val)
+	// 		$("#building").append(option)
+	// 	})
+	// })
+
+
+	let building_select = $("#building");
+	let data = {};
+
+    $.get({
+        url: "/buildings",
+        data: data,
+        traditional: true,
+        success: function (ans) {
+            // buildings = ans;
+            building_select.empty();
+
+            for (college in ans) {
+                let group = $('<optgroup></optgroup>');
+                group.attr("label",college);
+                building_select.append(group);
+
+                $.each(ans[college], function (i, building) {
+                    let option = $(`<option></option>`);
+                    option.attr("value", building);
+                    option.text(building);
+
+                    // console.log(building);
+                    // console.log(college);
+                    group.append(option);
+                })
+            }
+
+            // console.log('hi');
+            // building_select.empty();
+            // // building_select.append('<option></option>');
+            //
+            // $.each(buildings, function (i, building) {
+            //     let option = $(`<option></option>`);
+            //     option.attr("value", building);
+            //     option.text(building);
+            //
+            //     // console.log(building);
+            //     // console.log(college);
+            //     building_select.append(option);
+            // })
+        }
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	$("#roomnum").change(function() {
 		var building = $("#building").val()
