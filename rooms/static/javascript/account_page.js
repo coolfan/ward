@@ -1,4 +1,4 @@
-function get_pending_card(val) {
+/*function get_pending_card(val) {
 	var card = $("<div>").addClass("card")
 	var container_fluid = $("<div>").addClass("container-fluid")
 	var card_body = $("<div>").addClass("card-body")
@@ -50,9 +50,31 @@ function get_pending_card(val) {
 	card.css("margin-bottom", "10px")
 
 	return card
-}
+}*/
 
 function get_group_card(val) {
+	var card = $("<div>").addClass("card")
+	var container_fluid = $("<div>").addClass("container-fluid")
+	var card_body = $("<div>").addClass("card-body")
+	var row1 = $("<div>").addClass("row")
+	var col11 = $("<div>").addClass("col-sm-12")
+	var header = $("<p>").addClass("card-text")
+
+	header.text(val.name)
+
+	col11.append(header)
+
+	row1.append(col11)
+	card_body.append(row1)
+	container_fluid.append(card_body)
+	card.append(container_fluid)
+
+	card.css("margin-bottom", "10px")
+
+	return card
+}
+
+function get_member_card(val) {
 	var card = $("<div>").addClass("card")
 	var container_fluid = $("<div>").addClass("container-fluid")
 	var card_body = $("<div>").addClass("card-body")
@@ -74,7 +96,7 @@ function get_group_card(val) {
 	return card
 }
 
-function update_pending() {
+/*function update_pending() {
 	$("#pending").empty()
 	$.get("/pending_requests", function(data) {
 		$.each(data, function(i, val) {
@@ -82,13 +104,23 @@ function update_pending() {
 			$("#pending").append(card)
 		})
 	})
+}*/
+
+function update_groups() {
+	$("#groups").empty()
+	$.get("/user", function(data) {
+		var group_ids = data.groups
+		$.each(group_ids, function(i, val) {
+			
+		})
+	})
 }
 
-function update_group() {
+function update_members() {
 	$("#members").empty()
 	$.get("/my_group", function(data) {
 		$.each(data, function(i, val) {
-			var card = get_group_card(val)
+			var card = get_member_card(val)
 			$("#members").append(card)
 		})
 	})
@@ -96,8 +128,8 @@ function update_group() {
 
 $(document).ready(function() {
 	
-	update_group()
-	update_pending()
+	update_members()
+	//update_pending()
 
 	$("#add_member_form").submit(function(e) {
 		e.preventDefault()
