@@ -191,16 +191,19 @@ def my_group(my_user, db):
 
 @blueprint.auth_route("/my_groups")
 def my_groups(my_user, db):
+    group_id = request.args.get("id")
     groups = my_user.groups
     netid = my_user.netid
+    if group_id is None:
+        groups_info = []
+        for group in groups:
+            d = group.to_dict(netid)
+            groups_info.append(d)
 
-    groups_info = []
-    for group in groups:
-        d = group.to_dict()
-        d["members"] = [
-            member.netid for member in group.members
-            if member.netid != netid
-        ]
-        groups_info.append(d)
-
-    return jsonify(groups_info)
+        return jsonify(groups_info)
+    else:
+        group = db.Group.get(id=group_id)
+        if group is None or group not in groups:
+            return jsonify([])
+        d = group.to_dict(netid)
+        return jsonify(d)

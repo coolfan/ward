@@ -76,6 +76,17 @@ def define_entities(db: Database) -> None:
         group_requests = Set('GroupRequest')
         invites_made = Set('GroupInvite')
 
+        def getfavoritelist(self):
+            return self.ranked_room_lists.select()[:][0]
+
+        def to_dict(self, netid=""):
+            d = super(Group, self).to_dict()
+            d["members"] =[
+                member.netid for member in self.members
+                if member.netid != netid
+            ]
+            return d
+
     class Review(db.Entity):
         id = PrimaryKey(int, auto=True)
         user = Required(User)
