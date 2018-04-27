@@ -48,7 +48,7 @@ function display_bigcard(val) {
 	card_mgr.card_queue.push(val)
 	if (card_mgr.card_queue.length > 2) {
 		var ret = card_mgr.card_queue.shift()
-		$("#" + get_dom_id(ret)).click()
+		$("#hitbox" + ret.id).click()
 	}
 }
 
@@ -113,12 +113,18 @@ function get_card(val) {
 	var container_fluid = $("<div>").addClass("container-fluid");
 	var card_body = $("<div>").addClass("card-body");
 	var row = $("<div>").addClass("row");
-	var col = $("<div>").addClass("col-sm-12");
+	var col1 = $("<div>").addClass("col col-sm-10").attr("id", "hitbox" + val.id);
+	var col2 = $("<div>").addClass("col col-sm-2");
 	var text = $("<p>").addClass("card-text");
-	
+	var del_btn_hitbox = $("<div>")
+	var del_btn = $("<i>").addClass("fa fa-close")
+
+	del_btn_hitbox.append(del_btn)
 	text.append(to_header(val));
-	col.append(text);
-	row.append(col);
+	col1.append(text);
+	col2.append(del_btn_hitbox)
+	row.append(col1);
+	row.append(col2)
 	card_body.append(row);
 	container_fluid.append(card_body);
 	card.append(container_fluid);
@@ -126,7 +132,7 @@ function get_card(val) {
 	card.css("margin-bottom", "10px");
 	val.bool_filled = false;
 
-	card.click(function() {
+	col1.click(function() {
 		if (val.bool_filled) {
 			card.css("backgroundColor", "white");
 			undisplay_bigcard(val)
@@ -137,6 +143,21 @@ function get_card(val) {
 		val.bool_filled = !val.bool_filled
 	});
 	card.attr("id", get_dom_id(val));
+
+	del_btn_hitbox.click(function() {
+		$.get("/unfavorite", {roomid: val.id}, function(data) {
+			var list = $($("#cards").children()[0]).children()
+			$.each(list, function(i, item) {
+				console.log($(item).attr("id"))
+				if ($(item).attr("id") == "elem" + val.id) {
+					if (val.bool_filled) {
+						$("#hitbox" + val.id).click()
+					}
+					$("#cards").children()[0].removeChild(item)
+				}
+			})
+		})
+	})
 
 	li.append(card);
 	return li
