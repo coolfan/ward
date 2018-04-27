@@ -37,6 +37,7 @@ function search_rooms(room_query) {
     $.get({
         url: "/query",
         data: room_query,
+        traditional:true,
         success: function (new_rooms) {
             clear_rooms();
             add_rooms(new_rooms);
@@ -73,6 +74,7 @@ function load_more_rooms() {
 
     $.get({
         url: "/query",
+        traditional:true,
         data: room_query,
         success: function (new_rooms) {
 
@@ -139,19 +141,9 @@ $(document).ready(function() {
 	// Each time the user scrolls
 	win.scroll(function() {
 
-	    // console.log("hi");
-		// End of the document reached?
-        // console.log($(document).height() - win.height());
-        // console.log(win.scrollTop());
-        // console.log(container.height());
-
-        // console.log(scrollBottom);
-        // console.log("h" + win.height());
-        // console.log($.now());
-        // console.log(last_loaded);
         let scrollBottom = win.scrollTop() + win.height();
 
-		if (scrollBottom > container.height() && $.now() > last_loaded + 1000) {
+		if (scrollBottom > container.height() - 50 && $.now() > last_loaded + 1000) {
 			$('#loading').show();
             last_loaded = $.now();
 			load_more_rooms();
@@ -159,8 +151,10 @@ $(document).ready(function() {
 	});
 });
 
-
-
+$(document).ready(function() {
+    $('#draw_type_select').select2();
+    $('#building_select').select2();
+});
 
 // //http://fredwu.github.io/jquery-endless-scroll/js/jquery.endless-scroll.js (This is where the endless scroll stuff came from)
 // $(function () {

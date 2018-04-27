@@ -41,6 +41,8 @@ function setup_form() {
         let floor = floor_input.val();
         let room_num = room_num_input.val();
 
+        let sort_criteria = $("#sorting_select").val();
+
         let room_query = {};
 
         if (college !== "") {
@@ -70,6 +72,8 @@ function setup_form() {
         if(room_num !== ""){
             room_query["roomnum"] = room_num;
         }
+
+        if(sort_criteria)
 
         search_rooms(room_query);
     });
@@ -138,7 +142,3 @@ function fill_buildings() {
     });
 }
 
-$(document).ready(function() {
-    $('#draw_type_select').select2();
-    $('#building_select').select2();
-});
