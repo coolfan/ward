@@ -193,8 +193,16 @@ $(document).ready(function() {
 	$("#cards").append(ul);
 	ul.sortable({
 		stop: function(a, b, c) {
-			var order = get_new_order()
-			$.post("/reorder_favorites", order)
+			let order = get_new_order();
+			console.log(order);
+			$.ajax({
+				url:"/reorder_favorites",
+				type:"POST",
+				data:JSON.stringify({"data": order}),
+				contentType: "application/json",
+				dataType: "json",
+				success: null
+			})
 		}
 	});
 
