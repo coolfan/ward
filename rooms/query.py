@@ -20,14 +20,18 @@ def colleges(db):
 @blueprint.route("/buildings", methods=["GET"])
 @dbm.use_app_db
 def buildings(db):
-    college = request.args.get("college")
+    # college = request.args.get("college")
+    colleges = request.args.getlist("college")
 
-    building_list = select(
-        r.building for r in db.Room
-        if (college is None or r.college == college)
-    )[:]
+    if len(colleges) == 0:
+        colleges = select(r.college for r in db.Room)[:]
 
-    return jsonify(building_list)
+    building_by_college = {}
+    for college in colleges:
+        q = select(r.building for r in db.Room if r.college == college)
+        building_by_college[college] = q[:]
+
+    return jsonify(building_by_college)
 
 @blueprint.route("/query", methods=["GET"])
 @dbm.use_app_db
@@ -38,8 +42,8 @@ def query(db):
     continue_from = int(request.args.get("continueFrom", 0))
 
     # TODO: automate how this is done
-    college = request.args.get("college")
-    building = request.args.get("building")
+    colleges = request.args.getlist("college")
+    buildings = request.args.getlist("building")
     floor = request.args.get("floor")
     roomnum = request.args.get("roomnum")
 
@@ -53,10 +57,15 @@ def query(db):
     numrooms = int(numrooms) if numrooms else numrooms
     subfree = bool(subfree) if subfree else subfree
 
+    if len(colleges) == 0:
+        colleges = select(r.college for r in db.Room)[:]
+    if len(buildings) == 0:
+        buildings = select(r.building for r in db.Room)[:]
+
     res = select(
         room for room in db.Room
-        if (room.college == college or college is None)
-        and (room.building == building or building is None)
+        if (room.college in colleges)
+        and (room.building in buildings)
         and (room.floor == floor or floor is None)
         and (room.roomnum == roomnum or roomnum is None)
 
