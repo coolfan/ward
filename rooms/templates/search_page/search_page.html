@@ -19,21 +19,41 @@
 
 <div class="container-fluid" style="">
     <div class="row">
-        <div class="col col-sm-6 col-lg-6">
+        <div class="col col-sm-4">
             {% include 'search_page/search_bar.html' %}
         </div>
-        <div class="col col-sm-6 col-lg-6" style="overflow: auto; height: 100vh; max-height: 100vh">
-            <div class="container-fluid padding-0">
-                <div class="row" id="Sorting_controls">
-                    {% include 'search_page/sorting_controls.html' %}
 
-                </div>
+
+        <div class = "col col-sm-8">
+            <div class="row" id="Sorting_controls">
+                    <h4>Results: (50)</h4>
+
+                            <div class = "ml-auto">
+                            <select class="form-control filter" id="building_select">
+                                <option id="building_fake_option" value="" >Sort by building</option>
+                                <option id="building_fake_option" value="" >Sort by floor</option>
+                                <option id="building_fake_option" value="" >Sort by square footage</option>
+                                <option id="building_fake_option" value="" >Sort by occupancy</option>
+                                <option id="building_fake_option" value="" selected>Sort by draw type</option>
+                                <option id="building_fake_option" value="" >Sort by likelihood</option>
+                                <option id="building_fake_option" value="" >Sort by number of rooms</option>
+                                <option id="building_fake_option" value="" >Sort by favorited</option>
+                            </select>
+                            </div>
+            </div>
+
+            <div class = "row">
+            <div id = "scroller" style="overflow-x: hidden;overflow-y: auto; height: calc(100vh - 150px); max-height: calc(100vh - 150px)">
+            <div class="container-fluid padding-0">
+
 
                 <div class="row Table_card">
                     {# Cards are dynamically inserted here using jquery #}
                 </div>
-            </div>
 
+                </div>
+            </div>
+            </div>
         </div>
     </div>
 </div>

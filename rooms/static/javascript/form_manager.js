@@ -11,6 +11,7 @@ function setup_form() {
     let occupancy_input = $("#occupancy_input");
     let num_rooms_input = $("#num_rooms_input");
     let floor_input = $("#floor_input");
+    let room_num_input = $("#room_num_input");
 
     //Fill in data
     $.get({
@@ -21,8 +22,13 @@ function setup_form() {
                 let option = $(`<option></option>`);
                 option.attr("value", college);
                 option.text(college);
+                console.log(option);
                 draw_type_select.append(option);
+                // draw_type_select.selectpicker("refresh");
             });
+
+            // console.log(buildings);
+            fill_buildings();
         }
     });
 
@@ -33,6 +39,7 @@ function setup_form() {
         let occupancy = occupancy_input.val();
         let num_rooms = num_rooms_input.val();
         let floor = floor_input.val();
+        let room_num = room_num_input.val();
 
         let room_query = {};
 
@@ -60,6 +67,10 @@ function setup_form() {
             room_query["floor"] = floor
         }
 
+        if(room_num !== ""){
+            room_query["roomnum"] = room_num;
+        }
+
         search_rooms(room_query);
     });
 
@@ -67,7 +78,6 @@ function setup_form() {
         fill_buildings();
     });
 
-    fill_buildings();
 
     search_form.submit(function (e) {
         e.preventDefault();
@@ -80,31 +90,52 @@ function fill_buildings() {
     let building_select = $("#building_select");
 
     let college = draw_type_select.val();
+    console.log(college);
 
-    if (college === ""){
-        college = null;
-    }
+    let data = {};
+    data['college'] = college;
 
     $.get({
         url: "/buildings",
-        data: {
-            college : college
-        },
+        data: data,
         success: function (ans) {
-            buildings = ans;
-            console.log('hi');
+            // buildings = ans;
             building_select.empty();
-            building_select.append('<option></option>');
 
-            $.each(buildings, function (i, building) {
-                let option = $(`<option></option>`);
-                option.attr("value", building);
-                option.text(building);
+            for (college in ans) {
+                let group = $('<optgroup></optgroup>');
+                group.attr("label",college);
+                building_select.append(group);
 
-                console.log(building);
-                // console.log(college);
-                building_select.append(option);
-            })
+                $.each(ans[college], function (i, building) {
+                    let option = $(`<option></option>`);
+                    option.attr("value", building);
+                    option.text(building);
+
+                    // console.log(building);
+                    // console.log(college);
+                    group.append(option);
+                })
+            }
+
+            // console.log('hi');
+            // building_select.empty();
+            // // building_select.append('<option></option>');
+            //
+            // $.each(buildings, function (i, building) {
+            //     let option = $(`<option></option>`);
+            //     option.attr("value", building);
+            //     option.text(building);
+            //
+            //     // console.log(building);
+            //     // console.log(college);
+            //     building_select.append(option);
+            // })
         }
     });
 }
+
+$(document).ready(function() {
+    $('#draw_type_select').select2();
+    $('#building_select').select2();
+});

@@ -1,6 +1,6 @@
 function get_small_card(room){
-    var html_card = $(`
-    <div class = "row">
+    let html_card = $(`
+    <div class = "row" style="font-size: 16pt">
         <div class = "col-sm-6 padding-0">
             <div class = "container-fluid padding-0">
                 <div class = "row">
@@ -129,7 +129,7 @@ function get_small_card(room){
             room_type = room['occupancy'] + " People";
     }
 
-    // occupancy_p.text(room_type);
+    //Display the apropriate amount of stick figures
     let stick_figure = (`<i class="fas fa-male fa-lg"></i>`);
     if (room['occupancy'] > 5){
         occupancy_p.append(stick_figure);
@@ -141,12 +141,14 @@ function get_small_card(room){
         }
     }
 
-
+    //Display the colleges
     college_p.empty();
     college_p.text(room['college']);
 
+
     star_div.attr("is_favorited", room['favorited']);
 
+    //Allow for favoriting by clicking on star
     star_div.click(function(){
         let favorited = 'true' === star_div.attr("is_favorited");
         console.log(typeof favorited);
@@ -162,14 +164,22 @@ function get_small_card(room){
         star_div.attr("is_favorited",!favorited);
     });
 
+    //Color in star if already favorited
+    let favorited = 'true' === star_div.attr("is_favorited");
+
+    if(favorited)
+        star_img.attr("src", "/static/starfill.png");
+
+
     star_img.attr('id',room['id']+ 'star');
     down_img.attr('id',room['id']+ 'down');
-    // double_down_img.attr('id',room['id']+ 'doubledown');
+
 
     down_anchor.attr('href','#' + room['id'] + 'medium_card');
     down_anchor.click(function(){
         load_reviews(room['id']); //Currently not implemented
     });
+
 
     let likelihood = room['likelihood'];
     likelihood = 66;

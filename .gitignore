@@ -8,3 +8,7 @@ venv/
 uploads/
 startup.sh
 rooms/__pycache__/
+node_modules/
+Gruntfile.js
+package.json
+package-lock.json

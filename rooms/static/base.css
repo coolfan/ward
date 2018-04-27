@@ -49,6 +49,11 @@ th.dt-center, td.dt-center { text-align: center; }
     list-style-type: none;
 }
 
+.Table_card{
+    font-size: 20pt;
+}
+
+
 /*Source for these 4 navbar things (Making the navbar bigger): https://bootstrapious.com/p/how-to-change-bootstrap-navbar-height*/
  /*.navbar {*/
   /*min-height: 80px;*/
