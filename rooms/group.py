@@ -15,6 +15,7 @@ def pending_requests(my_user, db):
     """
     Produce a JSON of the pending requests to any of your groups 
     """
+    return Response("Warning: This feature has been removed.", 410)
     groups = my_user.groups
 
     pending_requests = select(
@@ -37,6 +38,7 @@ def pending_invites(my_user, db):
     """
     Produce a JSON of your pending invites 
     """
+    return Response("Warning: This feature has been removed.", 410)
     invites = select(
         inv for inv in db.GroupInvite
         if inv.to_user == my_user
@@ -59,6 +61,7 @@ def request_group(my_user, db):
     """
     Sends a request to join the group of another person.
     """
+    return Response("Warning: This feature has been removed.", 410)
     message = request.args.get("message", "")
 
     to_group_id = request.args.get("to_group_id")
@@ -84,6 +87,7 @@ def invite_to_group(my_user, db):
     """
     Invites a user to join one of your groups 
     """
+    return Response("Warning: This feature has been removed.", 410)
     message = request.args.get("message", "")
 
     to_netid = request.args.get("to_netid")
@@ -110,6 +114,7 @@ def invite_to_group(my_user, db):
 @blueprint.auth_route("/approve_group", methods=["GET"])
 def approve_group(user, db):
     """"""
+    return Response("Warning: This feature has been removed.", 410)
     # Check for presence of required parameters
     if "request_id" not in request.args:
         return Response("Missing request_id", 400)
@@ -151,6 +156,7 @@ def approve_invite(user, db):
     """
     Accept or reject a pending invite to join a group 
     """
+    return Response("Warning: This feature has been removed.", 410)
     if "invite_id" not in request.args:
         return Response("Missing invite_id", 400)
     if "action" not in request.args:
