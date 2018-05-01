@@ -121,22 +121,34 @@ def favorites(db):
     user = db.User.get_or_create(netid=netid)
     groups = user.groups
 
-    lists = dict()
-    for group in groups:
-        # Even though DB allows multiple lists per group--logically we will only allow 1
-        ranked_room_lists = group.ranked_room_lists.select()[:]
-        if len(ranked_room_lists) == 0: continue
+    group_id = request.args.get("id")
 
-        # Select all the ranked rooms in the list
-        ranked_room_list = ranked_room_lists[0].ranked_rooms.select()[:]
+    if group_id is None:
+        lists = dict()
+        for group in groups:
+            # Even though DB allows multiple lists per group--logically we will only allow 1
+            group_list = group.getfavoritelist()
 
-        # Sort by rank
-        ranked_room_list.sort(key=lambda ranked_room: ranked_room.rank)
+            # Select all the ranked rooms in the list
+            ranked_room_list = group_list.ranked_rooms.select()[:]
 
-        name = group.name if group.name else f"Group {group.id}"
-        lists[name] = [ranked_room.room.to_dict() for ranked_room in ranked_room_list]
+            # Sort by rank
+            ranked_room_list.sort(key=lambda ranked_room: ranked_room.rank)
 
-    rrl = user.getfavoritelist()
-    lists["Personal Favorites"] = [rr.room.to_dict() for rr in rrl.ranked_rooms.select()]
+            name = group.name if group.name else f"Group {group.id}"
+            lists[name] = [ranked_room.room.to_dict() for ranked_room in ranked_room_list]
 
-    return jsonify(lists)
+        rrl = user.getfavoritelist()
+        lists["Personal Favorites"] = [rr.room.to_dict() for rr in rrl.ranked_rooms.select()]
+
+        return jsonify(lists)
+    else:
+        group = db.Group.get(id=group_id)
+        if group is None:
+            return Response("invalid group id", 422)
+        if group not in groups:
+            return Response("not in this group", 403)
+        group_list = group.getfavoritelist()
+        rrl = group_list.ranked_rooms.select()[:]
+        rrl.sort(key=lambda rr: rr.rank)
+        return jsonify([rr.room.to_dict() for rr in rrl])
