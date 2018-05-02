@@ -36,6 +36,7 @@ def buildings(db):
 
 def likelihood(my_groups, room) -> int:
     # TODO: This crashes!  make it look for the draw group corresponding to the room
+    return 50
     if len(my_groups) == 0: return 50
     my_time = my_groups.timefromstart
     if my_time is None: return 50
@@ -49,18 +50,55 @@ def likelihood(my_groups, room) -> int:
     return int(prob * 100.0)
 
 
+def rich_query(q: str, db):
+    """parses a free form query string!"""
+    print(f"Evaluating query: {q}")
+    tokens = q.lower().split()
+    all_colleges = list(select(r.college for r in db.Room))
+    all_buildings = list(select(r.building for r in db.Room))
+    all_roomnums = list(select(r.roomnum for r in db.Room))
+
+    college_aliases = {c.split()[0].lower(): i for i, c in enumerate(all_colleges)}
+    building_aliases = {b.split()[0].lower(): i for i, b in enumerate(all_buildings)}
+    room_aliases = {r.lower(): i for i, r in enumerate(all_roomnums)}
+
+    print(building_aliases)
+
+    colleges = []
+    buildings = []
+    roomnums = []
+
+    for tok in tokens:
+        if tok == "hall": continue
+        if tok == "college": continue
+        if tok == "rocky": tok = "rockefeller"
+        if len(tok) < 3 and tok.isdecimal(): tok = f"{int(tok):03d}"
+        if tok in college_aliases:
+            colleges.append(all_colleges[college_aliases[tok]])
+        elif tok in building_aliases:
+            buildings.append(all_buildings[building_aliases[tok]])
+        elif tok in room_aliases:
+            roomnums.append(all_roomnums[room_aliases[tok]])
+
+    return colleges, buildings, roomnums
+
+
 @blueprint.route("/query", methods=["GET"])
 @dbm.use_app_db
 def query(db):
-    query_string = request.args.get("q")
+    q = request.args.get("q", "")
+    rich_colleges, rich_buildings, rich_roomnums = rich_query(q, db)
+    current_app.logger.debug(f"Discovered colleges: {rich_colleges}")
+    current_app.logger.debug(f"Discovered buildings: {rich_buildings}")
+    current_app.logger.debug(f"Discovered roomnums: {rich_roomnums}")
 
     limit = int(request.args.get("limit", 50))
     continue_from = int(request.args.get("continueFrom", 0))
     order_by = request.args.get("orderBy", "college")
 
     # TODO: automate how this is done
-    college = request.args.get("college")
-    building = request.args.get("building")
+    colleges = request.args.getlist("college")
+    buildings = request.args.getlist("building")
     floor = request.args.get("floor")
     roomnum = request.args.get("roomnum")
 
@@ -74,13 +112,20 @@ def query(db):
     numrooms = int(numrooms) if numrooms else numrooms
     subfree = bool(subfree) if subfree else subfree
 
+    if len(colleges) == 0:
+        colleges = select(r.college for r in db.Room)[:]
+    if len(buildings) == 0:
+        buildings = select(r.building for r in db.Room)[:]
+
     rooms = select(
         room for room in db.Room
-        if (room.college == college or college is None)
-        and (room.building == building or building is None)
+        if (room.college in colleges)
+        and (room.college in rich_colleges or len(rich_colleges) == 0)
+        and (room.building in buildings)
+        and (room.building in rich_buildings or len(rich_buildings) == 0)
         and (room.floor == floor or floor is None)
         and (room.roomnum == roomnum or roomnum is None)
-
+        and (room.roomnum in rich_roomnums or len(rich_roomnums) == 0)
         and (sqft is None or room.sqft >= sqft)
         and (room.occupancy == occupancy or occupancy is None)
         and (room.numrooms == numrooms or numrooms is None)
