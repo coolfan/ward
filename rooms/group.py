@@ -196,7 +196,7 @@ def my_group(my_user, db):
 
 @blueprint.auth_route("/my_groups")
 def my_groups(my_user, db):
-    group_id = request.args.get("id")
+    group_id = request.args.get("groupid")
     groups = my_user.groups
     netid = my_user.netid
     if group_id is None:
