@@ -178,8 +178,10 @@ function get_new_order() {
 
 $(document).ready(function() {
 	card_mgr.bigcard_arr = [$("#bigcard1_body"), $("#bigcard2_body")];
-	let ul = $("<ul>").addClass("draggable no-bullets padding-0");
-	$.getJSON("/favorites", function(data) {
+	let ul = $("<ul>").addClass("draggable no-bullets padding-0").attr("id", "fav-list");
+	$("#cards").append(ul);
+	$.getJSON("/favorites", {groupid: $("groups").val()}, function(data) {
+		ul.empty()
 		if (data.length > 0) {
 			$.each(data, function(i, val) {
 				let card = get_card(val);
@@ -188,9 +190,7 @@ $(document).ready(function() {
 		} else {
 			ul.append(get_empty_card())
 		}
-		//card_mgr.card_data_arr[val.id] = val
 	});
-	$("#cards").append(ul);
 	ul.sortable({
 		stop: function(a, b, c) {
 			let order = get_new_order();
@@ -205,6 +205,24 @@ $(document).ready(function() {
 			})
 		}
 	});
+	$.get("/my_groups", function(data) {
+		$.each(data, function(i, val) {
+			$("#groups").append($("<option>").attr("value", val.id).text(val.name))
+		})
+	})
+	$("#groups").change(function() {
+		$.getJSON("/favorites", {groupid: $("groups").val()}, function(data) {
+			ul.empty()
+			if (data.length > 0) {
+				$.each(data, function(i, val) {
+					let card = get_card(val);
+					ul.append(get_card(val))
+				});
+			} else {
+				ul.append(get_empty_card())
+			}
+		});
+	})
 
 	navbar_set("#nav_favorites")
 });
