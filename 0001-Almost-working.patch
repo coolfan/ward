@@ -1,0 +1,625 @@
+From cebba470527fe21d51d728d9fa668e10bd77ba57 Mon Sep 17 00:00:00 2001
+From: Eitan <zlatineitan@gmail.com>
+Date: Fri, 27 Apr 2018 12:10:24 -0400
+Subject: [PATCH] Almost working
+
+---
+ .gitignore                                   |   4 +
+ rooms/rooms.sqlite                           | Bin 249856 -> 249856 bytes
+ rooms/static/base.css                        |   5 ++
+ rooms/static/javascript/form_manager.js      |  71 ++++++++++++-----
+ rooms/static/javascript/search_page.js       | 115 ++++++++++++++++++---------
+ rooms/static/javascript/small_card.js        |  20 +++--
+ rooms/static/sass/app.scss                   |   0
+ rooms/templates/base.html                    |  20 ++++-
+ rooms/templates/search_page/search_bar.html  |  88 +++++++++++---------
+ rooms/templates/search_page/search_page.html |  32 ++++++--
+ scss/custom.scss                             |   1 +
+ 11 files changed, 250 insertions(+), 106 deletions(-)
+ create mode 100644 rooms/static/sass/app.scss
+ create mode 100644 scss/custom.scss
+
+diff --git a/.gitignore b/.gitignore
+index d35501a..b214425 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -8,3 +8,7 @@ venv/
+ uploads/
+ startup.sh
+ rooms/__pycache__/
++node_modules/
++Gruntfile.js
++package.json
++package-lock.json
+\ No newline at end of file
+diff --git a/rooms/rooms.sqlite b/rooms/rooms.sqlite
+index 45b47582467015de4f726546b36b5e2ebc7047ee..bbab327400becd877f10f2281ff06fe71e8006ef 100644
+GIT binary patch
+delta 230
+zcmZozz~8Wde}XjQsfjYqjHfmxMC&sqZQi5rA;8DN&&J6AjsFe*L;f55XEzHu{NQ7}
+zIGNl3tQC7KD+41ZBNH=cD3HO#$i$?=#Ni8KaxyVq<6s7{IGC9Ca`As<VBvqv!2h2A
+z7ynEC$NYCE3k1Y$&I`!rH)H?<R%S*<rdTi;3MQF>!mJEnrY{$e&BFhXmH#*Y3;u_b
+z1rp*m=OpCut3k9furUK|RtW`BjMscY6!Tt?cAzF^PR7`#g0=$2wgRSQ1<VNmw|X$5
+
+delta 226
+zcmZozz~8Wde}Xh)`$QRM#`cW~(fW+`oA>B@2=FoTvoZ32<A29*$#1|PzFElO2Os16
+z$=v>DO&Ay$<bW6gL|_aU&B4sdz{teG#Jrb_|0@F{|9b}h_x!&mD+KsWHV6>eoEMPK
+zuMLzCVqgH0JYbTIfq|8ok&%fRXa+ab94`KEV9k>S65=K+ByeobOUU6@lK`s!2G;ux
+htoIuOP%j%Z6C?9pkY+B3=B9$S0>-uirey`p2>@iyEdc-k
+
+diff --git a/rooms/static/base.css b/rooms/static/base.css
+index 1b0e770..5d7e35e 100644
+--- a/rooms/static/base.css
++++ b/rooms/static/base.css
+@@ -49,6 +49,11 @@ th.dt-center, td.dt-center { text-align: center; }
+     list-style-type: none;
+ }
+ 
++.Table_card{
++    font-size: 20pt;
++}
++
++
+ /*Source for these 4 navbar things (Making the navbar bigger): https://bootstrapious.com/p/how-to-change-bootstrap-navbar-height*/
+  /*.navbar {*/
+   /*min-height: 80px;*/
+diff --git a/rooms/static/javascript/form_manager.js b/rooms/static/javascript/form_manager.js
+index 342c07f..3d043bc 100644
+--- a/rooms/static/javascript/form_manager.js
++++ b/rooms/static/javascript/form_manager.js
+@@ -11,6 +11,7 @@ function setup_form() {
+     let occupancy_input = $("#occupancy_input");
+     let num_rooms_input = $("#num_rooms_input");
+     let floor_input = $("#floor_input");
++    let room_num_input = $("#room_num_input");
+ 
+     //Fill in data
+     $.get({
+@@ -21,8 +22,13 @@ function setup_form() {
+                 let option = $(`<option></option>`);
+                 option.attr("value", college);
+                 option.text(college);
++                console.log(option);
+                 draw_type_select.append(option);
++                // draw_type_select.selectpicker("refresh");
+             });
++
++            // console.log(buildings);
++            fill_buildings();
+         }
+     });
+ 
+@@ -33,6 +39,7 @@ function setup_form() {
+         let occupancy = occupancy_input.val();
+         let num_rooms = num_rooms_input.val();
+         let floor = floor_input.val();
++        let room_num = room_num_input.val();
+ 
+         let room_query = {};
+ 
+@@ -60,6 +67,10 @@ function setup_form() {
+             room_query["floor"] = floor
+         }
+ 
++        if(room_num !== ""){
++            room_query["roomnum"] = room_num;
++        }
++
+         search_rooms(room_query);
+     });
+ 
+@@ -67,7 +78,6 @@ function setup_form() {
+         fill_buildings();
+     });
+ 
+-    fill_buildings();
+ 
+     search_form.submit(function (e) {
+         e.preventDefault();
+@@ -80,31 +90,52 @@ function fill_buildings() {
+     let building_select = $("#building_select");
+ 
+     let college = draw_type_select.val();
++    console.log(college);
+ 
+-    if (college === ""){
+-        college = null;
+-    }
++    let data = {};
++    data['college'] = college;
+ 
+     $.get({
+         url: "/buildings",
+-        data: {
+-            college : college
+-        },
++        data: data,
+         success: function (ans) {
+-            buildings = ans;
+-            console.log('hi');
++            // buildings = ans;
+             building_select.empty();
+-            building_select.append('<option></option>');
+ 
+-            $.each(buildings, function (i, building) {
+-                let option = $(`<option></option>`);
+-                option.attr("value", building);
+-                option.text(building);
+-
+-                console.log(building);
+-                // console.log(college);
+-                building_select.append(option);
+-            })
++            for (college in ans) {
++                let group = $('<optgroup></optgroup>');
++                group.attr("label",college);
++                building_select.append(group);
++
++                $.each(ans[college], function (i, building) {
++                    let option = $(`<option></option>`);
++                    option.attr("value", building);
++                    option.text(building);
++
++                    // console.log(building);
++                    // console.log(college);
++                    group.append(option);
++                })
++            }
++
++            // console.log('hi');
++            // building_select.empty();
++            // // building_select.append('<option></option>');
++            //
++            // $.each(buildings, function (i, building) {
++            //     let option = $(`<option></option>`);
++            //     option.attr("value", building);
++            //     option.text(building);
++            //
++            //     // console.log(building);
++            //     // console.log(college);
++            //     building_select.append(option);
++            // })
+         }
+     });
+-}
+\ No newline at end of file
++}
++
++$(document).ready(function() {
++    $('#draw_type_select').select2();
++    $('#building_select').select2();
++});
+\ No newline at end of file
+diff --git a/rooms/static/javascript/search_page.js b/rooms/static/javascript/search_page.js
+index d86f6ce..fe8cd81 100644
+--- a/rooms/static/javascript/search_page.js
++++ b/rooms/static/javascript/search_page.js
+@@ -120,44 +120,83 @@ $(document).ready(function () {
+ 
+     $('[data-toggle="tooltip"]').tooltip(); //Enable tooltips
+ 
++
++    // $('.Table_card').infiniteScroll({
++    //     // options
++    //     path: '.pagination__next',
++    //     append: '.post',
++    //     history: false,
++    // });
+     // $(".Table_card").append(create_sorting_controller());
+ });
+ 
+-//http://fredwu.github.io/jquery-endless-scroll/js/jquery.endless-scroll.js (This is where the endless scroll stuff came from)
+-$(function () {
+-    $('.Table_card').endlessScroll({
+-        // pagesToKeep: 2,
+-        pagesToKeep: null,
+-        inflowPixels: 100,
+-        fireDelay: 1000,
+-        content: true,
+-        // fireOnce: true,
+-        loader: "<p>...</p>",
+-        insertBefore: ".Table_card div:first",
+-        insertAfter: ".Table_card div:last",
+-        callback: function (firesequence, pageSequence, scrollDirection) {
+-            if (scrollDirection === 'next') {
+-                console.log('Trying to load more rooms');
+-                load_more_rooms();
+-            }
+-        },
+-        ceaseFire: function (firesequence, pageSequence, scrollDirection) {
+-            if (scrollDirection === 'next') {
+-                return done_loading;
+-            }
+-        },
+-        intervalFrequency: 5
+-    });
+-    //
+-    // $('#images').scrollTop(101);
+-    // var images = $("ul#images").clone().find("li");
+-    // $('#images').endlessScroll({
+-    //     pagesToKeep: 5,
+-    //     inflowPixels: 100,
+-    //     fireDelay: 10,
+-    //     content: function (i, p, d) {
+-    //         console.log(i, p, d)
+-    //         return images.eq(Math.floor(Math.random() * 8))[0].outerHTML;
+-    //     }
+-    // });
+-});
+\ No newline at end of file
++
++$(document).ready(function() {
++	let win = $("#scroller");
++    let container = $(".Table_card");
++    let last_loaded = $.now();
++
++	// Each time the user scrolls
++	win.scroll(function() {
++
++	    // console.log("hi");
++		// End of the document reached?
++        // console.log($(document).height() - win.height());
++        // console.log(win.scrollTop());
++        // console.log(container.height());
++
++        // console.log(scrollBottom);
++        // console.log("h" + win.height());
++        // console.log($.now());
++        // console.log(last_loaded);
++        let scrollBottom = win.scrollTop() + win.height();
++
++		if (scrollBottom > container.height() && $.now() > last_loaded + 1000) {
++			$('#loading').show();
++            last_loaded = $.now();
++			load_more_rooms();
++		}
++	});
++});
++
++
++
++
++// //http://fredwu.github.io/jquery-endless-scroll/js/jquery.endless-scroll.js (This is where the endless scroll stuff came from)
++// $(function () {
++//     $('.Table_card').endlessScroll({
++//         // pagesToKeep: 2,
++//         pagesToKeep: null,
++//         inflowPixels: 100,
++//         fireDelay: 1000,
++//         content: true,
++//         // fireOnce: true,
++//         loader: "<p>...</p>",
++//         insertBefore: ".Table_card div:first",
++//         insertAfter: ".Table_card div:last",
++//         callback: function (firesequence, pageSequence, scrollDirection) {
++//             if (scrollDirection === 'next') {
++//                 console.log('Trying to load more rooms');
++//                 load_more_rooms();
++//             }
++//         },
++//         ceaseFire: function (firesequence, pageSequence, scrollDirection) {
++//             if (scrollDirection === 'next') {
++//                 return done_loading;
++//             }
++//         },
++//         intervalFrequency: 5
++//     });
++//     //
++//     // $('#images').scrollTop(101);
++//     // var images = $("ul#images").clone().find("li");
++//     // $('#images').endlessScroll({
++//     //     pagesToKeep: 5,
++//     //     inflowPixels: 100,
++//     //     fireDelay: 10,
++//     //     content: function (i, p, d) {
++//     //         console.log(i, p, d)
++//     //         return images.eq(Math.floor(Math.random() * 8))[0].outerHTML;
++//     //     }
++//     // });
++// });
+\ No newline at end of file
+diff --git a/rooms/static/javascript/small_card.js b/rooms/static/javascript/small_card.js
+index c04841d..e1b13e1 100644
+--- a/rooms/static/javascript/small_card.js
++++ b/rooms/static/javascript/small_card.js
+@@ -1,6 +1,6 @@
+ function get_small_card(room){
+-    var html_card = $(`
+-    <div class = "row">
++    let html_card = $(`
++    <div class = "row" style="font-size: 16pt">
+         <div class = "col-sm-6 padding-0">
+             <div class = "container-fluid padding-0">
+                 <div class = "row">
+@@ -129,7 +129,7 @@ function get_small_card(room){
+             room_type = room['occupancy'] + " People";
+     }
+ 
+-    // occupancy_p.text(room_type);
++    //Display the apropriate amount of stick figures
+     let stick_figure = (`<i class="fas fa-male fa-lg"></i>`);
+     if (room['occupancy'] > 5){
+         occupancy_p.append(stick_figure);
+@@ -141,12 +141,14 @@ function get_small_card(room){
+         }
+     }
+ 
+-
++    //Display the colleges
+     college_p.empty();
+     college_p.text(room['college']);
+ 
++
+     star_div.attr("is_favorited", room['favorited']);
+ 
++    //Allow for favoriting by clicking on star
+     star_div.click(function(){
+         let favorited = 'true' === star_div.attr("is_favorited");
+         console.log(typeof favorited);
+@@ -162,15 +164,23 @@ function get_small_card(room){
+         star_div.attr("is_favorited",!favorited);
+     });
+ 
++    //Color in star if already favorited
++    let favorited = 'true' === star_div.attr("is_favorited");
++
++    if(favorited)
++        star_img.attr("src", "/static/starfill.png");
++
++
+     star_img.attr('id',room['id']+ 'star');
+     down_img.attr('id',room['id']+ 'down');
+-    // double_down_img.attr('id',room['id']+ 'doubledown');
++
+ 
+     down_anchor.attr('href','#' + room['id'] + 'medium_card');
+     down_anchor.click(function(){
+         load_reviews(room['id']); //Currently not implemented
+     });
+ 
++
+     let likelihood = room['likelihood'];
+     likelihood = 66;
+ 
+diff --git a/rooms/static/sass/app.scss b/rooms/static/sass/app.scss
+new file mode 100644
+index 0000000..e69de29
+diff --git a/rooms/templates/base.html b/rooms/templates/base.html
+index 1895b49..cbe2abe 100644
+--- a/rooms/templates/base.html
++++ b/rooms/templates/base.html
+@@ -3,16 +3,24 @@
+ 
+     <title>WARD</title>
+     <!-- Scripts -->
++
++    {# Jquery #}
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4= sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
+ 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
++
++    {# Datatables #}
+     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
++
++    {# Bootstrap#}
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+             integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+             crossorigin="anonymous"></script>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+             crossorigin="anonymous"></script>
++
++    {# Font awesome   #}
+     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js"
+             integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l"
+             crossorigin="anonymous"></script>
+@@ -23,7 +31,10 @@
+             integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c"
+             crossorigin="anonymous"></script>
+ 
+-    <script src="{{url_for('static', filename='plugins/jquery.endless-scroll.js')}}"></script>
++    {# Bootstrap select #}
++{#    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>#}
++    {# Select2 #}
++    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+ 
+     <script src="https://cdn.datatables.net/plug-ins/1.10.16/features/pageResize/dataTables.pageResize.min.js"></script>
+     <script src="https://cdn.datatables.net/colreorder/1.4.1/js/dataTables.colReorder.min.js"></script>
+@@ -35,9 +46,16 @@
+           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css">
+     <link rel="stylesheet" href="https://cdn.datatables.net/colreorder/1.4.1/css/colReorder.dataTables.min.css">
++
++{#    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">#}
++
++    {# Select2 #}
++    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
++
+     <link rel="shortcut icon" href="{{url_for('static', filename='favicon.ico')}}" type="image/x-icon">
+     <link rel="icon" href="{{url_for('static', filename='favicon.ico')}}"  type="image/x-icon">
+ 
+ 
+ 
+ 
++
+diff --git a/rooms/templates/search_page/search_bar.html b/rooms/templates/search_page/search_bar.html
+index cd70704..1383c7d 100644
+--- a/rooms/templates/search_page/search_bar.html
++++ b/rooms/templates/search_page/search_bar.html
+@@ -2,61 +2,77 @@
+     <div class="row">
+         <form id="search_form" class="col-sm-12">
+ 
+-            <div class="form-group row">
+-                <span class="col-xs-6 col-sm-3 col-md-2">
+-                    <label for="draw_type_select">Draw Type</label>
+-                </span>
+-
+-                <span class="col-xs-6 col-sm-3 col-md-2">
+-                    <label for="building_select">Building </label>
+-                </span>
++{#            <div class="form-group row">#}
++{#                <span class="col-xs-6 col-sm-3 col-md-2">#}
++{##}
++{#                </span>#}
++{##}
++{#                <span class="col-xs-6 col-sm-3 col-md-2">#}
++{##}
++{#                </span>#}
++{##}
++{#                <span class="col-xs-4 col-sm-3 col-md-2">#}
++{##}
++{#                </span>#}
++{##}
++{#                <span class="col-xs-4 col-sm-3 col-md-2">#}
++{##}
++{#                </span>#}
++{##}
++{#                <span class="col-sm-4 col-sm-3 col-md-2">#}
++{##}
++{#                </span>#}
++{#            </div>#}
+ 
+-                <span class="col-xs-4 col-sm-3 col-md-2">
+-                    <label for="occupancy_input">Occupancy </label>
+-                </span>
+-
+-                <span class="col-xs-4 col-sm-3 col-md-2">
+-                    <label for="num_rooms_input"># of Rooms </label>
+-                </span>
+-
+-                <span class="col-sm-4 col-sm-3 col-md-2">
+-                    <label for="floor_input">Floor Number</label>
+-                </span>
++            <div class="form-group row">
++                <div class="col">
++                    <label for="room_num_input">Room Number</label>
++                    <input class="form-control filter number_only" id="room_num_input">
++                </div>
+             </div>
+ 
+             <div class="form-group row">
+-                <div class="col-xs-6 col-sm-3 col-md-2">
+-
+-                    <select class="form-control filter" id="draw_type_select">
+-                        <option id="draw_type_fake_option" value="" selected></option>
++                <div class="col">
++                    <label for="draw_type_select">Draw Type</label>
++                    <select class="form-control filter" id="draw_type_select" multiple="multiple">
+                     </select>
+-
+                 </div>
++            </div>
+ 
+-                <div class="col-xs-6 col-sm-3 col-md-2">
+-
+-                    <select class="form-control filter" id="building_select">
+-                        <option id="building_fake_option" value="" selected></option>
++            <div class="form-group row">
++                <div class="col">
++                    <label for="building_select">Building </label>
++                    <select class="form-control filter" id="building_select" multiple="multiple">
++{#                        <option id="building_fake_option" value="" selected></option>#}
+                     </select>
+                 </div>
++            </div>
+ 
+-                <div class="col-xs-4 col-sm-3 col-md-2">
+-                    <input class="form-control filter number_only" id="occupancy_input">
+-                </div>
+ 
+-                <div class="col-xs-4 col-sm-3 col-md-2">
++            <div class="form-group row">
++                <div class="col col-sm-4">
++                    <label for="num_rooms_input">Number of Rooms </label>
+                     <input class="form-control filter number_only" id="num_rooms_input">
+                 </div>
+ 
+-                <div class="col-sm-4 col-sm-3 col-md-2">
++                <div class="col col-sm-4">
++                    <label for="floor_input">Floor Number</label>
+                     <input class="form-control filter number_only" id="floor_input">
+                 </div>
++
++                 <div class="col col-sm-4">
++                    <label for="occupancy_input">Occupancy </label>
++                    <input class="form-control filter number_only" id="occupancy_input">
++                </div>
+             </div>
+ 
+-            <div class="form-check">
+-                <input type="checkbox" class="form-check-input filter" id="check_subfree">
+-                <label class="form-check-label" for="check_subfree">Subfree</label>
++            <div class="form-group row">
++                <div class="form-check">
++                    <input type="checkbox" class="form-check-input filter" id="check_subfree">
++                    <label class="form-check-label" for="check_subfree">Subfree</label>
++                </div>
+             </div>
++
+         </form>
+     </div>
+ </div>
+diff --git a/rooms/templates/search_page/search_page.html b/rooms/templates/search_page/search_page.html
+index 2cef9ea..2045933 100644
+--- a/rooms/templates/search_page/search_page.html
++++ b/rooms/templates/search_page/search_page.html
+@@ -19,21 +19,41 @@
+ 
+ <div class="container-fluid" style="">
+     <div class="row">
+-        <div class="col col-sm-6 col-lg-6">
++        <div class="col col-sm-4">
+             {% include 'search_page/search_bar.html' %}
+         </div>
+-        <div class="col col-sm-6 col-lg-6" style="overflow: auto; height: 100vh; max-height: 100vh">
++
++
++        <div class = "col col-sm-8">
++            <div class="row" id="Sorting_controls">
++                    <h4>Results: (50)</h4>
++
++                            <div class = "ml-auto">
++                            <select class="form-control filter" id="building_select">
++                                <option id="building_fake_option" value="" >Sort by building</option>
++                                <option id="building_fake_option" value="" >Sort by floor</option>
++                                <option id="building_fake_option" value="" >Sort by square footage</option>
++                                <option id="building_fake_option" value="" >Sort by occupancy</option>
++                                <option id="building_fake_option" value="" selected>Sort by draw type</option>
++                                <option id="building_fake_option" value="" >Sort by likelihood</option>
++                                <option id="building_fake_option" value="" >Sort by number of rooms</option>
++                                <option id="building_fake_option" value="" >Sort by favorited</option>
++                            </select>
++                            </div>
++            </div>
++
++            <div class = "row">
++            <div id = "scroller" style="overflow-x: hidden;overflow-y: auto; height: calc(100vh - 150px); max-height: calc(100vh - 150px)">
+             <div class="container-fluid padding-0">
+-                <div class="row" id="Sorting_controls">
+-                    {% include 'search_page/sorting_controls.html' %}
+ 
+-                </div>
+ 
+                 <div class="row Table_card">
+                     {# Cards are dynamically inserted here using jquery #}
+                 </div>
+-            </div>
+ 
++                </div>
++            </div>
++            </div>
+         </div>
+     </div>
+ </div>
+diff --git a/scss/custom.scss b/scss/custom.scss
+new file mode 100644
+index 0000000..fa491fb
+--- /dev/null
++++ b/scss/custom.scss
+@@ -0,0 +1 @@
++@import "node_modules/bootstrap/scss/bootstrap";
+\ No newline at end of file
+-- 
+2.7.4
+

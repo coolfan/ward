@@ -1,3 +1,5 @@
+import json
+
 from flask import request, logging, jsonify, session, Response, Blueprint, \
     abort, current_app
 from pony.orm import db_session, select
@@ -110,7 +112,7 @@ def reorder_favorites(user, db):
         ranked_room_list = group.getfavoritelist()
 
     # Ensure that they give us a list of all the room ids
-    roomid_list = request.get_json()
+    roomid_list = json.loads(request.get_data())["data"]
     real_roomid_list = {rr.room.id for rr in ranked_room_list.ranked_rooms}
     if set(roomid_list) != set(real_roomid_list):
         abort(400)

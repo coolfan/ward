@@ -24,14 +24,18 @@ def colleges(db):
 @blueprint.route("/buildings", methods=["GET"])
 @dbm.use_app_db
 def buildings(db):
-    college = request.args.get("college")
+    # college = request.args.get("college")
+    colleges = request.args.getlist("college")
 
-    building_list = select(
-        r.building for r in db.Room
-        if (college is None or r.college == college)
-    )[:]
+    if len(colleges) == 0:
+        colleges = select(r.college for r in db.Room)[:]
 
-    return jsonify(building_list)
+    building_by_college = {}
+    for college in colleges:
+        q = select(r.building for r in db.Room if r.college == college)
+        building_by_college[college] = q[:]
+
+    return jsonify(building_by_college)
 
 
 def likelihood(my_groups, room) -> int:
@@ -141,7 +145,10 @@ def query(db):
         fave_roomids = {fav.room.id for fav in groups.ranked_room_lists.ranked_rooms}
 
     limited = rooms[continue_from:continue_from+limit]
+    res.sort(key=lambda room_dict: room_dict[order_by] if order_by != "sqft" else -room_dict["sqft"])
+    limited = res[continue_from:continue_from+limit]
     room_dicts = []
+
     for room in limited:
         d = room.to_dict()
         d['favorited'] = d['id'] in fave_roomids
