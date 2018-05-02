@@ -71,6 +71,11 @@ function get_group_card(val) {
 
 	card.css("margin-bottom", "10px")
 
+	card.click(function() {
+		update_members(val.members)
+		update_addinfo(val.drawtype, val.timefromstart)
+	})
+
 	return card
 }
 
@@ -108,29 +113,37 @@ function get_member_card(val) {
 
 function update_groups() {
 	$("#groups").empty()
-	$.get("/user", function(data) {
-		var group_ids = data.groups
-		$.each(group_ids, function(i, val) {
-			
+	$.get("/my_groups", function(data) {
+		$.each(data, function(i, val) {
+			var card = get_group_card(val)
+			$("#groups").append(card)
 		})
 	})
 }
 
-function update_members() {
+function update_members(data) {
 	$("#members").empty()
-	$.get("/my_group", function(data) {
-		$.each(data, function(i, val) {
-			var card = get_member_card(val)
-			$("#members").append(card)
-		})
+	$.each(data, function(i, val) {
+		var card = get_member_card(val)
+		$("#members").append(card)
 	})
+}
+
+function update_addinfo(type, time) {
+	var addinfo_cont = $("#add-info")
+	addinfo_cont.empty()
+	addinfo_cont.append($("<p>").text(type))
+	addinfo_cont.append($("<p>").text(time))
+
 }
 
 $(document).ready(function() {
 	
-	update_members()
+	//update_members()
 	//update_pending()
+	update_groups()
 
+/*
 	$("#add_member_form").submit(function(e) {
 		e.preventDefault()
 		var netid = $("#add_member").val()
@@ -139,6 +152,6 @@ $(document).ready(function() {
 		})
 		$("#add_member").val("")
 	})
-
+*/
 	navbar_set("#nav_account")
 })
