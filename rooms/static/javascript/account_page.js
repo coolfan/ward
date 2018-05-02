@@ -70,10 +70,12 @@ function get_group_card(val) {
 	card.append(container_fluid)
 
 	card.css("margin-bottom", "10px")
+	card.attr("id", "group" + val.id)
 
 	card.click(function() {
 		update_members(val.members)
-		update_addinfo(val.drawtype, val.timefromstart)
+		update_addinfo(val.timefromstart)
+		update_selected(val.id)
 	})
 
 	return card
@@ -87,7 +89,7 @@ function get_member_card(val) {
 	var col11 = $("<div>").addClass("col-sm-12")
 	var header = $("<p>").addClass("card-text")
 
-	header.text(val.netid)
+	header.text(val)
 
 	col11.append(header)
 
@@ -129,12 +131,23 @@ function update_members(data) {
 	})
 }
 
-function update_addinfo(type, time) {
+function update_addinfo(time) {
 	var addinfo_cont = $("#add-info")
 	addinfo_cont.empty()
-	addinfo_cont.append($("<p>").text(type))
-	addinfo_cont.append($("<p>").text(time))
+	addinfo_cont.append($("<p>").text("Draw time: " + time))
 
+}
+
+function update_selected(id) {
+	var cardlist = $("#groups").children()
+	$.each(cardlist, function(i, val) {
+		var card = $(val)
+		if (card.attr("id") != "group" + id) {
+			card.css("backgroundColor", "white")
+		} else {
+			card.css("backgroundColor", "#f2f5ff")
+		}
+	})
 }
 
 $(document).ready(function() {
