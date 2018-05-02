@@ -1,0 +1,595 @@
+,Timestamp,room_name,bunk_beds,lighting,bathrooms,kitchens,facilities,heating,text
+0,4/19/2018 22:10:04,Edwards 307,5,3,4,4,5,3,"I am in my room because it is part of the Edwards Collective, and I enjoy being in that community. It's a pretty good size for a single, and Edwards does have access to a lot of things in-building (kitchen, laundary, printers, ect.) Also worth noting that there is a lovely nook right next to my room where people occasionally hang out."
+1,4/19/2018 23:05:10,Pyne 333,2,5,5,3,3,4,
+2,4/19/2018 23:05:13,Walker 224,2,2,5,2,2,1,
+3,4/19/2018 23:05:56,1938 Hall 236,1,3,2,1,2,2,this room is pretty bad :( (this building is pretty bad in general; there isn't even a water fountain!!)
+4,4/19/2018 23:06:01,Gauss 114,1,5,5,3,5,5,"Wu is right outside the building, bathroom is right next door, decent sized single"
+5,4/19/2018 23:06:08,Cuyler 403,5,3,4,4,3,3,
+6,4/19/2018 23:06:09,Wild E205,5,4,5,5,4,5,"West facing room, be aware that sun streams directly in in the afternoon. The extra area provided by the curved out walls in nice."
+7,4/19/2018 23:06:32,Walker 116,5,5,5,1,4,1,
+8,4/19/2018 23:06:33,Forbes A116,5,3,5,3,3,3,shower often clogs
+9,4/19/2018 23:06:36,Wendell B214,5,3,3,1,4,3,
+10,4/19/2018 23:06:37,Witherspoon 322,5,5,5,2,4,5,Lots of bugs 
+11,4/19/2018 23:06:40,Wendell B214,5,3,1,2,2,1,small and dirty
+12,4/19/2018 23:06:47,1967 B312,5,4,5,4,3,5,
+13,4/19/2018 23:06:48,Bloomber 443,5,4,4,4,3,4,"Spacious single. Morning light is beautiful and direct, but sconces are a little dim at night."
+14,4/19/2018 23:06:52,1915 Hall 311,2,4,1,1,3,2,
+15,4/19/2018 23:06:57,Forbes A112,5,5,5,2,3,1,
+16,4/19/2018 23:07:07,Lauritzen D405,5,3,3,2,2,5,HUGE! So nice
+17,4/19/2018 23:07:14,Pyne 124,5,2,5,4,3,2,Feels huge inside. Really liked this room
+18,4/19/2018 23:07:16,Baker E406,5,3,5,3,3,2,Nice single
+19,4/19/2018 23:07:23,Dodge Osborn 121,5,5,5,5,5,5,It's an amazing room.
+20,4/19/2018 23:07:38,Forbes Main Inn 214,4,5,5,4,4,4,
+21,4/19/2018 23:07:45,Wendell B309,3,3,2,5,4,4,The closest printer is in another building
+22,4/19/2018 23:08:00,Spelman 52,5,2,5,5,5,2,"Right above the laundry so can get really hot from that, but great privacy with minimal stairs"
+23,4/19/2018 23:08:02,1967 B202,3,5,5,4,5,5,
+24,4/19/2018 23:08:05,Witherspoon 117,1,4,2,3,4,5,Fantastic room. The turret is phenomenal
+25,4/19/2018 23:08:06,Forbes 262,5,5,5,3,3,2,
+26,4/19/2018 23:08:31,1981 F023,5,3,5,3,4,5,
+27,4/19/2018 23:08:36,Forbes Annex A278,5,5,4,1,3,4,
+28,4/19/2018 23:08:46,Blair 51,3,4,4,2,3,4,"One bedroom is just big enough to debunk, and the other is not big enough."
+29,4/19/2018 23:09:03,Wendell B215,5,2,5,2,5,5,The layout of the common room is better than the ones across the hall and can fit more stuff more comfortably
+30,4/19/2018 23:09:15,Baker S102,5,5,5,4,3,5,"One bedroom is small, the other one is very large."
+31,4/19/2018 23:09:20,Fisher A211,3,1,5,5,5,4,There is a weird corner in the room bc of the electrical closet. The room is really dark in winter since it faces north.
+32,4/19/2018 23:09:29,Forbes New Wing 257,5,4,5,3,3,2,
+33,4/19/2018 23:09:37,Forbes 263,5,2,5,3,4,2,We have a private bathroom.
+34,4/19/2018 23:09:45,Dod202S,1,4,5,3,4,5,
+35,4/19/2018 23:09:50,Bloomberg 140,5,3,5,3,4,5,Amazing room!
+36,4/19/2018 23:09:54,1937 221,5,4,5,2,1,2,
+37,4/19/2018 23:10:16,Holder 25,1,5,2,2,2,5,Small single but it's definitely homey. The window seat is accounted for in the square footage. Can only set up room one way. 
+38,4/19/2018 23:10:20,Wendell C321,5,4,5,2,4,5,Room is unusually big for a double
+39,4/19/2018 23:11:06,Holder 51,4,4,4,5,3,3,
+40,4/19/2018 23:11:07,Campbell 21,4,3,2,1,1,3,"All of Campbell is horrible. This room is probably the least terrible, as it’s the closest to the Campbell bathroom. However, thin walls, no laundry room, and weird temperature make it not worth living here. "
+41,4/19/2018 23:11:41,Clapp 231,5,3,5,1,2,3,
+42,4/19/2018 23:12:15,Buyers 14,5,4,4,3,4,4,
+43,4/19/2018 23:13:50,Dodge Osborn 227,5,4,3,4,5,3,"Gets good natural light during the day, but the overhead lamp isn't great. Very spacious. Sometimes bugs. Actual closet, which is nice (not just a wardrobe). Heating broke twice and I had to file work orders. Since it's right in Wilson's courtyard, I was sometimes awoken by people coming back from the street late at night or workers doing loud jobs early in the morning (lawn mowing, vehicles going in and out). Also beware that the fire alarm goes off from time to time because there's a kitchen in the building (once went off at 7am). Super convenient location!"
+44,4/19/2018 23:13:55,Laughlin 632,1,1,2,2,3,3,you probably need to bunk all four beds if you want a common room. this room was meant to be a double 
+45,4/19/2018 23:14:27,Walker 315,4,5,3,2,5,4,Pretty big double
+46,4/19/2018 23:14:37,Laughlin 626,5,2,5,1,5,2,
+47,4/19/2018 23:14:39,Feinberg 201,5,3,5,3,5,1,
+48,4/19/2018 23:15:28,Witherspoon 206,5,4,5,3,4,2,"It's extremely small, but pretty typical for a Witherspoon single.  It's advantages are all about location."
+49,4/19/2018 23:15:48,Campbell 3A,5,4,2,3,5,3,
+50,4/19/2018 23:16:31,Little A38,4,4,5,2,4,4,
+51,4/19/2018 23:17:40,Scully 266,5,4,5,5,5,5,"private bedrooms, small common entryway, two partial private bathrooms"
+52,4/19/2018 23:17:47,1903 Hall 237,5,2,5,3,3,2,
+53,4/19/2018 23:18:08,Jeremie Lumbroso,1,1,1,1,1,1,Hi
+54,4/19/2018 23:19:22,Little Hall 391,5,5,5,2,2,3,"Very nice and spacious! Hardwood floors. Can't go wrong with this room, but there is a lot of noise at the end of the week and on the weekends."
+55,4/19/2018 23:19:29,Bloomberg 373,5,3,3,4,4,5,very spacious
+56,4/19/2018 23:19:31,Campbell Hall 5B,5,2,1,1,4,3,
+57,4/19/2018 23:19:47,Hamilton 324,5,5,5,3,5,5,
+58,4/19/2018 23:19:49,1976 D206,5,4,5,5,4,5,I wish I could keep this quad this quad or equivalent next year!
+59,4/19/2018 23:20:23,Scully 345,5,3,5,3,4,4,
+60,4/19/2018 23:20:37,Spelman 81,5,3,5,5,3,3,
+61,4/19/2018 23:20:46,Holder 101,3,5,5,4,5,3,
+62,4/19/2018 23:20:47,Edwards 507,5,4,2,3,3,3,The walk up sucks
+63,4/19/2018 23:20:55,Brown 428,1,3,1,3,2,2,Bathroom far for men. Close for women.
+64,4/19/2018 23:21:06,Brown 218,5,1,2,1,1,1,DON'T get this room. cockroaches everywhere. plus you are right next to the brown co-op so get weird food smells and they are SO loud. woken up every night. not an ideal situation and the room is very tiny
+65,4/19/2018 23:21:47,Little 323,5,2,5,1,1,4,it has a great view and it has a nice vibe though! and you get your daily exercise in with the walk up the staircase haha 
+66,4/19/2018 23:21:48,Baker E123,5,3,4,3,5,5,"Nice amount of space, good central location in Whitman."
+67,4/19/2018 23:21:56,Scully 107,5,4,5,5,5,5,It’s a little small for a quad 
+68,4/19/2018 23:22:17,Joline 222,1,4,1,4,4,5,One room can debunk in an L shape and but the other is way too small. Horrible closet space as well. 2 tiny closets(smaller then other rooms’ in the buildings’ closets) for 4 people. 
+69,4/19/2018 23:22:56,Lockhart 201,3,4,4,4,4,2,
+70,4/19/2018 23:24:01,Bloomberg 257,5,3,5,5,5,4,single with mucho espacio
+71,4/19/2018 23:24:35,South Baker 302,3,3,4,2,5,5,
+72,4/19/2018 23:24:49,Holder Hall,5,5,5,4,4,2,
+73,4/19/2018 23:25:02,Buyers B12,4,4,4,2,4,4,"Decent quad. Tiny common room, decent-sized bedrooms (plenty of room to debunk, or lots of floor space with bunks). Convenient to laundry room and bathrooms, and the windows make good alternative entrances in the event of getting locked out, or for quick trips to the U-Store. The tile floors can be annoyingly cold in winter, but the upside of living in Buyers is that, being sub-free, it’s generally pretty quiet. "
+74,4/19/2018 23:25:31,Wendell B419,5,2,4,2,3,5,
+75,4/19/2018 23:26:08,Liitle 107,5,4,5,2,1,3,This is a dormitory assistant room so it might not be very helpful
+76,4/19/2018 23:27:19,Little 329,5,5,5,2,2,4,
+77,4/19/2018 23:27:21,Joline 214,5,4,4,3,3,1,a lot of space (like seriously a great two room double) but a slight bug problem in the early fall and spring. also gets really hot in the early fall and spring because the window gets direct sunlight. Window faces street so it can get pretty loud with cars and construction on houses across the street. 
+78,4/19/2018 23:28:40,Spelman 67,5,3,5,5,4,3,Room is exposed to the elements- the outer walls are so thin that heat escapes very easily and the heating fan can be very loud. Also the balcony door has zero insulation against the wind. Worth it for the kitchen/bathroom though.
+79,4/19/2018 23:28:45,458 Bloomberg Hall,5,5,5,5,5,3,This is an interesting room with great angles and three large windows. Very pleasant! 
+80,4/19/2018 23:29:03,Baker E111,5,3,5,4,5,5,RCA Room 
+81,4/19/2018 23:29:28,Feinberg 401,5,3,5,2,4,3,"The wall in the upper bedroom does not continue all the way up to the ceiling, so both sound and light leak in and out of the room very easily. Far from optimal, especially if the person in this room tends to go to sleep late/early or frequently is bringing guests home. "
+82,4/19/2018 23:29:44,Butler 1976 D306,5,5,5,4,5,4,
+83,4/19/2018 23:30:11,Witherspoon 311,5,5,5,3,4,4,
+84,4/19/2018 23:31:14,Holder 84,2,2,5,3,3,5,Not ideal. Got the job done.
+85,4/19/2018 23:31:15,Bloomberg 111,5,2,5,5,5,5,Bug problem despite multiple facilities visits. Do not recommend. 
+86,4/19/2018 23:32:03,Bloomberg 111,5,2,5,5,5,5,Bug problem despite multiple facilities visits. Do not recommend. 
+87,4/19/2018 23:32:39,blair 96,5,5,5,5,5,5,"Traffic is loud at times in one of the doubles if the window is open, but you get used to it. Great room overall and would highly recommend "
+88,4/19/2018 23:32:45,Little A40,4,4,5,3,5,5,Phenomenal quad!
+89,4/19/2018 23:32:52,Whitman B220,5,4,5,3,5,4,
+90,4/19/2018 23:33:04,Forbes A371,3,3,4,1,1,1,"very bad layout, wardrobes are bolted to the walls so cant really set up the room in any other configuration. It is a triple with 2 rooms and it is set up in a way that 2 people have to live in the smaller room and 1 person lives in the common area"
+91,4/19/2018 23:34:27,Witherspoon 315,5,4,5,4,4,4,"solid room, would recommend"
+92,4/19/2018 23:34:54,Dodge-Osborn 221,5,2,5,3,3,2,Ugly room. Collects dust incredibly quickly
+93,4/19/2018 23:35:41,Scully 270,5,3,5,4,5,2,
+94,4/19/2018 23:36:45,Wendel C415,3,4,3,5,4,2,
+95,4/19/2018 23:36:49,"Fisher 201, Whitman",5,4,5,4,4,5,really nice common room
+96,4/19/2018 23:37:09,Bloomberg 276,5,4,5,4,5,4,
+97,4/19/2018 23:37:19,Blair 83,2,5,3,4,5,5,"Small bedrooms, good sized common room, not enough room in common room for all four desks if you have a couch"
+98,4/19/2018 23:37:23,Forbes A216,5,5,5,3,4,4,
+99,4/19/2018 23:37:23,Witherspoon 409,5,5,5,5,4,3,Big double
+100,4/19/2018 23:38:24,Hamilton 115,2,5,3,4,5,5,"super small bedrooms, big common room, isolated but also nice and quiet. Great to live close to town/ Dhall"
+101,4/19/2018 23:38:34,Campbell 2A,5,4,1,1,3,3,"Although it is supposed to be a double, it can be easily switched to 2 singles, which is great."
+102,4/19/2018 23:39:00,Holder 33,2,4,4,3,4,1,Nice bay window in bedrooms let in light; girls bathroom next door; creaky floorboards
+103,4/19/2018 23:40:00,1937 132,1,3,3,2,3,1,
+104,4/19/2018 23:40:13,517 1903 Hall,5,2,3,3,3,5,a great room! very spacious! the main problem is it's on the ground floor so you can't really keep the shades up without worrying people can look in
+105,4/19/2018 23:41:30,1938 203,3,2,5,2,4,1,Weirdly humid all the time
+106,4/19/2018 23:41:35,Lauritzen 205,1,5,2,2,4,4,
+107,4/19/2018 23:43:17,Pyne 429,1,5,3,1,2,1,
+108,4/19/2018 23:43:27,Witherspoon 115,4,4,5,5,5,4,
+109,4/19/2018 23:44:08,Witherspoon Hall 006,5,5,5,5,5,3,"Do not get this room unless you are ok with spiders (not necessarily in the room, but proximally located). Yes, everything is super super conveniently located and it's a very large single but since late fall, spiders have moved into the bathroom. I am terrified of spiders and I literally live in fear going to the bathroom - especially the showers. The room is next to the elevator and that may bother some people (you can hear it) but I don't mind. Note that room has full-size windows despite being in the basement and if you get locked out you can climb in through the window."
+110,4/19/2018 23:45:07,Baker E319,5,4,5,1,3,3,Heater potentially broken. Small quad.
+111,4/19/2018 23:45:15,Wendell C302,5,3,5,3,5,5,
+112,4/19/2018 23:45:36,Blair 101,5,4,3,4,5,2,
+113,4/19/2018 23:46:30,Campbell 52a,5,2,3,3,4,5,
+114,4/19/2018 23:47:52,"1914 Hall, rm 314",1,3,5,4,5,1,"The area can be loud sometimes because of pre-games, but the location is one of the bets on campus if you are a STEM major. "
+115,4/19/2018 23:49:21,"1976 Hall, D309",5,5,5,5,5,4,This is a really nice room on an amazing hallway with a lounge and a study. Did I mention that Studio 34 is in the basement? No complaints here.
+116,4/19/2018 23:49:28,Wilcox 306,5,5,4,2,3,5,I love Wilcox.
+117,4/19/2018 23:49:50,Forbes 312,5,5,5,3,4,3,
+118,4/19/2018 23:50:14,Holder 61,4,4,4,5,4,5,
+119,4/19/2018 23:51:42,1967 B204,5,4,5,5,5,5,
+120,4/19/2018 23:53:35,Hargadon 407B,5,3,2,3,3,4,
+121,4/19/2018 23:54:28,Witherspoon 104,1,5,4,5,5,3,Absolutely cannot debunk the beds but the common room more than makes up for it
+122,4/19/2018 23:54:30,Forbes 112,5,5,5,5,5,5,Best room in Forbes!!!
+123,4/20/2018 0:00:04,B21 Buyers,1,4,5,3,5,4,double closets
+124,4/20/2018 0:00:08,Baker S204,5,4,5,2,5,5,
+125,4/20/2018 0:00:12,blair 65,4,3,3,4,3,3,
+126,4/20/2018 0:01:52,Campbell 6A,5,1,1,1,1,1,The room itself is beautiful but the amenities are TRASH. Get this room only if you don't mind walking four floors to the bathroom every day.
+127,4/20/2018 0:03:47,Blair B82,5,3,4,3,4,4,
+128,4/20/2018 0:04:07,Campbell 003B,5,5,2,1,2,5,
+129,4/20/2018 0:04:29,Buyers 23,2,5,4,1,4,4,
+130,4/20/2018 0:06:54,Forbes 266,3,5,5,4,5,4,Great room and plenty of space! 
+131,4/20/2018 0:07:38,Bloomberg 140,4,3,5,3,5,3,quingle with private bathroom
+132,4/20/2018 0:11:45,Campbell 2B,5,4,1,1,1,2,Huge room but no amenities
+133,4/20/2018 0:16:41,Holder 123,4,4,4,1,5,4,One of the rooms debunks if you place the beds in an L shape but the other room doesn't de-bunk. Doesn't have a huge common room but overall a pretty great room. 
+134,4/20/2018 0:17:16,Lockhart 321,2,5,3,5,4,5,This room doesn't have the largest bedrooms but is comfortable and has nice closets (one for each person!)
+135,4/20/2018 0:17:19,1937 Hall Room 211,5,4,5,2,4,4,
+136,4/20/2018 0:18:46,Blair 96,2,5,5,4,5,5,"Lots of space in the common room! One of the bedrooms is narrow and hard to debunk. The other one is a square, well-lit, and spacious but you can hear traffic from the street (loudly) and the sun can be very bright. Not good for light sleepers."
+137,4/20/2018 0:18:55,Witherspoon 104,1,5,2,3,4,3,Fantastic common room
+138,4/20/2018 0:19:03,Henry 233 ,5,4,5,1,1,5,Don't live in Henry. It is a shit hole 
+139,4/20/2018 0:19:20,Pyne 727,5,5,5,3,4,3,"If you're gonna use the girls' bathroom it's right down the hall and there's 2 on this floor; else, the closest dudes' bathrooms are up a flight or down two flights. The kitchen is across the courtyard and if you email housing, you can get access to it (for the sacred Only Microwave in the slums basically). Natural lighting is great and awesome window size. Super close to the gym if you're into that, but be warned--some times music from the gym can be heard if your windows are open! Overall, solid 8.5/10 of a room. "
+140,4/20/2018 0:20:51,1967 Hall B312,5,5,5,4,5,4,
+141,4/20/2018 0:22:16,Forbes 402,1,4,5,4,3,4,"Don't pick this room if you can avoid it. It is a double which feels like the same size as some of the singles on this floor. The size wouldn't be as big of a deal if it wasn't for the fact that the placement of the closets and the window isle make it impossible to have any space in this room if you are not willing to keep the beds bunked. Otherwise this location is perfect. Any other room on this hall would be amazing, though I'm pretty sure it's is only freshman so it won't even matter."
+142,4/20/2018 0:23:38,Forbes 403,4,3,5,1,3,5,"This room has its pros and cons: there is not very much space to maneuver, but it is still bigger than the neighboring 402.  402 and 403 share a private bathroom, which is nice, and it has A/C.  The view out onto the golf course is beautiful.  Overall, I've enjoyed my stay on this floor with my zee group!"
+143,4/20/2018 0:24:42,Bogle C202,5,5,5,5,5,5,Butler is best
+144,4/20/2018 0:28:11,Joline 215,1,4,4,3,5,2,"Very small room, but very well located. Not the worst. Definitely can't debunk, though."
+145,4/20/2018 0:29:03,Bloomberg 356,5,5,4,4,4,4,"SUPER NICE, one of the best rooms in bloomberg. It is two singles together with a common room (a dingle)"
+146,4/20/2018 0:31:21,Pyne 234,4,5,5,2,1,4,Balcony!!
+147,4/20/2018 0:31:43,Holder 122,2,4,5,2,5,2,
+148,4/20/2018 0:32:28,Forbes A114,5,4,5,3,3,4,The room is a single that shares a private bathroom with an adjoining double. 
+149,4/20/2018 0:37:58,Forbes A311,5,5,5,3,3,4,
+150,4/20/2018 0:38:24,Scully 122,5,4,5,4,4,5,
+151,4/20/2018 0:38:37,Patton 081,4,4,4,2,5,1,Noise problems at times
+152,4/20/2018 0:42:52,Spelman 42,5,3,5,5,4,1,
+153,4/20/2018 0:44:28,Dod 403,5,4,5,3,4,2,"It's a bi-level, upperclassman dorm with two singles, one double, and its own bathroom."
+154,4/20/2018 0:46:46,Edwards 514,5,5,5,1,3,2,"5th floor is ok if you’re somewhat athletic and spry, VERY hot during start and end of year"
+155,4/20/2018 0:52:16,Joline 221,3,2,2,4,4,2,
+156,4/20/2018 0:57:28,Walker 329,1,5,2,2,2,3,"Laundry, kitchen are in different buildings. Very small room with large dresser and 3 book stands that take up a lot of space, basically have to have bunk beds. No AC, but manageable if you have a fan + you can open window. Good view from window, good lighting. Bathroom is on other floor for guys. Overall, probably one of the worst rooms you can get ~ bottom 10%, but hey, I still had a good time."
+157,4/20/2018 0:58:07,1967 309,5,5,5,5,5,5,"There literally (literally as in literally, not literally as in figuratively; is not a nicer caliber of room in the any of the residential colleges, across the entirety of campus."
+158,4/20/2018 0:58:43,Edwards 201,5,3,3,2,3,1,"Air vent thing broke in the middle of the semester and poured water all over the groud... but the maintenence guys replaced some stuff, so I don't think that will happen anytime soon. 
+Often unbearably hot, even in the middle of winter. Light is hospital-like--I bought a lamp with a softer, yellowish light, and it dramatically improved my mood overall. Crazy.
+Otherwise, room is very spacious and nice when decorated well (it's a single)."
+159,4/20/2018 1:00:11,1903 313,5,3,5,4,4,1,"The wiring in the lights leads to variable light brightness within the room. Additionally, the middle window has not closed properly all year, making the winter a bit uncomfortable. However, I love the 1903 courtyard, and the kitchen, laundry, printer, and Frist proximity is great. The room is on the ground floor facing the street, so if noise bothers you, maybe don't move in here. Also, the bathroom on the hall is a women's room."
+160,4/20/2018 1:05:21,"2 Dickinson Street, Room 34",3,3,5,5,5,5,gotta get in through 2D's own room draw
+161,4/20/2018 1:05:47,Holder 101,2,5,3,2,5,4,large common room
+162,4/20/2018 1:08:37,Wilf402,5,4,5,5,4,5,It’s a great room! Very spacious and lots of natural light. 
+163,4/20/2018 1:10:29,Campbell 28,2,2,1,1,1,1,people shit in the showers too much
+164,4/20/2018 1:14:10,Brown 320,2,2,5,5,5,3,
+165,4/20/2018 1:15:07,Dod 416,5,4,5,1,2,3,
+166,4/20/2018 1:22:25,Brown 127,1,5,5,2,5,2,Haven't had a bug problem all year. I know that's a huge thing for me when choosing a room.
+167,4/20/2018 1:27:49,1981 F410,5,3,4,5,4,3,A single room double isn't for everybody. My roommate and I are springing for a quad with some other people next year.
+168,4/20/2018 1:29:20,Campbell 41,5,4,2,1,1,4,"The room is nice and spacious enough for 4 people - there's nothing too bad about the room itself. The main issue with this room is that the facilities are not great (no laundry room, the ""kitchen"" is a sink and a microwave"", only bathroom is in the basement) and Campbell is set up in an entryway style, so there are no halls (makes it hard to become close with anyone else in your zee group)."
+169,4/20/2018 1:36:58,Cuyler 432,5,3,5,4,3,4,
+170,4/20/2018 1:37:37,Dodge Osborne 224,5,2,4,4,4,2,I love my room! It’s small and happy and cozy. It does have ants. 
+171,4/20/2018 1:39:08,Forbes 207,1,5,5,4,3,3,
+172,4/20/2018 1:40:06,Little 25,5,5,5,3,2,5,Perfect location to canpus
+173,4/20/2018 1:42:19,Dod 202N,1,5,3,4,4,4,
+174,4/20/2018 1:43:45,Scully 217,5,4,5,4,5,5,Amazing
+175,4/20/2018 1:47:37,Blair 83,4,4,3,4,4,5,
+176,4/20/2018 1:47:56,Pyne 131,5,4,5,4,3,2,Has a private bathroom which is great. Pyne hall is a little dank.. entryway 1 tends to be pretty quiet. 
+177,4/20/2018 1:49:06,Campbell 28,2,3,3,2,2,2,"Even with the inconveniences of living in Campbell, the room itself is a decent size and it’s directly above the bathroom. Overall it’s not that bad."
+178,4/20/2018 1:57:28,Forbes Annex A431,5,3,5,3,4,3,Shares a wall with the bathroom that is not soundproof! Lots of space for a double.
+179,4/20/2018 2:03:58,Little 111,5,4,3,1,3,2,Room is deceptively huge—also great survey idea
+180,4/20/2018 2:07:12,1976 D315,5,4,5,5,5,3,
+181,4/20/2018 2:21:05,Blair 303,3,2,3,3,5,4,"Its a pretty good quad, not the best but definitely a great option. "
+182,4/20/2018 2:26:37,Holder 141,3,5,2,2,4,4,"Fairly small for a quad, but perfectly livable. Debunked beds are maybe 2 feet apart, but you get used to the closeness. Bay window with seat is a plus. Very close to laundry, and arguably the closest dorm to the dining hall. "
+183,4/20/2018 2:30:59,Foulke 101,5,2,5,1,3,3,Overall great room with tons of space
+184,4/20/2018 2:46:25,Scully 255,5,4,5,4,4,4,
+185,4/20/2018 2:47:03,Pyne 441A,1,2,1,1,1,1,
+186,4/20/2018 2:56:22,1903 332,5,4,5,3,3,2,You can hear echoes from lower floors through the stairwell
+187,4/20/2018 2:57:02,Witherspoon 310,5,5,5,2,3,4,
+188,4/20/2018 3:11:16,Brown 225,3,1,5,4,4,3,
+189,4/20/2018 3:25:17,1927/Clapp 111,5,4,5,2,5,2,
+190,4/20/2018 3:35:10,1967 Hall B113,5,5,5,5,5,5,
+191,4/20/2018 4:22:05,Buyers 17,4,4,3,2,5,4,
+192,4/20/2018 5:05:26,Dodge Osborne 222,1,3,5,2,1,5,Small af
+193,4/20/2018 5:06:20,2 Dickinson 33,5,5,5,5,4,1,
+194,4/20/2018 7:18:48,Witherspoon 301,2,5,5,3,4,2,"One room has to be bunked, the other room has space to unbunk. No air conditioning"
+195,4/20/2018 7:32:45,Jolene 413,4,3,4,4,4,2,
+196,4/20/2018 7:45:13,Forbes A232,5,4,4,3,4,3,
+197,4/20/2018 8:15:14,Gauss 120,5,4,5,1,3,3,
+198,4/20/2018 8:38:57,Bloomberg 232,5,5,5,3,4,3,
+199,4/20/2018 8:48:30,Spoon 305,4,5,5,4,3,3,Floor super squeaky
+200,4/20/2018 8:52:36,Butler 1915,1,2,2,1,3,1,
+201,4/20/2018 9:08:31,Forbes 271,5,5,5,3,4,3,Sometimes there are cockroaches.
+202,4/20/2018 9:17:46,Patton 30,5,3,4,1,2,5,
+203,4/20/2018 9:18:29,Clapp 121,5,5,5,5,5,5,
+204,4/20/2018 9:20:10,Walker 312,1,3,1,1,1,1,Big common room tho.
+205,4/20/2018 9:26:35,Walker 111,2,4,5,2,3,3,"The radiator works well, but there's no AC. "
+206,4/20/2018 9:34:14,1903 124,5,5,4,3,5,4,"Great central location, have to go outside to reach kitchen but kitchen is pretty nice, radiator makes very loud noises the first week or so that heat is turned on so be prepared to buy ear plugs to sleep at night "
+207,4/20/2018 9:37:04,1939 Hall 338,5,5,4,3,4,3,
+208,4/20/2018 9:37:14,Patton 71,5,3,5,4,4,4,
+209,4/20/2018 9:37:55,Cuyler 435,5,2,4,2,2,2,"Great natural light, closet and window seat with storage underneath!"
+210,4/20/2018 9:39:47,Campbell 26,2,4,1,3,1,2,
+211,4/20/2018 9:46:50,Bloomberg 350,5,4,5,4,5,2,"Regarding the heating: Bloomberg is temperature controlled, but for some reason the heating component in the room is broken so it is often 10 degrees hotter than what I set the thermostat to.
+
+Other: It's across the hall from the elevator which is super convenient, but it is also sometimes annoying to hear dings at night (ear plugs can block the noise easily) and it's kind of creepy to know that everyone who uses the elevator can hear what you're doing and vice versa."
+212,4/20/2018 9:52:27,1981 F201,5,4,4,3,5,5,"This is the biggest room in Whitman--you can't go wrong. Although the quingle above it has an extra window, the east-facing windows in the common room provide plenty of light. The individual bedrooms are huge (about the same size as a regular Whitman single); the three west-facing rooms are the same size, while the east-facing bedroom is a little smaller but still pretty big. Heating/temperature control was hit-or-miss at the beginning of the year but I'll chalk that one up to Whitman transitioning to the fancy new system in summer 2017. Love, love, love this room, but you will absolutely need to get furniture and stuff to fill it up because it's so huge (the opposite of a problem, I know). If you have the opportunity to draw any of the big quingles in Whitman (above 1000 square feet), go for it. "
+213,4/20/2018 10:04:47,1939 Hall 112,1,1,2,1,3,2,ant infestation 
+214,4/20/2018 10:13:00,YOSELOFF A210,5,2,5,4,3,5,
+215,4/20/2018 10:13:49,1981 F414,5,4,5,4,4,5,The room is really big and has three windows that light up the room really well (and the window sill is really comfortable)
+216,4/20/2018 10:20:03,1937 125,1,4,4,1,2,4,
+217,4/20/2018 10:20:19,1901 105,5,5,1,1,1,2,
+218,4/20/2018 10:24:03,Little 81,4,4,4,3,3,3,
+219,4/20/2018 10:30:03,YOSELOFF A210,5,2,5,4,3,5,
+220,4/20/2018 10:34:08,Little 389,5,4,4,3,2,3,Highly recommend this single
+221,4/20/2018 10:35:38,Forbes A168,4,4,4,3,3,2,
+222,4/20/2018 10:45:59,Bloomberg 322,5,5,5,2,5,3,
+223,4/20/2018 10:54:28,Forbes A338,5,3,5,3,3,4,Ugly room with cinder blocks and narrow hallways but everything else is great
+224,4/20/2018 11:02:28,Campbell 23,4,5,4,1,3,4,
+225,4/20/2018 11:04:14,Bloomberg 325,5,3,5,2,5,5,"Only two windows, not three (like neighboring rooms) Beautiful view of Poe Field"
+226,4/20/2018 11:06:25,Blair 301,5,3,3,4,4,5,Love this room! 
+227,4/20/2018 11:08:31,Forbes 368,5,4,4,2,5,4,
+228,4/20/2018 11:08:46,Walker 132,5,3,5,1,3,3,
+229,4/20/2018 11:17:17,Scully 356,5,5,5,3,4,5,
+230,4/20/2018 11:19:32,Scully 202,2,1,5,3,4,4,
+231,4/20/2018 11:25:20,Forbes Main Inn 402,1,1,5,1,2,1,"Bunk Beds HAVE to be debunked unless the top person wants to breathe in ceiling dust all night. Leaves you with literally no space in the room, my roommate and I are currently separated by a printer, and we can't ever have any visitors because there's no where to even stand. I sit on my bed to use my desk because my chair can't be pulled out far enough to get seated at my desk. "
+232,4/20/2018 11:34:11,1928 115,4,5,5,2,3,5,"Two of the rooms are very easy to be unbunked, two rooms need to be bunked in order to have room to move. HUGE common room."
+233,4/20/2018 11:36:20,Edwards 515,5,4,3,2,3,2,"Had trouble with the heating (not easily controlled despite setting both thermostats on high), but definitely not unbearable. Great windows with good view of sunset! Good lighting--except in closets! Just use a little desk lamp to shed light on clothes."
+234,4/20/2018 11:44:59,Little 387,1,4,4,3,2,1,It is very hot in my room all the time. The window is also kind of weird because it is in the ceiling and is therefore slanted. This is a single so there aren't any bunk beds. The room is really long and skinny. My bed only fits the one way. The wall also juts out kind of weirdly. It is a very convenient location. There are also a lot of bathroom options near by. 
+235,4/20/2018 11:50:32,Wilf 202,5,5,5,5,3,5,
+236,4/20/2018 11:51:54,Wilcox 303,5,4,5,3,5,3,"Literally the best rooms for freshman in Wilson. There is a library, a dance studio,  and The. Dining. Hall. in your building. And my double is massive."
+237,4/20/2018 11:54:46,Forbes New Wing 164,5,5,5,1,4,4,"The single part of this triple is extremely spacious and is the only room that contains the heater. However, the heater is not great because it makes the room extremely hot (it's a stuffy kind of hot, not a space-heater kind of warmth). So I often have to turn it on for short periods of time and then turn it off. I leave the window open at all times in order to have fresh air to compensate for the lack of quality of the heating system."
+238,4/20/2018 11:56:26,Scully 225,5,3,5,3,4,5,
+239,4/20/2018 11:57:13,Dod 103,5,4,5,3,4,5,Right above the kitchen area where dance groups occasionally have loud parties...
+240,4/20/2018 12:04:46,Pyne 704,5,4,1,3,4,5,
+241,4/20/2018 12:06:18,Blair 96,4,4,5,5,5,5,"Common room is HUGE, one bedroom is also huge, but then one bedroom is very narrow! (Could still debunk, but barely) Overall great though."
+242,4/20/2018 12:10:04,Holder 91,1,4,4,2,4,4,
+243,4/20/2018 12:12:12,Dodge-Osborn 204,5,1,3,2,3,4,"This is a terrible room. There's no common space, so the people that live in the double have no private space to go to."
+244,4/20/2018 12:30:26,Spelman 45,5,4,5,5,5,4,Has the most fantastic view of the trees! Looks amazing in every season!
+245,4/20/2018 12:33:30,Forbes 101,4,5,5,4,5,2,"Great location within Forbes, bigger than most rooms on the hallway, private bathroom, heat needs fixing"
+246,4/20/2018 12:50:24,Scully 218,5,5,5,2,4,5,"An amazing room, beautiful view onto Poe field, high ceiling makes it feel bigger, no bugs EVER"
+247,4/20/2018 12:52:29,1981 F113,4,4,5,3,3,4,"Had to move the two sets of dresser drawers into the common room to make the bedroom at all bearable, since they are very small.  Arranged the two beds together in an L-shape in the corner so there was any walking space (otherwise there's just a small aisle between them.  Common room isn't big enough to fit a couch or anything unless you got rid of some desks.  Otherwise an ok room with an ok location"
+248,4/20/2018 12:54:25,Fisher A116,5,4,5,3,5,4,"Private bathroom is nice but makes the room very small.  The wardrobe is secured to the wall at an annoying place that makes it hard to really rearrange the furniture in any way other than the way it came, which limits the amount of open space in the room.  Fine for one person but definitely not a room for entertaining"
+249,4/20/2018 12:54:42,Lockhart 421,5,5,4,4,4,4,"THERE ARE TONS OF COCKROACHES IN THIS ROOM. This is not a joke. I ended up moving out and sleeping on a couch for a month until I could get a new room it was so bad. The exterminator came dozens of times and still could not get rid of them. While I was there the first night, I saw about 6 in the span of an hour. Stay away from this room at all costs. "
+250,4/20/2018 13:01:31,Blair 113,3,4,2,5,5,3,
+251,4/20/2018 13:17:50,Blair 112,5,5,5,5,5,5,
+252,4/20/2018 13:31:42,Forbes 302,5,4,5,4,4,4,Great room!
+253,4/20/2018 13:35:15,Joline 122,3,4,3,3,3,3,
+254,4/20/2018 13:36:02,Little 37,1,5,5,2,4,2,"We were able to debunk for one room, but the other room didn't have enough space to debunk even if we took out everything else in the room. Almost seems that it was meant to be a triple. However, it's overall not too bad. Some people like bunk beds. Climbing to the top can be a bit of an ordeal, but not too difficult. We are right next to the bathroom and a drinking fountain. There's a kitchen which is locked (I guess it's more of a private kitchen) but we have microwaves in the basement! Someone stole them once, but the University got new ones so it didn't suck too terribly. Just used hot water for ramen for a little bit. We get a lot of natural light, and the common room is a really decent size. If you were to debunk in the smaller room, you could even move the bed into the common room instead. You can't really control the air conditioning in here, so it was pretty bad in the summer, but not unbearable. Just dress appropriately! We're about 5 minutes from the dining hall, but like 2 minutes from the U-Store. I am quite ashamed of the amount of times I've gone to the U-Store to satiate my kettle corn cravings. But it's right there! You'll understand if you pick this room. We had a minor ladybug infestation, but I don't think they'll be returning. I promise that I'm not the devil incarnate, but I had to spray Raid in where I thought they were nesting. They were buzzing around scaring the heck out of me! And at night, that's really annoying. But they might come back. So be prepared."
+255,4/20/2018 13:43:00,Walker 322,1,2,5,3,2,3,
+256,4/20/2018 13:49:19,Edwards 301,5,5,4,5,5,2,"Very roomy, built in closet is good, nice shelf for extra stuff and a quiet section "
+257,4/20/2018 13:54:05,1976 D312,5,4,5,5,5,5,
+258,4/20/2018 14:10:55,Bloomberg 220,5,5,4,4,4,5,
+259,4/20/2018 14:12:54,Forbes 151,5,5,5,3,4,3,
+260,4/20/2018 14:25:21,Buyers B13,5,4,5,4,3,5,
+261,4/20/2018 14:26:44,Joline 233,5,2,5,3,3,1,
+262,4/20/2018 14:38:57,Wright 302,5,5,5,3,5,4,Very noisy at times and men's bathroom can get gross. Not many spaces to put the bed. Otherwise a great single. 
+263,4/20/2018 14:40:46,Blair 52,3,5,5,2,3,5,
+264,4/20/2018 14:44:07,Blair 309,1,2,4,3,3,2,"This room is tiny. It is impossible to de-bunk the beds, and we don't have enough room for desks or bookshelves. This room is absolute garbage in terms of space. It's livable, but very far from comfortable. Location is good, though. Third floor, but at least we're close to dining hall and the u-store."
+265,4/20/2018 14:51:42,1937 122,5,4,5,3,3,2,
+266,4/20/2018 15:00:16,Bloomberg 267,5,5,5,3,5,5,"This room overlooks Poe Field and has three windows, so it is extremely sunny and beautiful!  I would highly recommend if you are a sunshine and light person, NOT a darkness person.  "
+267,4/20/2018 15:09:19,Little 62,5,5,3,3,4,5,"ask how quiet the room is, like ability to hear your neighbors through walls or people in hallway? In this room, you can hear everything...."
+268,4/20/2018 15:29:28,36 Holder,2,5,4,3,3,3,
+269,4/20/2018 15:44:23,Holder Hall 104,1,5,5,4,4,2,
+270,4/20/2018 15:48:02,Spelman 54,5,3,5,5,4,2,The view of the lawn in front of New South is nice.
+271,4/20/2018 15:48:52,Scully 374,5,4,5,3,4,4,
+272,4/20/2018 15:50:14,Dodge-Osborne 121,3,4,5,3,4,4,This is a very spacious 2-floor suite for 10 people. It was lots of fun to live here.
+273,4/20/2018 15:52:11,Gauss Hall 211,3,4,4,2,4,4,"This (Gauss House) is an amazing 11-person suite. It's two stories, and the common room is two stories tall, ideal for setting up a projector. This is a great space."
+274,4/20/2018 16:03:04,Spelman 55,5,4,5,5,4,4,
+275,4/20/2018 16:12:48,1937 123,5,4,5,2,4,4,
+276,4/20/2018 16:59:24,Forbes 210,3,4,5,3,4,4,"This room has super weird corners, so that even though we have our beds debunked there's really only one possible configuration which doesn't leave us with much floorspace. Nice view though! (We've also both put our thoughts into the rooms.tigerapps site!)"
+277,4/20/2018 17:21:27,Dod 212,5,5,4,2,4,5,"Dod 212 is a cozy and comfortable single. Not a whole ton of space, but certainly enough for one person"
+278,4/20/2018 17:23:31,Forbes Main Inn 223 ,2,4,5,5,4,4,Weird L-shape space that makes it hard to accommodate; very small for a double especially with debunked beds 
+279,4/20/2018 18:21:24,Walker 332,5,5,4,3,5,3,"Great 1 room double in Wilson. Used to be a quad apparently, so there's tons of space. And there are two full sized closets! Many people comment that Walker can get loud because of the acapella groups that practice there, but you can't hear them at all on the third floor. That being said... stairs. "
+280,4/20/2018 19:11:57,Cuyler 613,4,2,4,1,5,2,"Laundry is outside, closest one in Brown or 1903 basement"
+281,4/20/2018 20:38:11,Little 311,5,4,5,3,4,4,"Great single with a large ledge above the door and a small shelf next to the entrance. Overall, this room is pretty comfortable and isn't super loud, even on big nights out."
+282,4/20/2018 21:26:30,Bloomberg 481,5,4,5,3,5,5,Vaulted ceilings make a room feel huge!
+283,4/20/2018 21:50:37,Cuyler 431,5,5,4,2,2,3,"The location on campus is superb. However, there is no laundry and the bathroom on this floor (which is right around the corner) can get very stuffy/gross so I usually go down 3 flights to the basement to shower. 
+
+That being said, the room is SUPER large and gets great light and has a beautiful view. Love this room. "
+284,4/21/2018 1:37:53,Witherspoon 115,4,4,5,5,4,5,"High ceilings. If we left the bunk beds, there'd be room for a couch/seating.  Study rooms and a printer down the hall. Common space, TV lounge, kitchen, and laundry all downstairs. Literally the only con is that we are in the front of the building (a common stop on tours) so we can never have our windows/shades open."
+285,4/21/2018 2:45:27,Henry 203,5,5,1,4,5,5,"This room is big enough for my King size bed, two chairs and a TV. It also includes a big closet!"
+286,4/21/2018 9:50:29,Blair 103,4,5,4,5,5,5,
+287,4/21/2018 9:51:02,Blair 95,5,3,3,5,5,5,
+288,4/21/2018 11:24:40,Hamilton 112,4,4,4,2,5,5,
+289,4/21/2018 12:43:17,Witherspoon 105,4,4,5,5,5,3,
+290,4/21/2018 14:14:44,Spelman 44,5,3,5,5,4,2,
+291,4/21/2018 15:07:20,Yoseloff A102,5,4,5,5,5,5,
+292,4/21/2018 16:58:56,Holder 122,2,3,5,4,5,3,
+293,4/21/2018 18:47:14,Dod 413,5,5,5,2,4,4,DOD QOD is the best QOD
+294,4/21/2018 20:27:47,Scully 420,5,5,5,3,4,5,
+295,4/21/2018 20:28:54,Edwards 115,5,5,3,3,3,3,"It's super small and oddly shaped, but if you like your privacy it's a fine enough room!"
+296,4/21/2018 20:30:22,Edwards 117,5,5,3,3,3,2,"When I lived in this room, I found that it was SUPER cold in the winter. The heater certainly made a lot of noise, but it never seemed to do much for the temperature... hopefully that got fixed, because when I asked Facilities about it, nothing seemed to change haha"
+297,4/21/2018 21:54:24,Blair 52,4,4,5,4,4,3,"This is a good room, but there is a hole in the wall under the window."
+298,4/22/2018 1:48:09,Forbes Main Inn 108,5,5,5,3,3,3,
+299,4/22/2018 6:26:02,Wendell C 215 ,5,3,3,2,5,3,Great room!
+300,4/22/2018 11:00:54,1937 115,5,4,3,3,4,3,"Overall it's a satisfactory room, it definitely has enough space for one person to be comfortable and I haven't had any problems with it, although it's mildly frustrating having a window at street level and having to share a small bathroom with a bunch of people. Good location."
+301,4/22/2018 16:46:14,Forbes A145,5,5,5,5,4,3,
+302,4/22/2018 16:56:24,1915 424,5,5,1,1,3,3,no central air or elevators. not much sense of community
+303,4/22/2018 17:00:23,Wilson College Dodge Osborn 211,2,3,5,5,4,4,"Room is good if you enjoy being around people. Really enjoyed having it with my roommates. Big common room. 1 triple, 1 double, 3 singles. Go for the singles if you can. I feel like it's the optimal condition. "
+304,4/22/2018 17:02:43,Forbes 258,5,4,5,3,3,2,
+305,4/22/2018 19:50:41,Holder 066,2,3,5,3,2,3,
+306,4/22/2018 20:34:30,Holder 26,4,5,3,2,3,4,
+307,4/22/2018 20:58:21,618 Laughlin,5,4,5,1,5,5,Overall a very nice single! 
+308,4/22/2018 21:10:39,1981 Hall F314,1,4,5,4,5,2,"Within 5 feet of elevator, laundry room, women’s bathroom. Within 15 feet of stairs and men’s bathroom. Huge common room, one of the bedrooms large enough to debunk but not the other. Biggest downside: hall/bathrooms/laundry room always smell weird and are kind of grimy. "
+309,4/22/2018 22:15:24,Edwards 206,2,3,2,2,3,2,
+310,4/22/2018 23:17:58,216 1903 Hall,5,4,5,4,4,2,
+311,4/23/2018 0:40:01,Little 28,2,5,5,3,2,5,
+312,4/23/2018 3:14:55,Buyers 14,4,5,5,2,3,3,
+313,4/23/2018 11:34:20,Scully 315,5,4,5,5,5,5,"PERFECT room, particularly if you are a member of the Scully coop. Facilities are wonderful."
+314,4/23/2018 16:59:05,Bloomberg 368,5,5,4,5,5,5,"Lovely single, very spacious. "
+315,4/23/2018 17:39:45,"1967 Hall, B213",5,5,5,4,5,5,
+316,4/23/2018 17:39:51,Baker 121,5,5,4,2,4,4,
+317,4/23/2018 17:39:52,Lauritzen D114,5,4,5,4,4,5,
+318,4/23/2018 17:39:54,Feinberg 202,5,2,5,3,5,4,
+319,4/23/2018 17:39:55,"Butler, 1976 Hall, D309",5,4,5,4,3,3,
+320,4/23/2018 17:40:00,Henry 314,4,3,3,2,2,5,We had a mouse infestation in the room because of some of the holes near the pipes.
+321,4/23/2018 17:40:06,Lauritzen D407,5,2,3,3,4,4,
+322,4/23/2018 17:40:09,Forbes A327,5,5,4,1,3,2,
+323,4/23/2018 17:40:14,Yoseloff a213,5,5,5,5,5,5,"It's nice, no bugs, lots of space, and a pretty big common room"
+324,4/23/2018 17:40:19,DO 121,3,5,5,5,5,2,
+325,4/23/2018 17:40:28,Holder 027,5,4,2,1,2,3,"A decent room - huge bedrooms make it easy to unbunk your beds. There's a staircase in the common room leading to a door downstairs, which is pretty inconvenient and limits the usable space in the common room. The closest men's bathroom is 2 floors down, and the closest women's bathroom is 3 floors down. Otherwise 0 complaints about this room. "
+326,4/23/2018 17:40:33,Cuyler 621,5,5,1,1,2,4,2 large singles and a decent sized common room. Also comes with a balcony!
+327,4/23/2018 17:40:34,Clapp Hall 212,5,5,5,4,5,5,"it's a great room! Big common room, and the two doubles were nice :)"
+328,4/23/2018 17:40:39,1937 201,3,1,5,2,2,1,L-shaped: bad news!
+329,4/23/2018 17:40:41,Scully 403,3,1,2,1,4,3,"If you don't loft your bed, you'll only have remaining floor space for one extra chair. Hall bathrooms are generally well maintained, but you have to leave the building to get water/to the kitchen."
+330,4/23/2018 17:40:43,Bloomberg 479,5,4,3,2,5,5,
+331,4/23/2018 17:40:45,1939 Hall 113,5,1,4,2,5,2,
+332,4/23/2018 17:40:49,cuyler 231 ,5,5,5,2,3,5,
+333,4/23/2018 17:40:59,1939 227,5,5,3,2,4,4,"There is a loud, loud banging of pipes in the walls whenever it snows/rains. Loud."
+334,4/23/2018 17:41:06,1976 D112,5,5,5,5,3,3,
+335,4/23/2018 17:41:08,Clapp 202,5,4,5,2,5,5,very dank room
+336,4/23/2018 17:41:19,1939 331,5,5,5,1,5,5,Amazing room.
+337,4/23/2018 17:41:29,1981 F314,1,4,5,3,5,5,
+338,4/23/2018 17:41:32,witherspoon 506,5,4,4,3,4,5,honestly besides AC this is about as nice as a single could get imo
+339,4/23/2018 17:41:33,1976 D306,5,4,5,5,5,4,The quad with the private bathroom is super comfortable and the room is super big and spacious. 
+340,4/23/2018 17:41:35,1938 Hall 132,4,5,5,2,2,3,
+341,4/23/2018 17:41:39,Walkre 122,5,5,4,1,1,3,Walker hall is disgusting. No common areas and ugly interior. Looks like a prison.
+342,4/23/2018 17:41:39,1901 333,5,4,3,1,2,3,"Pretty spacious, the closet has no lights but other than that it is a good single"
+343,4/23/2018 17:41:43,Henry 122,1,1,1,2,3,2,
+344,4/23/2018 17:41:48,Pyne 135,3,2,5,2,3,1,
+345,4/23/2018 17:41:59,1967 B113,5,5,5,4,3,5,Great freshman room! 
+346,4/23/2018 17:42:48,1939 hall 343,3,2,5,1,5,1,"Super super small, shaped like an L makes it really inconvenient. Not enough space. Not really any closet, just kinda 2 bars by the walkway"
+347,4/23/2018 17:43:00,Little 143,3,4,2,3,2,4,Big common room; small bedrooms
+348,4/23/2018 17:43:20,1937 231,5,5,5,4,4,1,
+349,4/23/2018 17:43:22,Forbes Main 404,5,4,5,3,3,3,
+350,4/23/2018 17:43:22,Wendell C214,5,5,4,2,5,5,
+351,4/23/2018 17:43:26,1981 F420,5,5,4,5,3,4,Incredibly spacious common room
+352,4/23/2018 17:43:40,Wilcox 302,5,4,5,4,5,5,Probably best rooms in Wilson for freshmen
+353,4/23/2018 17:43:44,1937 112,2,2,2,2,2,1,
+354,4/23/2018 17:43:56,Laughlin 522,5,5,3,1,2,5,"Woman's bathroom is down a floor, but men's is right next door. Nice because this entryway can't be used as a walkthrough to the other side of the slums so it is quieter than other entryways in the building."
+355,4/23/2018 17:44:32,Lauritzen D107,5,2,4,4,2,4,Can’t keep the shades up as much as I’d like because it’s on the first floor
+356,4/23/2018 17:44:43,2 Dickinson Room 32,5,5,4,5,5,2,"This room is a double, each person their own rooms (very spacious). It is very well lit, and has wooden floors. Overall, this is a very comfortable room "
+357,4/23/2018 17:45:27,Scully 307,4,5,5,1,3,4,
+358,4/23/2018 17:46:13,Forbes A118,3,5,5,3,4,4,Not the biggest room. You can't control your temperature but it's never bad or stuffy.. always good. Your desk space will be taken up if you separate bunk beds bc the stupid bookshelves are huge. I wish there were a way to ditch them.
+359,4/23/2018 17:46:34,Walker 124,5,3,4,1,2,2,Amazing room- very large with a balcony and fireplace
+360,4/23/2018 17:47:07,Campbell 15,1,1,1,1,1,1,Worst Hall on campus. Princeton should be embarrassed to have a Hall like this.
+361,4/23/2018 17:47:21,Lockhart 225,5,3,4,5,5,4,lots of space; two closets
+362,4/23/2018 17:49:19,1915 311,2,2,4,1,5,2,
+363,4/23/2018 17:49:25,Scully 371,5,2,5,1,4,5,The nearby elevator is convenient for laundry on the floor below
+364,4/23/2018 17:49:48,Bloomberg 411,5,3,5,2,5,4,
+365,4/23/2018 17:50:01,Bloomberg 381,5,4,5,4,5,5,
+366,4/23/2018 17:50:06,Pyne 224 ,5,3,5,4,3,2,This room is nice and spacious 
+367,4/23/2018 17:50:30,Forbes 365,5,3,4,2,3,1,This is a freshman-only room. 
+368,4/23/2018 17:50:42,Wilf 202,5,4,5,5,5,5,
+369,4/23/2018 17:50:49,Dod 213,3,5,5,4,5,4,
+370,4/23/2018 17:50:58,Buyers 17,2,3,3,2,3,4,
+371,4/23/2018 17:50:59,1939 Hall 342,1,5,4,1,4,4,
+372,4/23/2018 17:51:00,Cuyler 623,2,4,2,1,1,5,
+373,4/23/2018 17:52:29,"211, 1938 hall",5,3,5,2,3,4,"Great room! 7 person suite with 5 singles, a double, a large common room, and bathroom"
+374,4/23/2018 17:53:40,Scully 367,5,4,5,2,4,5,
+375,4/23/2018 17:54:41,Dodge Osborne 112,5,2,5,4,5,4,
+376,4/23/2018 17:55:40,Joline 434,5,5,4,4,4,2,
+377,4/23/2018 17:56:47,Baker E125,5,4,5,3,4,1,"Typical whitman single of average size. I fit a large couch in addition to my bed, desk, and dresser. The one complaint: people can see into your room through the window, and you cannot adjust the temperature, it's preset to like 65 degrees which is very cold to me (a southerner). Women's bathroom around the corner, but closest laundry is 2 floors down in basement. "
+378,4/23/2018 17:58:26,1903 411,5,3,3,3,3,2,"Right next to stairwell, so can be loud "
+379,4/23/2018 17:58:30,Wright 32,5,4,5,4,4,1,"This is a great room because it is a real triple. Most upperclass triples used to be 3-room doubles but have been converted into triples as the University has begun accepting more students per class year. It is smaller in terms of square feet than other triples, but has a real double, a real single, and a decently-sized common room. Super convenient location (near Dillon and Frist), there is a microwave and hot water tap in the building, laundry and cluster printer in the building, and beyond that what more can you really ask for? Only con is that it is right next to a major pedestrian thoroughfare so it can be a bit noisy at night, but it is manageable if you have a fan or other source of white noise. "
+380,4/23/2018 17:58:47,Whitman Wendell C 209,5,3,4,1,3,1,"Great room! Very large. The only thing is that it is on the ground floor so you might get 1-5 of those creepy centipedes during the school year, but otherwise it's a great room. :)"
+381,4/23/2018 17:59:59,Holder 63,5,5,3,4,5,3,
+382,4/23/2018 18:05:08,A236,5,4,4,2,3,1,room is very tiny
+383,4/23/2018 18:07:12,Witherspoon 501,3,4,5,4,4,4,
+384,4/23/2018 18:08:25,1981 Hall F229,5,5,4,3,4,5,The room is HUGE
+385,4/23/2018 18:09:10,Baker E118,5,3,4,4,4,4,Great room with typical Whitman darkness
+386,4/23/2018 18:09:26,1938 hall room 121,4,3,4,3,3,2,
+387,4/23/2018 18:10:19,Forbes A178,5,4,5,3,4,3,"The official floor plans call this room a triple, but it’s actually a double (the extra person takes a single, which is actually A176). Very close to Wawa, has an attached bathroom, and is overall pretty good for the annex!"
+388,4/23/2018 18:10:57,Forbes 213,2,2,5,4,4,3,
+389,4/23/2018 18:11:09,Dodge Osborne 211,4,2,5,3,4,3,
+390,4/23/2018 18:14:00,Dod 115,5,4,4,4,4,2,
+391,4/23/2018 18:15:36,Buyers T2,3,4,5,1,4,2,
+392,4/23/2018 18:17:08,Dod 101s,1,3,4,3,3,3,
+393,4/23/2018 18:17:14,Spelman34,5,5,5,5,4,5,Spelman is great. The only bad thing is that the walls between the bedrooms are extremely thin so you can hear almost everything your room mates are doing. 
+394,4/23/2018 18:17:55,Lauritzen D207,5,3,3,2,5,5,"Great room, position is fantastic for daylight, the interior is a little dark due to furniture coloring, but the sun never glares onto this side of the building. Highly recommend for any future students. "
+395,4/23/2018 18:18:57,Scully 356,5,5,5,2,4,5,"Conveniently close to stairs, not far from elevator"
+396,4/23/2018 18:19:25,Forbes A436,1,2,3,1,2,1,"If you get stuck with a bad draw time in Forbes good frickin luck. Only perk of the fourth floor annex is that no one's gonna bother you. Mostly cause it's far away but also because it smells bad. Like sweat and whatever the hell drips through the ceiling. My hallmate wakes up to yellow shit on his face twice a week. Even when it doesn't rain. Get used to living with the window open because the outside temperatures are more reliable than Forbes' heating system.
+
+My advice- get a squad together and just ride it out. Solidarity is gonna be your only asset. "
+397,4/23/2018 18:19:41,Yoseloff A113,5,4,5,3,3,5,"Overall great room, a lot of space and ideal to have 3 people in, as the big group splits as a large double and the smaller room a nice single. Bathroom is a little wack but works fine. Only quarrel is the noise being on the ground floor, but that’s just a facet of living on the first floor so not much you can do. Also be careful with the windows, I wish I could have opened them more but it’s a bit awkward to open them right in front of a walkway."
+398,4/23/2018 18:22:49,Brown 228 ,1,4,4,3,4,3,"The heaters make a LOT of noise and the bedrooms are tiny, but the location of Brown is super convenient and the common room is a good size"
+399,4/23/2018 18:23:25,Bloomberg 359,5,1,5,1,3,1,
+400,4/23/2018 18:25:29,Fisher A308,5,4,5,5,5,5,Amazing room!
+401,4/23/2018 18:26:13,1981 F027,5,4,4,4,5,5,
+402,4/23/2018 18:28:44,Clapp 232,5,2,5,2,4,3,"Amazing common room and view, window faces 1938
+"
+403,4/23/2018 18:29:56,Holder 31,3,3,2,3,4,4,
+404,4/23/2018 18:35:34,Forbes A378,5,4,4,2,2,1,
+405,4/23/2018 18:42:36,Little 71,4,4,3,2,5,4,"The common room is super large, which is great, and little hall is just great location wise. We had a few cockroaches at the start of the year, but they cleared up pretty quickly. It is on the first floor, so you can climb through a window if you lock yourself out. "
+406,4/23/2018 18:45:33,scully 435,5,4,4,2,5,5,
+407,4/23/2018 18:46:25,Cuyler 421,1,5,4,1,2,3,"This room should really be a double, not a triple; it's nearly impossible to debunk, but if done, the spacing is extremely awkward."
+408,4/23/2018 18:49:03,1938 236,1,1,5,1,1,3,"The smaller double is less than 8 feet wide. Generally the room is awkward and cramped. The nearest laundry room has only two washers, and isn't even in the same building. The bathroom is very close, but has one shower/toilet for the whole floor."
+409,4/23/2018 18:52:53,1938 hall 131,5,2,4,2,2,1,common space is too small!
+410,4/23/2018 18:58:48,Lockhart 223,4,4,4,4,4,4,
+411,4/23/2018 19:01:34,Brown 329,5,3,5,3,4,2,"Brown 329 has been one of my favorite rooms at Princeton, despite the many negative aspects. I lived in Scully junior year, and the only reasons why my Scully room would be slightly better is because of the private bathroom and the elevators (Brown has no elevators fyi). It was also slightly closer to the kitchenette, which can be a deal breaker if you're independent. 
+
+The space in Brown 329 is incomparable. In addition to what we usually get in a room, I was able to comfortably fit a full-sized futon, an ottoman, two 5x7 rugs, a coffee table, and a mini fridge with enough room to do yoga (lol). It is super close to the Women's bathroom. The Men's bathroom is on the other side of the building, which is also where the kitchen is located. The heater in the ""living room"" just does not work, so I had to open the windows most days (even in the winter) so the room wouldn't feel like sauna. The one in the bedroom won't turn on, but it's not much of a problem, especially since the heater in the living room is so hot that it warms both rooms. The walls are also SUPER  thin. Also, if you hate insects (especially of the centipede variety), beware. Cuyler doesn't have laundry, so the laundry room in Brown is often crowded. Most of the dryers don't work either. None of these were huge inconveniences for me, and I think I'm pretty picky, but they are all things worth keeping in mind."
+412,4/23/2018 19:04:48,Wilcox 306,5,5,5,3,5,4,"Wilcox Hall itself is an anomaly. We have truly been blessed. It is the third floor of the dining hall, and the rooms are HUGE! The third floor used to be an office space. There is a room in the floor that serves as a common room. Insanely nice. Amazing bathrooms. Everything is wonderful. Proximity to the dining hall and everything in Wilcox (JStreet library, Blackbox theater, Butler library, Wu common space, all the offices, everything!) is obviously right here, can be accessed without going outside. Wilcox is essentially the best dorm hall in all of Wilson, but it is only for freshmen, so I am not sure how this will factor into your app. Good luck with your app!"
+413,4/23/2018 19:05:05,Holder 46,5,4,5,3,5,3,"No air conditioning, and there are sometimes roaches in the fall (we only got 2 or 3). Great common space! They also redid the flooring this year."
+414,4/23/2018 19:07:32,Walker 314,5,5,3,1,4,3,
+415,4/23/2018 19:09:52,Spelman 56,5,5,5,5,5,1,Only con to Spelman is thin walls and bad insulation. Tower 5 has particularly nice views. Get a top room regardless if you can--it's worth the stairs. 
+416,4/23/2018 19:09:56,Dod 315,1,5,5,5,5,5,This is a beautiful room!!!
+417,4/23/2018 19:09:55,Wilf 305,5,5,5,5,4,5,
+418,4/23/2018 19:20:29,Patton 40,5,3,3,1,1,2,
+419,4/23/2018 19:28:01,Bloomberg 372,1,3,5,2,2,4,
+420,4/23/2018 19:29:33,Scully 353,5,5,5,4,4,3,
+421,4/23/2018 19:33:43,Holder 067,4,2,5,1,2,3,
+422,4/23/2018 19:34:19,Witherspoon 101,3,3,5,3,3,3,
+423,4/23/2018 19:34:39,Patton T05,5,5,5,4,4,4,"It's a single, so debunking is not relevant; gorgeous room, a lot of natural light and great storage options...also features a balcony!"
+424,4/23/2018 19:35:48,Clapp 231,5,4,5,4,5,5,"This is a great room with a big common room! The bedrooms are carpeted, the common room has wooden floors. Walls are a bit thin but you are up on the third floor so most noise won't reach you. All in all, one of the best quads in Wilson!"
+425,4/23/2018 19:36:00,Witherspoon 204,2,4,5,2,4,2,
+426,4/23/2018 19:36:29,Butler 1967 Hall B311,5,5,5,5,5,5,Pipes are quite noisy in winter
+427,4/23/2018 19:37:46,"1981 Hall, Room F401",1,2,5,5,4,3,RCA room
+428,4/23/2018 19:39:32,Wright 306,5,4,5,2,4,1,Best double on campus (2 large singles and 1 large common room). Always the first upperclass double taken.
+429,4/23/2018 19:43:13,Hargadon 304B,5,5,3,3,4,4,"bay window is lovely and faces full west, so lots of light in the afternoon"
+430,4/23/2018 19:44:05,1901 Hall 411,5,3,4,4,4,3,"The room is huge. 840 square feet for 3 people. The single is kind of small, but liveable. The double is huge with 2 closets. The common room is the biggest one I've seen on campus. "
+431,4/23/2018 19:48:31,Holder 79,5,3,5,1,2,3,
+432,4/23/2018 19:50:48,Whitman E316,5,3,4,4,5,3,It's good for roommates who like a bit of space! Me and my roommate were able to live in a double but also feel like we have our own personal space because of the two separate rooms. 
+433,4/23/2018 19:53:52,Bloomberg 261,5,2,5,5,5,5,
+434,4/23/2018 19:58:23,Witherspoon 121,5,5,5,4,4,4,
+435,4/23/2018 20:00:24,1976 Hall D206,5,5,5,4,4,5,
+436,4/23/2018 20:01:27,1915 222,2,2,3,1,5,3,
+437,4/23/2018 20:02:48,1915 Hall 423,5,3,1,1,2,2,
+438,4/23/2018 20:07:45,Fisher A205,5,2,5,5,4,4,a m a z i n g  r o o m
+439,4/23/2018 20:11:29,Lauritzen D207,5,4,3,2,4,4,
+440,4/23/2018 20:12:05,Wendell C215,5,3,5,3,5,3,
+441,4/23/2018 20:15:26,1938 112,1,4,4,1,2,1,Fix my damn heater princeton
+442,4/23/2018 20:22:19,Little A16,3,4,5,4,4,2,Common room is very spacious with a lot of lighting and decorating potential
+443,4/23/2018 20:25:12,Laughlin 634,1,3,1,1,1,3,This room is terrible. Avoid at all costs. 
+444,4/23/2018 20:26:15,Pyne 723,5,5,5,2,3,3,"This is a DA room so its pretty big. Also, a huge closet with four windows overlooking Pyne courtyard. Only complaint is that the courtyard is an echo chamber so it can sometimes be quite loud."
+445,4/23/2018 20:27:24,1915 Hall 614,5,5,5,3,5,3,Great single
+446,4/23/2018 20:32:06,Blair 96,4,3,3,4,4,4,"Really spacious even when unbunked, although it’s a little weirdly shaped"
+447,4/23/2018 20:32:11,Joline 221,3,5,3,2,4,3,
+448,4/23/2018 20:33:41,Holder 116,5,4,5,3,5,4,"While it is pretty big for a single 176 square feet, the walls facing Nassau are slanted so it seems a bit smaller. "
+449,4/23/2018 20:35:35,Forbes 369,5,5,5,2,2,1,Pretty large double with enough room for a small couch. Closets are very spacious. It gets very hot in the warmer months since it is in the attic. 
+450,4/23/2018 20:35:39,Blair B92,5,4,2,5,5,3,
+451,4/23/2018 20:36:32,Holder 141,2,2,2,2,3,2,"Because it is at the end of holder and very isolated, the cleaning crew tends not to take out the trash regularly. Once, the trash was outside the room for a month and we got fruit flies. In addition, it is literally the smallest quad on campus. Only two desks fit in the common room, so you can only unbunk the beds in one room. It's also lowkey cursed."
+452,4/23/2018 20:36:40,Hamilton 124,5,4,5,2,5,4,
+453,4/23/2018 20:36:46,Blair 91,3,3,2,3,4,3,"Well no A/C, but you can adjust the heat super well and it's really nice. This room is v underrated because it was drawn last last year (I was the last draw group). It is debunkable and has a big common room, but the bedrooms are quite small and you have to be clever with debunking."
+454,4/23/2018 20:37:23,Scully 442,5,5,5,5,5,5,
+455,4/23/2018 20:37:33,Blair 111,4,5,4,3,3,5,
+456,4/23/2018 20:37:58,B202 1967 Hall,5,4,5,5,5,4,
+457,4/23/2018 20:38:59,Blair 303,2,1,3,3,3,1,
+458,4/23/2018 20:40:46,43 Blair,4,4,3,3,4,3,
+459,4/23/2018 20:41:13,Blair 71,1,3,2,1,2,3,
+460,4/23/2018 20:43:15,Brown 213,5,4,5,3,4,4,"I think it's important that you discuss access to bathrooms in a gendered context (w/ potentially also stuff about access to degendered bathrooms). For example, my room is close to the boys' bathroom but not to the girls' bathroom (which is all the way on the other side of the building."
+461,4/23/2018 20:45:37,Joline 413,5,3,3,3,4,3,
+462,4/23/2018 20:45:51,Pyne 141,5,3,3,1,2,2,Excellent room for girls! (bathroom right down the hall). Men's bathroom is 2 floors down...
+463,4/23/2018 20:47:49,1981 Hall F229,5,4,4,3,4,4,It's large af
+464,4/23/2018 20:47:50,1981 F123,5,4,5,4,5,5,
+465,4/23/2018 20:48:07,1903 241,5,4,5,1,3,5,
+466,4/23/2018 20:48:10,Spelman 23,5,5,5,5,4,2,
+467,4/23/2018 20:51:00,Scully 208,1,4,5,5,4,3,
+468,4/23/2018 20:54:45,Baker E114,3,4,4,4,2,4,
+469,4/23/2018 21:00:13,Laughlin 617,5,2,5,2,5,3,"It's a great room in terms of proximity to laundry and bathroom. In an all girls hallway. Only cons are that it can be kind of dark in there if you don't keep the windows open during the day, but everyone can see in since it's on the first floor."
+470,4/23/2018 21:00:52,Bloomberg 274,5,4,5,3,5,5,
+471,4/23/2018 21:04:09,Little 63,5,4,5,1,4,3,One bedroom is significantly smaller
+472,4/23/2018 21:04:16,Edwards 208,5,3,2,2,4,1,
+473,4/23/2018 21:04:31,Spelman 51,5,5,5,5,5,4,
+474,4/23/2018 21:09:01,Joline 421,4,5,2,3,4,3,It's livable 
+475,4/23/2018 21:09:46,1927 125,5,5,5,3,5,2,
+476,4/23/2018 21:10:36,Hamilton 112,5,4,3,4,5,3,
+477,4/23/2018 21:11:14,Joline 121,2,2,1,3,4,2,Small and shit
+478,4/23/2018 21:11:16,Hamilton 113,5,5,2,2,5,5,Close to Nassau street but isolated from the rest of campus
+479,4/23/2018 21:12:10,Wilf 108,5,4,5,4,4,5,
+480,4/23/2018 21:14:03,1937 202,5,3,4,1,1,1,"Small, old, dusty, moldy, no A/C"
+481,4/23/2018 21:17:27,Bloomberg 335,1,3,4,3,4,4,
+482,4/23/2018 21:18:12,Yoseloff A104,5,4,5,5,3,5,
+483,4/23/2018 21:20:01,Lockhart 222,5,5,5,3,3,4,
+484,4/23/2018 21:20:19,Campbell 65,5,3,4,3,2,2,It's nice to have a two-room double but Campbell is not a nice part of Mathey. Look first for two-room double elsewhere before considering this. 
+485,4/23/2018 21:20:34,Pyne 626,5,2,5,2,3,2,
+486,4/23/2018 21:22:56,Edwards 218,5,3,3,1,3,1,"Edwards is very gross, but at least it's a single ;D you'll be fine"
+487,4/23/2018 21:24:31,1967 B304,5,4,5,5,4,4,Its dope
+488,4/23/2018 21:24:46,Campbell 55 (Mathey),4,4,5,3,3,2,
+489,4/23/2018 21:25:00,Campbell 054,1,3,3,2,3,4,"Forced triple, which sucks"
+490,4/23/2018 21:25:22,515 1903 Hall,5,4,4,4,4,2,"The room is centrally located, on the first floor, which makes it pretty convenient. I do have to warn about the noise level in this room though. We are right at the corner of the path that a lot of people pass through on their way to/from the street so it can get loud at night. Also, the radiator is incredibly loud during the winter, so buy earplugs!!"
+491,4/23/2018 21:27:17,Joline 221,4,4,2,3,3,3,Great freshman dorm. Great view of Mathey court Yard. Cozy but not near any classes. 
+492,4/23/2018 21:33:15,Forbes A418,5,5,5,1,3,4,4 floors
+493,4/23/2018 21:43:45,Joline 123,2,4,4,3,3,2,Beds in the smaller room can't be debunked. Otherwise a nice quad with a large common room 
+494,4/23/2018 21:43:58,Little 11,5,4,3,4,5,2,This is a 3-room double RCA room. 
+495,4/23/2018 21:44:26,Little 18,5,4,5,4,4,3,
+496,4/23/2018 21:49:23,Little 318,5,5,5,1,2,3,"My favorite room of all 4 years at Princeton. Spacious single however, reported square-footage is a bit misleading because there is some un-useable space like a single step up into the room upon entering the room and a small window nook that could fit a chair or small bean bag perhaps. Can get noisy on nights out since it backs up to the slums."
+497,4/23/2018 21:53:52,Patton T06,1,5,5,3,2,2,"Terrible room to live in as a triple. The room is clearly in a common room + 2x singles format, and the two rooms attached to the common room are very small. "
+498,4/23/2018 21:54:03,Joline 111,3,3,1,1,4,4,Jo 111 is a fantastic room
+499,4/23/2018 21:57:16,Cuyler 613,1,5,3,1,3,4,
+500,4/23/2018 22:05:46,Campell 52A,5,3,3,3,2,4,
+501,4/23/2018 22:07:41,Little 53,3,2,4,1,2,3,"Great location, fun space!"
+502,4/23/2018 22:07:49,Campbell 54,1,3,2,2,2,1,
+503,4/23/2018 22:16:52,Blair 44,5,5,5,2,3,3,"Good room overall, but the floors are ridiculously creaky"
+504,4/23/2018 22:21:54,Lockhart 412,5,5,5,2,2,4,
+505,4/23/2018 22:23:08,Forbes A331,3,4,4,4,2,1,
+506,4/23/2018 22:23:59,Joline 214,5,4,3,4,5,3,
+507,4/23/2018 22:25:02,1927 131,5,4,5,1,4,3,"This room is awesome. It's a bi-level suite with a big common room and a loft. We were able to fit three couches! The upstairs room was amazing. It has a peaked ceiling and looks out onto the roof for optimal privacy. Only drawbacks were that the huge window meant it got quite hot when it was hot outside, and if you open the windows in the upstairs bedroom the fans on the roof are quite loud."
+508,4/23/2018 22:25:24,Blair 301,5,4,2,1,1,1,
+509,4/23/2018 22:26:46,Brown 321,2,5,3,4,5,3,"Overall great room. Great central location, large common room with lots of lighting and a good view. Only gripes come from the fact that the double rooms can't be unbunked; also the mens room is down the hall, while the women's room is next door. "
+510,4/23/2018 22:27:40,Wilf E205,5,5,5,5,4,5,This room is pretty much a typical Butler quad. The main thing that sets it apart is that it is next door to a good sized kitchen (the Wilf kitchens are bigger than the rest in Butler) and it is hardly ever in use because no independents live on this floor.
+511,4/23/2018 22:28:57,Spelman 34,5,5,5,5,5,5,
+512,4/23/2018 22:29:50,Butler Yoseloff A106,4,5,5,3,4,3,
+513,4/23/2018 22:31:53,Yoseloff A115,5,5,5,4,4,5,
+514,4/23/2018 22:39:23,Blair 41,3,3,4,2,4,4,"Near the arch, so can get a bit noisy. Not super private because it is on the first floor. Overall really nice clean area! We didn't debunk, so there is a lot of room."
+515,4/23/2018 22:40:21,Walker 225,5,4,5,2,4,4,This room is super super spacious and has a central location! 
+516,4/23/2018 22:40:44,Dod 316,5,5,5,3,4,5,"Pretty small. Can't host people very easily. But good for one person (although can feel small even for one person at times). If you arrange the furniture smartly, though, it's a nice space."
+517,4/23/2018 22:41:50,1901 104,1,3,2,3,2,3,Terrible location. would not recommend. hard to socialize.
+518,4/23/2018 22:44:02,Walker 322,1,4,5,1,2,3,"It has a great common room that's a little awkwardly laid out (weird placements of doors and windows), but makes up for that with the space and amount of windows. Also a fire escape that's great to chill on in warm weather. You can't really unbunk the beds though. Overall, pretty nice quad. "
+519,4/23/2018 22:47:48,wilf 302,5,3,5,5,4,5,
+520,4/23/2018 23:16:24,Holder 52,2,3,2,4,3,2,"One perk about this room is that we've never seen a cockroach (yet!). One bad thing is that the floor creaks a lot, which can be annoying. The wardrobes are tiny. The space between beds after debunked is just enough for 1.5 person to pass. Common room is relatively large. "
+521,4/23/2018 23:24:29,Blair 64,2,3,5,4,3,4,
+522,4/23/2018 23:29:23,Pyne 334,5,4,5,1,4,4,
+523,4/23/2018 23:37:29,Pyne 443,5,2,1,1,1,3,"window seat
+"
+524,4/23/2018 23:42:13,1915 622,5,3,3,1,5,4,"Probably contrary to popular opinion, if you're female and want a single, I believe 1915 entryway 4/5/6 living is not a bad option for living. Just because it doesn't have ac doesn't mean that the rooms aren't large in sq footage and cozy if you'd like them to be :) I had a wonderful experience in my room! "
+525,4/23/2018 23:46:02,Edwards 213,5,5,5,4,3,4,"incredible freshman year single, enjoy this precious room while you can"
+526,4/23/2018 23:50:40,1901 141,5,4,2,1,3,2,
+527,4/23/2018 23:59:38,Forbes Annex 416,5,3,5,1,1,1,Decent floor space.
+528,4/24/2018 0:04:47,Pyne 123,5,3,5,3,2,3,
+529,4/24/2018 0:17:06,1903 401,5,5,5,5,5,3,It's a beautiful hobbit hole 
+530,4/24/2018 0:30:31,Dodge Osborn 122,5,5,5,3,4,4,Nice space for a single!!!!
+531,4/24/2018 0:31:20,1981 F107,5,5,5,5,4,3,best room
+532,4/24/2018 0:35:58,Murley T402,4,3,3,1,3,5,
+533,4/24/2018 1:25:46,Walker 221,1,4,3,1,2,4,Good common room
+534,4/24/2018 7:22:15,Blair 54,4,4,5,4,4,4,
+535,4/24/2018 8:29:32,Blair 063,5,5,5,5,5,5,"On the first floor when you walk in, but it actually overlooks the whole U-Store/Blair Walk area from a second-story view, so it's a win-win. Plenty of space, extra storage closet, long window bench with five windows. You can't lose with this room – I'm sad to leave it!"
+536,4/24/2018 10:43:23,1976 d309,5,5,5,3,5,4,typical Butler quad very nice
+537,4/24/2018 10:57:07,Forbes 235,5,3,5,4,5,4,
+538,4/24/2018 11:12:12,Blair B81,5,2,5,5,4,5,Ground level windows that can be opened.
+539,4/24/2018 11:13:34,Joline 432,3,2,3,3,4,1,
+540,4/24/2018 11:14:23,Campbell 63,5,4,4,3,4,3,
+541,4/24/2018 11:27:18,T04 Patton Hall,3,4,5,4,5,3,"Bunk Beds: It is a single, so there's only one bed
+Lighting: pretty good at night, but really good during the day because there are lots of windows
+Bathrooms: Women's bathroom is super close, men's not so much
+Kitchen: It's close, but super small. Definitely wouldn't advise an independent live there
+Heat: My room is often really warm, which I personally like. There is no thermostat, so if you don't like warmth, you might have a bad time"
+542,4/24/2018 11:35:44,Little 121,1,3,3,2,4,3,
+543,4/24/2018 11:47:00,Pyne 715,5,4,3,2,4,4,
+544,4/24/2018 12:28:32,Forbes A247,5,4,5,4,3,1,
+545,4/24/2018 12:58:13,Forbes A122,5,3,5,3,3,5,
+546,4/24/2018 14:04:32,Joline 413,3,4,2,4,4,4,
+547,4/24/2018 14:58:58,1901 211,5,4,5,3,2,3,"It's a Dormitory Assistant room so it's exceptionally big, and not anyone could choose it for room draw"
+548,4/24/2018 15:31:48,Dod 101,5,5,5,5,5,5,"Relatively small, but comfy if you don't need a lot of space"
+549,4/24/2018 15:41:35,1903 324,1,5,5,5,5,3,"Great room! Plenty of natural light, common room space is more than enough. The double is a little tight but honestly not a problem at all. Highly recommend"
+550,4/24/2018 16:09:37,Edwards 318,5,5,5,3,3,2,"Good room -- it's a humble, satisfying single! "
+551,4/24/2018 16:14:34,Spelman 36,5,5,5,5,5,4,"Window occasionally leaks, but a great room with a great view"
+552,4/24/2018 16:15:15,1938 115,4,2,5,2,4,3,
+553,4/24/2018 16:29:41,1903 Hall 225,5,5,3,3,3,5,
+554,4/24/2018 16:47:58,Little 25,5,4,5,3,3,3,
+555,4/24/2018 16:51:42,Blair 81,1,4,1,3,4,3,Decent Common Room
+556,4/24/2018 19:06:51,Walker 213,5,4,5,1,3,3,
+557,4/24/2018 20:12:21,Scully 333,5,4,5,4,5,5,"This room was fantastic! The space is incredible, and it is a single. "
+558,4/24/2018 20:21:16,Whitman 1981 F103,5,4,5,4,4,4,"One of the bedroom looks directly out into Whitman courtyard, so there is not much privacy with the shades open; the other bedroom is on the second floor (because Whitman's on a hill). Good light at all times of day because it is a corner room with lots of windows. laundry a few floors away; bathroom just down the hall; very convenient to dining hall; printer in whit library or 2 floors down. "
+559,4/24/2018 20:22:49,Spelman 64,5,2,5,5,2,5,"64 has better privacy than some of the other Spelman rooms since the common room window is facing the grass and trees looking towards the junior slums, rather than Pyne Dr where a lot of people are constantly walking by."
+560,4/24/2018 21:13:05,1981 F317,5,4,5,5,4,5,Great room.
+561,4/24/2018 21:34:15,1981 F212,3,4,4,2,3,4,"It is right next to the women's bathroom which keeps me up every fucking night. Also it is right next to where the food delivery truck goes into the dining hall, so that also wakes me up at the crack of fucking dawn daily. Other than that, it is chill"
+562,4/24/2018 22:34:21,Brown 222,5,5,5,5,5,5,"Women's bathroom is right next door, which is good, but the slamming stall doors reverberate loudly against the wall, which is a negative."
+563,4/25/2018 0:01:09,Scully 207,5,4,5,3,5,4,"cozy and quiet, kitchenette next door and laundry just one floor below."
+564,4/25/2018 2:59:47,Gauss 135,5,4,3,2,5,3,RCA room- one of the best in Wilson. Essentially is the size of two rooms. Nice living room to yourself and a bedroom. Loved it!
+565,4/25/2018 10:12:48,1967 B111,5,3,5,5,4,4,
+566,4/25/2018 11:09:36,Feinberg 202,4,4,5,2,3,2,
+567,4/25/2018 11:45:34,Fisher A212,5,3,5,5,4,2,great room
+568,4/25/2018 12:32:54,Bloomber 279,5,5,5,4,5,5,"This is a wonderful room -- the attached bathroom is very convenient, and the lighting/view is perfect. It's close to the laundry room + the exits, so even though it's a bit on the smaller side, as Bloomberg singles go, 279 is definitely a good choice."
+569,4/25/2018 13:05:59,1903 333,5,4,5,3,5,4,
+570,4/25/2018 13:24:35,Forbes A150,5,5,5,5,5,3,"Very spacious, beautiful golf course view in the fall/spring"
+571,4/25/2018 13:57:54,Baker 104,5,5,5,4,4,5,"Super close to Wawa, really loud because the entryway door is nearby, common space nearby that can get loud, the light from the hallway can be annoying"
+572,4/25/2018 14:34:34,1903 211,5,3,3,5,5,3,
+573,4/25/2018 15:22:42,Scully 116,5,5,5,5,3,5,
+574,4/25/2018 16:07:09,Joline 432,2,2,3,3,3,2,very tiny room with little space and odd geometry due to the roof
+575,4/25/2018 18:55:19,Walker 318,5,5,4,3,4,4,One of the bigger doubles in Wilson. Great light and view of courtyard.
+576,4/25/2018 21:36:50,Laughlin 633,5,5,3,1,4,5,
+577,4/26/2018 16:00:10,Henry 234,3,2,5,1,3,2,"Pros: Common room is pretty large; Windows look out on the street, not the courtyard so it's really quiet; can debunk beds in the double. Cons: Common room is oblong and a weird shape; The single is pretty small, and the double is on the smaller side (but is still decent); Henry is loud and gross. One thing to note is that the room next door has a balcony they can get out onto which looks directly into the windows of the single and the common room, so be careful!"
