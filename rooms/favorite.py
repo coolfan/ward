@@ -109,15 +109,19 @@ def reorder_favorites(user, db):
     if group is not None:
         ranked_room_list = group.getfavoritelist()
 
-    favoriteid_list = request.get_json()
-    real_favoriteid_list = {rr.id for rr in ranked_room_list.ranked_rooms}
-    if set(favoriteid_list) != set(real_favoriteid_list):
+    # Ensure that they give us a list of all the room ids
+    roomid_list = request.get_json()
+    real_roomid_list = {rr.room.id for rr in ranked_room_list.ranked_rooms}
+    if set(roomid_list) != set(real_roomid_list):
         abort(400)
 
-    faverooms = [db.RankedRoom.get(id=fid) for fid in favoriteid_list]
+    ranked_rooms = [
+        ranked_room_list.get_by_room(db.Room[rid])
+        for rid in roomid_list
+    ]
 
-    for newrank, faveroom in enumerate(faverooms): # this should fix things??
-        faveroom.rank = newrank
+    for newrank, ranked_room in enumerate(ranked_rooms):
+        ranked_room.rank = newrank
 
     return jsonify({"success": True})
 
@@ -130,7 +134,7 @@ def favorites(user, db):
     """
     groups = user.groups
 
-    group_id = request.args.get("id")
+    group_id = request.args.get("groupid")
 
     if group_id is None:
         lists = dict()
