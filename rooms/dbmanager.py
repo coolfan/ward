@@ -1,89 +1,123 @@
-import json
 import os
 from functools import wraps
 
 from flask import g
-from pony.orm import Database, Required, Optional, LongStr, Json, \
-    db_session, select
-from pony.orm import Set as PonySet
-
-from .conf import DB_NAME, DB_TYPE
+from pony.orm import Database, Required, Optional, LongStr, db_session, PrimaryKey, Set, exists
 
 
 def define_entities(db: Database) -> None:
     class Room(db.Entity):
-        # Some rooms are reserved for freshman, disabled, etc
-        # This changes year, to year however, so we will track all rooms we
-        # know about, and will simply not show reserved rooms in queries.
+        id = PrimaryKey(int, auto=True)
         reserved = Required(bool)
-
-        # Location information
         college = Required(str)
         building = Required(str)
         floor = Required(str)
         roomnum = Required(str)
-
-        # Details
         sqft = Required(int)
         occupancy = Required(int)
         numrooms = Required(int)
         subfree = Required(bool)
+        ranked_rooms = Set('RankedRoom')
+        reviews = Set('Review')
+        room_draws = Set('RoomDraw')
 
-        # Reverse mappings (mainly for pony.  don't remove!)
-        favorites = PonySet("FavoriteRoom")
-        reviews = PonySet("Review", reverse="room")
-        drawings = PonySet("RoomDraw", reverse="room")
+    class RankedRoom(db.Entity):
+        id = PrimaryKey(int, auto=True)
+        room = Required(Room)
+        ranked_room_list = Required('RankedRoomList')
+        rank = Required(int)
+
+    class RankedRoomList(db.Entity):
+        id = PrimaryKey(int, auto=True)
+        name = Optional(str)
+        ranked_rooms = Set(RankedRoom)
+        shared_with_users = Set('User')
+        shared_with_groups = Set('Group')
+
+        def __contains__(self, item):
+            if isinstance(item, Room):
+                for rr in self.ranked_rooms:
+                    if rr.room == item: return True
+            return False
+
+        def get_by_room(self, room):
+            for rr in self.ranked_rooms:
+                if rr.room == room: return rr
+            return None
 
     class User(db.Entity):
-        netid = Required(str)
-        group = Required("Group")
-        reviews = PonySet("Review", reverse="owner")
-        requests = PonySet("GroupRequest", reverse="from_user")
+        id = PrimaryKey(int, auto=True)
+        netid = Required(str, unique=True)
+        ranked_room_lists = Set(RankedRoomList)
+        groups = Set('Group')
+        requests_made = Set('GroupRequest')
+        reviews = Set('Review')
+        group_invites = Set('GroupInvite')
 
         @classmethod
         def get_or_create(cls, **kwargs):
             o = cls.get(**kwargs)
             if o:
                 return o
+            u = cls(**kwargs)
+            u.ranked_room_lists.create(name="Personal Favorites")
+            return u
 
-            g = Group()
-            return cls(group=g, **kwargs)
+        def getfavoritelist(self):
+            return self.ranked_room_lists.select()[:][0]
 
     class Group(db.Entity):
-        members = PonySet(User)
-        favorites = PonySet("FavoriteRoom")
-        requests = PonySet("GroupRequest", reverse="to_group")
+        id = PrimaryKey(int, auto=True)
+        members = Set(User)
+        name = Optional(str)
+        drawtype = Optional(str)
+        timefromstart = Optional(int)
+        ranked_room_lists = Set(RankedRoomList)
+        group_requests = Set('GroupRequest')
+        invites_made = Set('GroupInvite')
 
-    class FavoriteRoom(db.Entity):
-        group = Required(Group)
-        room = Required(Room)
-        rank = Required(int)
+        def getfavoritelist(self):
+            rrls = self.ranked_room_lists.select()[:]
+            if len(rrls) > 0: return rrls[0]
+            else:
+                self.ranked_room_lists.create()
+                return self.ranked_room_lists.select()[:][0]
 
-    class GroupRequest(db.Entity):
-        from_user = Required(User)
-        to_group = Required(Group)
-        message = Optional(str)
-        status = Required(
-            str,
-            py_check=lambda s: s in {"Pending", "Approved", "Denied"}
-        )
+        def to_dict(self, netid=""):
+            d = super(Group, self).to_dict()
+            d["members"] =[
+                member.netid for member in self.members
+                if member.netid != netid
+            ]
+            return d
 
     class Review(db.Entity):
-        owner = Required(User)
+        id = PrimaryKey(int, auto=True)
+        user = Required(User)
         room = Required(Room)
         rating = Required(int)
         text = Optional(LongStr)
-
-        # store pictures as list of file names? vs storing as raw bytes
         pictures = Optional(str)
 
     class RoomDraw(db.Entity):
-        draw_year = Required(int)  # Year the draw took place
-
-        # timefromstart excludes weekends!!
-        # timefromstart is the number of seconds from the start of draw
+        id = PrimaryKey(int, auto=True)
+        draw_year = Required(int)
         timefromstart = Required(int)
         room = Required(Room)
+
+    class GroupRequest(db.Entity):
+        id = PrimaryKey(int, auto=True)
+        message = Optional(str)
+        from_user = Required(User)
+        status = Required(str, py_check=lambda s: s in {"Pending", "Approved", "Denied"})
+        to_group = Required(Group)
+
+    class GroupInvite(db.Entity):
+        id = PrimaryKey(int, auto=True)
+        to_user = Required(User)
+        from_group = Required(Group)
+        message = Optional(str)
+        status = Required(str, py_check=lambda s: s in {"Pending", "Approved", "Denied"})
 
 
 def get_app_db():

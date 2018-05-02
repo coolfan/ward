@@ -4,126 +4,166 @@ from flask import request, logging, jsonify, session, Response, Blueprint, \
     abort, current_app
 from pony.orm import db_session, select
 
-from rooms import app, cas, conf
+from rooms import cas, conf
+from rooms.flask_extensions import AuthBlueprint
 import rooms.dbmanager as dbm
 
-blueprint = Blueprint("favorite", __name__)
+blueprint = AuthBlueprint("favorite", __name__)
 
 logger = logging.getLogger(conf.LOGGER)
 
 
-@blueprint.route("/favorite", methods=["GET"])
-@cas.authenticated
-@dbm.use_app_db
-def favorite(db) -> Response:
+def _verify_args(request_args, user, db):
+    """
+    Verify the args to a favorite function - checks valid roomid, groupid.
+    :returns: if valid, returns the room, group
+    """
+    if "roomid" not in request_args:
+        return False, Response("Missing roomid", 400), None
+    room_id = request_args["roomid"]
+
+    if not db.Room.exists(id=room_id):
+        return False, Response("Invalid roomid", 422), None
+    room = db.Room[room_id]
+
+    group = None
+    if "groupid" in request_args:
+        group_id = request_args["groupid"]
+        if not db.Group.exists(id=group_id):
+            return False, Response("Invalid groupid", 422), None
+        group = db.Group[group_id]
+
+        if user not in group.members:
+            return False, Response("You are not in this group", 403), None
+
+    return True, room, group
+
+
+
+
+@blueprint.auth_route("/favorite", methods=["GET"])
+def favorite(user, db) -> Response:
     """
     Adds a room to favorites list of group to which the currently logged in
     user belongs.  Expects parameters in url params:
         - roomid: id of the room to add to favorites list
     :return: Response(200) if successful
     """
-    if "roomid" not in request.args:
-        return Response("Missing roomid", 400)
-    roomid = request.args.get("roomid")
 
-    if not db.Room.exists(id=roomid):
-        return Response("Invalid roomid", 422)
-    room = db.Room[roomid]
+    # falg indicates validity.  Other holds error response, or tuple room, group
+    flag, *other = _verify_args(request.args, user, db)
+    if not flag:
+        return other[0]
+    room, group = other
+    ranked_room_list = user.getfavoritelist()
+    if group is not None:
+        ranked_room_list = group.getfavoritelist()
 
-    netid = cas.netid()
-
-    user = db.User.get_or_create(netid=netid)
-    group = user.group
-
-    if db.FavoriteRoom.get(group=group, room=room) is None:
-        app.logger.debug(f"{netid} has favorited room {roomid}")
-        curr_faves = group.favorites
-        fav = db.FavoriteRoom(
-            group=group, room=room, rank=len(curr_faves)
-        )
+    if room in ranked_room_list:
+        current_app.logger.debug("Favoriting an already favorite room")
     else:
-        app.logger.debug(f"{netid} attempted to favorite room {roomid} again")
+        fav = db.RankedRoom(
+            room=room,
+            rank=len(ranked_room_list.ranked_rooms),
+            ranked_room_list=ranked_room_list
+        )
+
     return jsonify({'success': True})
 
 
-@blueprint.route("/unfavorite", methods=["GET"])
-@cas.authenticated
-@dbm.use_app_db
-def unfavorite(db):
+@blueprint.auth_route("/unfavorite", methods=["GET"])
+def unfavorite(user, db):
     """
     Removes a room from favorites list of group to which the currently
     logged in user belongs.  Expects parameters in form data:
         - roomid: id of the room to remove from favorite list
     :return:
     """
-    if "roomid" not in request.args:
-        return Response("Missing roomid", 400)
-    roomid = request.args.get("roomid")
+    flag, *other = _verify_args(request.args, user, db)
+    if not flag:
+        return other[0]
+    room, group = other
+    ranked_room_list = user.getfavoritelist()
+    if group is not None:
+        ranked_room_list = group.getfavoritelist()
 
-    if not db.Room.exists(id=roomid):
-        return Response("Invalid roomid", 422)
-    room = db.Room[roomid]
-
-    netid = cas.netid()
-    user = db.User.get_or_create(netid=netid)
-    group = user.group
-
-    fav = db.FavoriteRoom.get(room=room, group=group)
-    if fav is not None:
-        app.logger.debug(f"{netid} unfavorited room {roomid}")
-        deleted_rank = fav.rank
-        fav.delete()
-
-        for fav in group.favorites:
-            if fav.rank > deleted_rank:
-                fav.rank -= 1
+    if room in ranked_room_list:
+        rr = ranked_room_list.get_by_room(room)
+        current_app.logger.debug(f"Deleting ranked room {rr}")
+        deleted_rank = rr.rank
+        rr.delete()
+        for rr in ranked_room_list.ranked_rooms:
+            if rr.rank > deleted_rank:
+                rr.rank -= 1
     else:
-        debug_msg = f"{netid} unfavorited room {roomid} that was not favorite"
-        app.logger.debug(debug_msg)
+        current_app.logger.debug("Unfavoriting a non favorite room")
 
     return jsonify({'success': True})
 
 
-@blueprint.route("/reorder_favorites", methods=["POST"])
-@cas.authenticated
-@dbm.use_app_db
-def reorder_favorites(db):
-    netid = cas.netid()
-    user = db.User.get_or_create(netid=netid)
+@blueprint.auth_route("/reorder_favorites", methods=["POST"])
+def reorder_favorites(user, db):
+    flag, *other = _verify_args(request.args, user, db)
+    if not flag:
+        return other[0]
+    room, group = other
+    ranked_room_list = user.getfavoritelist()
+    if group is not None:
+        ranked_room_list = group.getfavoritelist()
 
+    # Ensure that they give us a list of all the room ids
     roomid_list = json.loads(request.get_data())["data"]
-    roomid_list = [int(roomid) for roomid in roomid_list]
-
-    real_roomid_list = select(
-        faveroom.room.id
-        for faveroom in db.FavoriteRoom
-        if faveroom.group == user.group
-    )
+    real_roomid_list = {rr.room.id for rr in ranked_room_list.ranked_rooms}
     if set(roomid_list) != set(real_roomid_list):
         abort(400)
 
-    faverooms = select(fr for fr in db.FavoriteRoom if fr.group == user.group)[:]
-    faverooms.sort(key=lambda fr: roomid_list.index(fr.room.id))
+    ranked_rooms = [
+        ranked_room_list.get_by_room(db.Room[rid])
+        for rid in roomid_list
+    ]
 
-    for newrank, faveroom in enumerate(faverooms): # this should fix things??
-        faveroom.rank = newrank
+    for newrank, ranked_room in enumerate(ranked_rooms):
+        ranked_room.rank = newrank
 
     return jsonify({"success": True})
 
 
-@blueprint.route("/favorites", methods=["GET"])
-@cas.authenticated
-@dbm.use_app_db
-def favorites(db):
+@blueprint.auth_route("/favorites", methods=["GET"])
+def favorites(user, db):
     """
     Return a list of the rooms in your favorites list, sorted by rank
     :return:
     """
-    netid = cas.netid()
-    user = db.User.get_or_create(netid=netid)
-    group = user.group
+    groups = user.groups
 
-    curr_faves = group.favorites.select()[:]
-    curr_faves.sort(key=lambda fav: fav.rank)
-    rooms = [fave.room.to_dict() for fave in curr_faves]
-    return jsonify(rooms)
+    group_id = request.args.get("groupid")
+
+    if group_id is None:
+        lists = dict()
+        for group in groups:
+            # Even though DB allows multiple lists per group--logically we will only allow 1
+            group_list = group.getfavoritelist()
+
+            # Select all the ranked rooms in the list
+            ranked_room_list = group_list.ranked_rooms.select()[:]
+
+            # Sort by rank
+            ranked_room_list.sort(key=lambda ranked_room: ranked_room.rank)
+
+            name = group.name if group.name else f"Group {group.id}"
+            lists[name] = [ranked_room.room.to_dict() for ranked_room in ranked_room_list]
+
+        rrl = user.getfavoritelist()
+        lists["Personal Favorites"] = [rr.room.to_dict() for rr in rrl.ranked_rooms.select()]
+
+        return jsonify(lists)
+    else:
+        group = db.Group.get(id=group_id)
+        if group is None:
+            return Response("invalid group id", 422)
+        if group not in groups:
+            return Response("not in this group", 403)
+        group_list = group.getfavoritelist()
+        rrl = group_list.ranked_rooms.select()[:]
+        rrl.sort(key=lambda rr: rr.rank)
+        return jsonify([rr.room.to_dict() for rr in rrl])

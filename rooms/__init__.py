@@ -24,12 +24,14 @@ app.config.from_object(__name__)  # load config from this file , rooms.py
 
 
 # Load default config and override config from an environment variable
+env = os.environ.get("ENV", "DEVELOPMENT")
+service_url = "http://rooms.cs.princeton.edu/" if env == "PRODUCTION" else "http://localhost:5000/"
 app.config.update(dict(
     DATABASE=os.path.join(app.root_path, 'rooms.sqlite'),
     SECRET_KEY='cos333project_SeCrEtKeY',
     USERNAME='admin',
     PASSWORD='admin',
-    SERVICE_URL='http://localhost:5000/',
+    SERVICE_URL=service_url,
     UPLOAD_DIR=UPLOAD_DIR
 ))
 

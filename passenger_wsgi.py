@@ -15,5 +15,6 @@ from rooms import app as application
 
 # enabled when the site is running in production
 os.environ['ENV'] = "PRODUCTION"
+application.config['SERVICE_URL'] = 'http://rooms.cs.princeton.edu/'
 
 sys.path.append("/n/fs/rooms/COS333")
