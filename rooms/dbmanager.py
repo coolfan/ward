@@ -77,7 +77,11 @@ def define_entities(db: Database) -> None:
         invites_made = Set('GroupInvite')
 
         def getfavoritelist(self):
-            return self.ranked_room_lists.select()[:][0]
+            rrls = self.ranked_room_lists.select()[:]
+            if len(rrls) > 0: return rrls[0]
+            else:
+                self.ranked_room_lists.create()
+                return self.ranked_room_lists.select()[:][0]
 
         def to_dict(self, netid=""):
             d = super(Group, self).to_dict()
