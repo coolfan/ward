@@ -144,9 +144,9 @@ def query(db):
         groups = db.User.get_or_create(netid=netid).groups
         fave_roomids = {fav.room.id for fav in groups.ranked_room_lists.ranked_rooms}
 
+    rooms.sort(key=lambda room: getattr(room, order_by) if order_by != "sqft" else -getattr(room, "sqft"))
     limited = rooms[continue_from:continue_from+limit]
-    res.sort(key=lambda room_dict: room_dict[order_by] if order_by != "sqft" else -room_dict["sqft"])
-    limited = res[continue_from:continue_from+limit]
+
     room_dicts = []
 
     for room in limited:
