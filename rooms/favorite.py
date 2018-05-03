@@ -26,8 +26,8 @@ def _verify_args(request_args, user, db):
         return False, Response("Invalid roomid", 422), None
     room = db.Room[room_id]
 
-    group_id = request_args.get("groupid", -1)
-    if group_id != -1:
+    group_id = request_args.get("groupid", "-1")
+    if group_id != "-1":
         if not db.Group.exists(id=group_id):
             return False, Response("Invalid groupid", 422), None
         group = db.Group[group_id]
@@ -137,9 +137,9 @@ def favorites(user, db):
     """
     groups = user.groups
 
-    group_id = request.args.get("groupid", -1)
+    group_id = request.args.get("groupid", "-1")
 
-    if group_id == -1:
+    if group_id == "-1":
         lists = dict()
         for group in groups:
             # Even though DB allows multiple lists per group--logically we will only allow 1
