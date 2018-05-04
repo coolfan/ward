@@ -130,7 +130,7 @@ function get_card(val) {
 	card.attr("id", get_dom_id(val));
 
 	del_btn_hitbox.click(function() {
-		$.get("/unfavorite", {roomid: val.id}, function(data) {
+		$.get("/unfavorite", {groupid: $("#groups").val, roomid: val.id}, function(data) {
 			var list = $($("#cards").children()[0]).children()
 			$.each(list, function(i, item) {
 				console.log($(item).attr("id"))
