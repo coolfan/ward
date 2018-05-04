@@ -53,6 +53,11 @@ th.dt-center, td.dt-center { text-align: center; }
     font-size: 20pt;
 }
 
+.select2 {
+    width:100%!important;
+}
+
+td { font-size: 20px; }
 
 /*Source for these 4 navbar things (Making the navbar bigger): https://bootstrapious.com/p/how-to-change-bootstrap-navbar-height*/
  /*.navbar {*/

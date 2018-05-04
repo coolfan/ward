@@ -19,15 +19,12 @@ function setup_form() {
         success: function (ans) {
             colleges = ans;
             $.each(colleges, function (i, college) {
-                let option = $(`<option></option>`);
+                let option = $(`<option>` + String(college) + `</option>`);
                 option.attr("value", college);
-                option.text(college);
-                console.log(option);
+
                 draw_type_select.append(option);
-                // draw_type_select.selectpicker("refresh");
             });
 
-            // console.log(buildings);
             fill_buildings();
         }
     });
@@ -41,7 +38,7 @@ function setup_form() {
         let floor = floor_input.val();
         let room_num = room_num_input.val();
 
-        let sort_criteria = $("#sorting_select").val();
+        // let sort_criteria = $("#sorting_select").val();
 
         let room_query = {};
 
@@ -73,8 +70,6 @@ function setup_form() {
             room_query["roomnum"] = room_num;
         }
 
-        if(sort_criteria)
-
         search_rooms(room_query);
     });
 
@@ -98,15 +93,11 @@ function fill_buildings() {
 
     let data = {};
     data['college'] = college;
-    // console.log("d");
-    // console.log(data);
-
     $.get({
         url: "/buildings",
         data: data,
         traditional: true,
         success: function (ans) {
-            // buildings = ans;
             building_select.empty();
 
             for (college in ans) {
@@ -119,25 +110,9 @@ function fill_buildings() {
                     option.attr("value", building);
                     option.text(building);
 
-                    // console.log(building);
-                    // console.log(college);
                     group.append(option);
                 })
             }
-
-            // console.log('hi');
-            // building_select.empty();
-            // // building_select.append('<option></option>');
-            //
-            // $.each(buildings, function (i, building) {
-            //     let option = $(`<option></option>`);
-            //     option.attr("value", building);
-            //     option.text(building);
-            //
-            //     // console.log(building);
-            //     // console.log(college);
-            //     building_select.append(option);
-            // })
         }
     });
 }

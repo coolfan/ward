@@ -145,7 +145,6 @@ function get_small_card(room){
     college_p.empty();
     college_p.text(room['college']);
 
-
     star_div.attr("is_favorited", room['favorited']);
 
     //Allow for favoriting by clicking on star
