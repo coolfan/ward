@@ -1,23 +1,3 @@
-function to_header(val) {
-	return val.roomnum + " " + val.building
-}
-
-function build_bigcard_inner(val) {
-	var header = $("<p>").addClass("col").addClass("col-sm-3")
-	header.text(to_header(val))
-
-	var occupancy = $("<p>").addClass("col").addClass("col-sm-3")
-	occupancy.text("Occupancy: " + val.occupancy)
-
-	var floor = $("<p>").addClass("col").addClass("col-sm-3")
-	floor.text("Floor: " + val.floor)
-
-	var subfree = $("<p>").addClass("col").addClass("col-sm-3")
-	subfree.text("Sub-Free: " + (val.subfree ? "Yes" : "No"))
-
-	return [header, occupancy, floor, subfree]
-}
-
 $(document).ready(function() {
 	navbar_set("#nav_reviews")
 
@@ -50,44 +30,12 @@ $(document).ready(function() {
                     option.attr("value", building);
                     option.text(building);
 
-                    // console.log(building);
-                    // console.log(college);
                     group.append(option);
                 })
             }
 
-            // console.log('hi');
-            // building_select.empty();
-            // // building_select.append('<option></option>');
-            //
-            // $.each(buildings, function (i, building) {
-            //     let option = $(`<option></option>`);
-            //     option.attr("value", building);
-            //     option.text(building);
-            //
-            //     // console.log(building);
-            //     // console.log(college);
-            //     building_select.append(option);
-            // })
         }
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	$("#roomnum").change(function() {
@@ -96,14 +44,9 @@ $(document).ready(function() {
 
 		$.get("/query", {building: building, roomnum: roomnum}, function(data) {
 			if (data.length > 0) {
-				var info = build_bigcard_inner(data[0])
-				$("#bigcard_body").empty()
-				$.each(info, function(i, val) {
-					$("#bigcard_body").append(val)
-				})
-				
-				$.get("/reviews", {roomid: data[0].id}, function(data) {
-					$("#bigcard_body").append(get_reviews_card(data))
+				$("#roomid").val(data[0].id)
+				$.get("/reviews", {roomid: data[0].id}, function(rev) {
+					$("#bigcard_body").append(get_big_card(data[0], rev))
 				})
 			}
 		})
