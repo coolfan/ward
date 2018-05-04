@@ -11,7 +11,7 @@ function setup_form() {
     let occupancy_input = $("#occupancy_input");
     let num_rooms_input = $("#num_rooms_input");
     let floor_input = $("#floor_input");
-    let room_num_input = $("#room_num_input");
+    let room_name_input = $("#room_name_input");
 
     //Fill in data
     $.get({
@@ -36,7 +36,7 @@ function setup_form() {
         let occupancy = occupancy_input.val();
         let num_rooms = num_rooms_input.val();
         let floor = floor_input.val();
-        let room_num = room_num_input.val();
+        let name = room_name_input.val();
 
         // let sort_criteria = $("#sorting_select").val();
 
@@ -66,8 +66,8 @@ function setup_form() {
             room_query["floor"] = floor
         }
 
-        if(room_num !== ""){
-            room_query["roomnum"] = room_num;
+        if(name !== ""){
+            room_query["q"] = name; //q is for query
         }
 
         search_rooms(room_query);

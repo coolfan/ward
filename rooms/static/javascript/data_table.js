@@ -45,7 +45,10 @@ $(document).ready(function () {
         searching: false,
         // colReorder: true,
         lengthChange: true,
-        pageResize: true
+        pageResize: true,
+        scrollY:  '80vh',
+        deferRender:    true,
+        scroller:       true
     });
 });
 
@@ -97,21 +100,27 @@ function render_floor(data, type, room) {
             case "0":
                 return "Basement";
             case "1":
-                return "First";
+                return "1st";
             // break;
             case "2":
-                return "Second";
+                // return "Second";
+                return "2nd";
             // break;
             case "3":
-                return "Third";
+                // return "Third";
+                return "3rd";
             case "4":
-                return "Fourth";
+                // return "Fourth";
+                return "4th";
             case "5":
-                return "Fifth";
+                // return "Fifth";
+                return "5th";
             case "6":
-                return "Sixth";
+                // return "Sixth";
+                return "6th";
             case "7":
-                return "Seventh";
+                // return "Seventh";
+                return "7th";
         }
 
         return "Lots";
