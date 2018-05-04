@@ -164,7 +164,8 @@ $(document).ready(function() {
 	$("#cards").append(ul);
 	$.getJSON("/favorites", /*{groupid: $("groups").val()},*/ function(data) {
 		ul.empty()
-		data = data["Personal Favorites"]
+		data = data["-1"]
+		//console.log(data)
 		if (data.length > 0) {
 			$.each(data, function(i, val) {
 				let card = get_card(val);
@@ -194,8 +195,9 @@ $(document).ready(function() {
 		})
 	})
 	$("#groups").change(function() {
-		$.getJSON("/favorites", {groupid: $("groups").val()}, function(data) {
+		$.getJSON("/favorites", function(data) {
 			ul.empty()
+			data = data[$("#groups").val()]
 			if (data.length > 0) {
 				$.each(data, function(i, val) {
 					let card = get_card(val);
