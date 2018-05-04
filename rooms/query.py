@@ -83,6 +83,9 @@ def rich_query(q: str, db):
             buildings.append(all_buildings[building_aliases[tok]])
         elif tok in room_aliases:
             roomnums.append(all_roomnums[room_aliases[tok]])
+        else:
+            colleges = ["FAKE COLLEGE"]
+            break
 
     return colleges, buildings, roomnums
 
