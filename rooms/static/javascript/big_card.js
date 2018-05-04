@@ -1,22 +1,34 @@
-function get_big_card(room){
-    let medium_card = get_medium_card(room);
-    let small_card = medium_card[0];
-    medium_card = medium_card[1];
+function to_header(val) {
+	return val.roomnum + " " + val.building
+}
 
-    let html_card = $(`
-    <div>
-        <div class = "collapse row Big_collapse">
-            <div class = "col-sm-12 padding-0">
-                <div class = "container-fluid padding-0">
-                    <p>hi</p>
-                <\div>
-            <\div>
-        <\div>
-    </div>
-    `);
+function build_bigcard_inner(val) {
+	var header = $("<h3>").addClass("row")
+	header.text(to_header(val))
 
-    let big_collapse_div = $(html_card).find(".Big_collapse");
+	var drawtype = $("<h5>").addClass("row")
+	drawtype.text(val.college)
 
-    big_collapse_div.attr('id', room['id'] + 'big_card');
-    return [small_card,medium_card,html_card];
+	var numrooms = $("<p>").addClass("row")
+	numrooms.text("Number of Rooms: " + val.numrooms)
+
+	var occupancy = $("<p>").addClass("row")
+	occupancy.text("Occupancy: " + val.occupancy)
+
+	var floor = $("<p>").addClass("row")
+	floor.text("Floor: " + val.floor)
+
+	var subfree = $("<p>").addClass("row")
+	subfree.text("Sub-Free: " + (val.subfree ? "Yes" : "No"))
+
+	return [header, drawtype, numrooms, occupancy, floor, subfree]
+}
+
+function get_big_card(room, reviews){
+    var div = $("<div>")
+	$.each(build_bigcard_inner(room), function(i, val) {
+		div.append(val)
+	})
+	div.append(get_reviews_card(reviews))
+	return div
 }

@@ -18,31 +18,13 @@ function get_room_id(s) {
 	return s.slice(4)
 }
 
-function build_bigcard_inner(val) {
-	var header = $("<p>").addClass("col").addClass("col-sm-3")
-	header.text(to_header(val))
-
-	var occupancy = $("<p>").addClass("col").addClass("col-sm-3")
-	occupancy.text("Occupancy: " + val.occupancy)
-
-	var floor = $("<p>").addClass("col").addClass("col-sm-3")
-	floor.text("Floor: " + val.floor)
-
-	var subfree = $("<p>").addClass("col").addClass("col-sm-3")
-	subfree.text("Sub-Free: " + (val.subfree ? "Yes" : "No"))
-
-	return [header, occupancy, floor, subfree]
-}
-
 function display_bigcard(val) {
 	var index = card_mgr.cur_bigcard1 ? 0 : 1
 	
 	card_mgr.bigcard_arr[index].empty()
-	$.each(build_bigcard_inner(val), function(i, elem) {
-		card_mgr.bigcard_arr[index].append(elem)
-	})
+	
 	$.get("/reviews", {roomid: val.id}, function(data) {
-		card_mgr.bigcard_arr[index].append(get_reviews_card(data))
+		card_mgr.bigcard_arr[index].append(get_big_card(val, data))
 	})
 	card_mgr.bigcard_disp_arr[index] = val
 	
@@ -180,8 +162,9 @@ $(document).ready(function() {
 	card_mgr.bigcard_arr = [$("#bigcard1_body"), $("#bigcard2_body")];
 	let ul = $("<ul>").addClass("draggable no-bullets padding-0").attr("id", "fav-list");
 	$("#cards").append(ul);
-	$.getJSON("/favorites", {groupid: $("groups").val()}, function(data) {
+	$.getJSON("/favorites", /*{groupid: $("groups").val()},*/ function(data) {
 		ul.empty()
+		data = data["Personal Favorites"]
 		if (data.length > 0) {
 			$.each(data, function(i, val) {
 				let card = get_card(val);
