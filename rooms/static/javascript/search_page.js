@@ -28,7 +28,7 @@ function change_star_color(id) {
 let rooms = {undefined}; //All the rooms currently being displayed
 let prev_query = {};
 let amount_displayed = 0;
-let LOADED_PER_QUERY = -1;
+let LOADED_PER_QUERY = 50000;
 let done_loading = false;
 
 function search_rooms(room_query) {
