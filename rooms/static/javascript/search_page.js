@@ -108,3 +108,48 @@ $(document).ready(function() {
     });
 });
 
+
+$(document).ready(function(){
+    let modal_popup = $(`
+<div class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Welcome to WARD!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>It looks like this is your first time visiting. Want to take the tour?</p>
+      </div>
+       <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="start_guide_btn">Sure!</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">I'm good</button>
+      </div>
+    </div>
+   
+    
+  </div>
+</div>`);
+
+    console.log(Cookies.get('first_time'));
+
+    if(Cookies.get('first_time') !== 'false'){
+
+        Cookies.set('first_time', 'false');
+
+
+        let btn = $(modal_popup).find("#start_guide_btn");
+        btn.click(function(){
+            start_guide();
+        })
+
+        modal_popup.modal({
+            keyboard: true,
+            focus: true,
+            show: true,
+        })
+    }
+
+});

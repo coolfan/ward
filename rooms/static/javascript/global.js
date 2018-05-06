@@ -9,11 +9,11 @@ $(document).ready(function(){
     let about_popup = $("#about_popup");
 
     search_popup_dismiss.click(function(){
-        Cookies.set('dismissed_search_popup', 'true', { expires: 7 }); //Expires in 7 days
+        Cookies.set('dismissed_search_popup', 'true', { expires: 300 }); //Expires in 300 days
     });
 
     about_popup_dismiss.click(function(){
-        Cookies.set('dismissed_about_popup', 'true', { expires: 7 }); //Expires in 7 days
+        Cookies.set('dismissed_about_popup', 'true', { expires: 300 });
     });
 
     if(Cookies.get('dismissed_search_popup') !== 'true'){
@@ -30,7 +30,12 @@ let global_in_intro = false;
 
 $(document).ready(function(){
     $("#guide_btn").click(function(){
-        var intro = introJs();
+       start_guide();
+    })
+});
+
+function start_guide(){
+     var intro = introJs();
         intro.oncomplete(function(){
            global_in_intro = false;
         });
@@ -44,5 +49,4 @@ $(document).ready(function(){
         intro.setOption('doneLabel', 'Next page').start().oncomplete(function() {
           window.location.href = 'favorites_page?multipage=true';
         });
-    })
-});
+}

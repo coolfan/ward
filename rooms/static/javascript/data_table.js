@@ -206,7 +206,7 @@ function render_likelihood(data, type, room) {
         likelihood_btn.text("Doomed");
     }
 
-    likelihood_btn.attr("title","We think you will get this room around " + likelihood + "% of the time. ");
+    likelihood_btn.attr("title","We think you will get this room around " + likelihood + "% of the time. See FAQ page for more detail.");
     return likelihood_btn.prop('outerHTML');
 }
 
