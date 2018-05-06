@@ -57,6 +57,28 @@ th.dt-center, td.dt-center { text-align: center; }
     width:100%!important;
 }
 
+.y-stalwart {
+	max-height: 100%
+	overflow-y: auto;
+}
+
+.selectable-card:hover {
+	background-color: #f8faff;
+}
+
+.selectable-card.selected {
+	background-color: #f2f5ff;
+	box-shadow: 3px 5px 10px #888888;
+}
+
+.selectable-card.locked {
+	border: solid 3px #7a7aff;
+}
+
+.big-card {
+	background-color: white !important;
+}
+
 td { font-size: 20px; }
 
 .highlight {

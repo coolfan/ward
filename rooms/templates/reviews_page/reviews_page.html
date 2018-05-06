@@ -20,13 +20,8 @@
 		<div class="col col-sm-5">
 		  <form action="/review" method="POST" enctype="multipart/form-data" id="review" target="target">
 			<div class="form-group row">
-			  <div class="col col-sm-8">
-                <select class="form-control" name="building" id="building">
-                  <option id="default" value="" selected>Select Building...</option>
-                </select>
-			  </div>
-			  <div class="col col-sm-4">
-				<input class="form-control" type="number" name="roomnum" id="roomnum" placeholder="Room Number" />
+			  <div class="col col-sm-12">
+				<input type="text" class="form-control" name="q" id="q" placeholder="Search">
 			  </div>
 			</div>
 			<input type="hidden" name="roomid" id="roomid" />
@@ -79,10 +74,10 @@
 		  </form>
 		</div>
 		<div class="col col-sm-5 bigcard_col">
-		  <div class="card h-100">
-			<div class="container-fluid">
-			  <div class="card-body">
-				<div class="row" id="bigcard_body">
+		  <div class="card h-100 y-stalwart">
+			<div class="container-fluid h-100 y-stalwart">
+			  <div class="card-body h-100 y-stalwart">
+				<div class="row h-100 y-stalwart" id="bigcard_body">
 				</div>
 			  </div>
 			</div>

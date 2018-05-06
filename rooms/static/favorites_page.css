@@ -4,12 +4,6 @@
     overflow-y: auto;
 }
 
-.locked {
-	border-width: 3px;
-	border-color: #7A7AFF;
-	box-shadow: 5px 10px 18px #888888;
-}
-
 .better {
 	border: solid 1px green !important;
 }

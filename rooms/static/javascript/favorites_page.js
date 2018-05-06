@@ -174,6 +174,7 @@ function display_bigcard(val) {
 		compare_stats()
 	})
 	card_mgr.bigcard_disp_arr[index] = val
+	get_bigcard_frame(card_mgr.bigcard_arr[index]).addClass("selected")
 
 	return true;
 }
@@ -182,11 +183,13 @@ function undisplay_bigcard(val) {
 	if (is_displaying(0, val)) {
 		card_mgr.bigcard_arr[0].empty()
 		card_mgr.bigcard_disp_arr[0] = null
+		get_bigcard_frame(card_mgr.bigcard_arr[0]).removeClass("selected")
 	}
 
 	if (is_displaying(1, val)) {
 		card_mgr.bigcard_arr[1].empty()
 		card_mgr.bigcard_disp_arr[1] = null
+		get_bigcard_frame(card_mgr.bigcard_arr[1]).removeClass("selected")
 	}
 
 	for (var i = 0; i < card_mgr.card_queue.length; i++) {
@@ -235,7 +238,7 @@ function get_empty_card() {
 
 function get_card(val) {
 	let li = $("<li>").attr("id", "elem" + val.id);
-	let card = $("<div>").addClass("card");
+	let card = $("<div>").addClass("card selectable-card");
 	var container_fluid = $("<div>").addClass("container-fluid");
 	var card_body = $("<div>").addClass("card-body");
 	var row = $("<div>").addClass("row");
@@ -262,13 +265,13 @@ function get_card(val) {
 		if (!is_being_sorted && !val.bool_locked) { 
 			console.log(to_header(val))
 			if (val.bool_filled) {
-				card.css("backgroundColor", "white");
+				card.removeClass("selected")
 				undisplay_bigcard(val)
 			} else {
 				if (!display_bigcard(val)) {
 					return;
 				}
-				card.css("backgroundColor", "#f2f5ff");
+				card.addClass("selected")
 			}
 			val.bool_filled = !val.bool_filled
 		}
