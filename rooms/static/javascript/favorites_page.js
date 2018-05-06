@@ -213,21 +213,23 @@ function get_card(val) {
 	})
 
 	del_btn_hitbox.click(function() {
-		is_being_sorted = true
-		setTimeout(function() {
-			is_being_sorted = false
-		}, 500)
-		$.get("/unfavorite", {groupid: $("#groups").val(), roomid: val.id}, function(data) {
-			var list = $($("#cards").children()[0]).children()
-			$.each(list, function(i, item) {
-				if ($(item).attr("id") == "elem" + val.id) {
-					if (val.bool_filled) {
-						undisplay_bigcard(val)
+		if (!val.bool_locked) {
+			is_being_sorted = true
+			setTimeout(function() {
+				is_being_sorted = false
+			}, 500)
+			$.get("/unfavorite", {groupid: $("#groups").val(), roomid: val.id}, function(data) {
+				var list = $($("#cards").children()[0]).children()
+				$.each(list, function(i, item) {
+					if ($(item).attr("id") == "elem" + val.id) {
+						if (val.bool_filled) {
+							undisplay_bigcard(val)
+						}
+						$("#cards").children()[0].removeChild(item)
 					}
-					$("#cards").children()[0].removeChild(item)
-				}
+				})
 			})
-		})
+		}
 	})
 
 	li.append(card);
