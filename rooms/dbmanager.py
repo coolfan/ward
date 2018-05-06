@@ -46,6 +46,15 @@ def define_entities(db: Database) -> None:
                 if rr.room == room: return rr
             return None
 
+        def remove(self, room):
+            rr = self.get_by_room(room)
+            if rr is None: return
+            deleted_rank = rr.rank
+            rr.delete()
+            for rr in self.ranked_rooms:
+                if rr.rank > deleted_rank:
+                    rr.rank -= 1
+
     class User(db.Entity):
         id = PrimaryKey(int, auto=True)
         netid = Required(str, unique=True)

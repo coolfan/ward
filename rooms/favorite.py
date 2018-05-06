@@ -56,17 +56,26 @@ def favorite(user, db) -> Response:
         return other[0]
     room, group = other
     ranked_room_list = user.getfavoritelist()
-    if group is not None:
-        ranked_room_list = group.getfavoritelist()
+    group_rrl = None
+    for group in user.groups:
+        if group.drawtype == room.college:
+            group_rrl = group.getfavoritelist()
+            break
 
     if room in ranked_room_list:
         current_app.logger.debug("Favoriting an already favorite room")
     else:
-        fav = db.RankedRoom(
+        fav_personal = db.RankedRoom(
             room=room,
             rank=len(ranked_room_list.ranked_rooms),
             ranked_room_list=ranked_room_list
         )
+        if group_rrl is not None:
+            fav_group = db.RankedRoom(
+                room=room,
+                rank=len(group_rrl.ranked_rooms),
+                ranked_room_list=group_rrl
+            )
 
     return jsonify({'success': True})
 
@@ -84,19 +93,14 @@ def unfavorite(user, db):
         return other[0]
     room, group = other
     ranked_room_list = user.getfavoritelist()
-    if group is not None:
-        ranked_room_list = group.getfavoritelist()
+    group_rrl = None
+    for group in user.groups:
+        if group.drawtype == room.college:
+            group_rrl = group.getfavoritelist()
+            break
 
-    if room in ranked_room_list:
-        rr = ranked_room_list.get_by_room(room)
-        current_app.logger.debug(f"Deleting ranked room {rr}")
-        deleted_rank = rr.rank
-        rr.delete()
-        for rr in ranked_room_list.ranked_rooms:
-            if rr.rank > deleted_rank:
-                rr.rank -= 1
-    else:
-        current_app.logger.debug("Unfavoriting a non favorite room")
+    ranked_room_list.remove(room)
+    if group_rrl is not None: group_rrl.remove(room)
 
     return jsonify({'success': True})
 
