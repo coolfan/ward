@@ -24,7 +24,6 @@ def colleges(db):
 @blueprint.route("/buildings", methods=["GET"])
 @dbm.use_app_db
 def buildings(db):
-    # college = request.args.get("college")
     colleges = request.args.getlist("college")
 
     if len(colleges) == 0:
@@ -141,8 +140,17 @@ def query(db):
     groups = []
     if cas.netid() is not None:
         netid = cas.netid()
-        groups = db.User.get_or_create(netid=netid).groups
-        fave_roomids = {fav.room.id for fav in groups.ranked_room_lists.ranked_rooms}
+        user = db.User.get_or_create(netid=netid)
+        groups = user.groups
+        fave_roomids |= {
+            rr.room.id
+            for rr in user.getfavoritelist().ranked_rooms
+        }
+        fave_roomids |= {
+            rr.room.id
+            for group in groups
+            for rr in group.getfavoritelist().ranked_rooms
+        }
 
     limited = rooms[continue_from:continue_from+limit]
     res.sort(key=lambda room_dict: room_dict[order_by] if order_by != "sqft" else -room_dict["sqft"])
