@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 from functools import wraps
 
 from flask import g
@@ -48,6 +49,8 @@ def define_entities(db: Database) -> None:
     class User(db.Entity):
         id = PrimaryKey(int, auto=True)
         netid = Required(str, unique=True)
+        name = Optional(str, default="")
+
         ranked_room_lists = Set(RankedRoomList)
         groups = Set('Group')
         requests_made = Set('GroupRequest')
@@ -64,14 +67,22 @@ def define_entities(db: Database) -> None:
             return u
 
         def getfavoritelist(self):
-            return self.ranked_room_lists.select()[:][0]
+            rrls = self.ranked_room_lists.select()[:]
+            if len(rrls) > 0:
+                return rrls[0]
+            else:
+                self.ranked_room_lists.create()
+                return self.ranked_room_lists.select()[:][0]
 
     class Group(db.Entity):
         id = PrimaryKey(int, auto=True)
         members = Set(User)
         name = Optional(str)
+
         drawtype = Optional(str)
+        drawtime = Optional(datetime)
         timefromstart = Optional(int)
+
         ranked_room_lists = Set(RankedRoomList)
         group_requests = Set('GroupRequest')
         invites_made = Set('GroupInvite')

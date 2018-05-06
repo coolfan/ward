@@ -24,7 +24,6 @@ def colleges(db):
 @blueprint.route("/buildings", methods=["GET"])
 @dbm.use_app_db
 def buildings(db):
-    # college = request.args.get("college")
     colleges = request.args.getlist("college")
 
     if len(colleges) == 0:
@@ -39,17 +38,22 @@ def buildings(db):
 
 
 def likelihood(my_groups, room) -> int:
-    # TODO: This crashes!  make it look for the draw group corresponding to the room
-    return 50
     if len(my_groups) == 0: return 50
-    my_time = my_groups.timefromstart
+
+    potential_groups = my_groups.select(lambda g: g.drawtype == room.college)[:]
+    if len(potential_groups) == 0: return -1
+
+    group = potential_groups[0]
+    my_time = group.timefromstart
     if my_time is None: return 50
-    times = [d.timefromstart for d in room.drawings]
+
+    times = [d.timefromstart for d in room.room_draws]
     if len(times) == 0: return 50
+
     mean = np.mean(times)
     stddev = np.std(times)
-    current_app.logger.debug(f"Mean: {mean}, Std: {stddev}")
-    stddev = stddev if stddev > 0.0 else 10*60*60
+    current_app.logger.debug(f"{room.building} {room.roomnum} | Mean: {mean}, Std: {stddev}, Your time: {my_time}")
+    stddev = stddev if stddev > 0.0 else 5*60*60
     prob = 1.0 - scipy.stats.norm.cdf(my_time, mean, stddev)
     return int(prob * 100.0)
 
@@ -63,7 +67,7 @@ def rich_query(q: str, db):
     all_roomnums = list(select(r.roomnum for r in db.Room))
 
     college_aliases = {c.split()[0].lower(): i for i, c in enumerate(all_colleges)}
-    building_aliases = {b.split()[0].lower(): i for i, b in enumerate(all_buildings)}
+    building_aliases = {" ".join(b.split()[:-1]).lower(): i for i, b in enumerate(all_buildings)}
     room_aliases = {r.lower(): i for i, r in enumerate(all_roomnums)}
 
     print(building_aliases)
@@ -76,6 +80,7 @@ def rich_query(q: str, db):
         if tok == "hall": continue
         if tok == "college": continue
         if tok == "rocky": tok = "rockefeller"
+        if tok in {"dodge", "osborn"}: tok = "dodge osborn"
         if len(tok) < 3 and tok.isdecimal(): tok = f"{int(tok):03d}"
         if tok in college_aliases:
             colleges.append(all_colleges[college_aliases[tok]])
@@ -144,12 +149,20 @@ def query(db):
     groups = []
     if cas.netid() is not None:
         netid = cas.netid()
-        groups = db.User.get_or_create(netid=netid).groups
-        fave_roomids = {fav.room.id for fav in groups.ranked_room_lists.ranked_rooms}
+        user = db.User.get_or_create(netid=netid)
+        groups = user.groups
+        fave_roomids |= {
+            rr.room.id
+            for rr in user.getfavoritelist().ranked_rooms
+        }
+        fave_roomids |= {
+            rr.room.id
+            for group in groups
+            for rr in group.getfavoritelist().ranked_rooms
+        }
 
-    rooms.sort(key=lambda room: getattr(room, order_by) if order_by != "sqft" else -getattr(room, "sqft"))
-    limited = rooms[continue_from:continue_from+limit]
-
+    rooms.sort(key=lambda room: getattr(room, order_by) if order_by != "sqft" else -1 * getattr(room, "sqft"))
+    limited = rooms[continue_from:continue_from + limit]
     room_dicts = []
 
     for room in limited:
@@ -157,6 +170,5 @@ def query(db):
         d['favorited'] = d['id'] in fave_roomids
         d['likelihood'] = likelihood(groups, room)
         room_dicts.append(d)
-    room_dicts.sort(key=lambda d: d[order_by])
 
     return jsonify(room_dicts)
