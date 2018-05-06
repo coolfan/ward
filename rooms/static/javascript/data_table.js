@@ -1,6 +1,7 @@
 $(document).ready(function () {
     $('#rooms_table').DataTable({
-        createdRow: add_favorite_event,
+        "stripeClasses": [],
+        createdRow: call_back_handler,
         data: rooms,
         order: [[2, 'dec']], //Order based on sqft, the 3rd collumn
         language: {
@@ -75,7 +76,7 @@ function render_favorite(data, type, room) {
                                  src = "/static/star.png"
                                  style="height: 37px;width: 37px;padding-top: 2px">
                       </span>`);
-        console.log(room.favorited);
+        // console.log(room.favorited);
         if (room.favorited) {
             star_div.attr("src", "/static/star_fill.png");
         }
@@ -215,8 +216,13 @@ function redraw_table() {
     table.draw();
 }
 
+function call_back_handler(row,room,index){
+    add_favorite_event(row,room,index);
+    add_modal(row,room,index);
+    add_highlighting(row,room,index);
+}
+
 function add_favorite_event(row, room, index) {
-    // console.log(row);
     row = $(row);
     star_div = $(row).find('.Star_img');
 
@@ -239,3 +245,62 @@ function add_favorite_event(row, room, index) {
         }
     });
 }
+
+function add_modal(row,room,index){
+    row = $(row);
+    let cells = row.find('td');
+    let n = cells.length;
+    cells.each(function(i,td) {
+        td = $(td);
+        if(i !== n - 1){ //6 is the final collumn
+            td.click(function(){
+                $.get("/reviews", {roomid: room.id}, function (data) {
+                    let modal = $(`
+                        <div class="modal fade" tabindex="-1" role="dialog">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`);
+
+                    let body = modal.find(".modal-body");
+
+                    let card = get_big_card(room, data);
+                    body.append(card);
+
+                    console.log(body.prop('outerHTML'));
+                    console.log(modal.prop('outerHTML'));
+
+                    modal.modal({
+                        keyboard: true,
+                        focus: true,
+                        show: true,
+                    })
+                });
+            });
+        }
+    });
+}
+
+function add_highlighting(row,room,index){
+    // console.log('hi');
+    row = $(row);
+    row.hover(
+        function(){
+            // console.log('hi');
+            row.addClass("highlight");
+        },
+        function(){
+            row.removeClass("highlight");
+        }
+    );
+}
+
+// $(document).ready(){
+//     $('#myModal').on('shown.bs.modal', function () {
+//         $('#myInput').trigger('focus')
+//     })
+// }

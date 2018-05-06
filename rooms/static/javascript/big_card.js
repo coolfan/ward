@@ -40,6 +40,7 @@ function build_bigcard_inner(val) {
 	rows[rc].append(drawtype)
 	var likelihood_col = $("<div>").addClass("col col-sm-2").css("padding-right", "10px")
 	let likelihood_btn = $(`<button type="button" class="btn w-100 h-100" data-toggle="tooltip" ></button>`);
+
     let likelihood = val.likelihood;
 
     if (likelihood <= 100 && likelihood >= 66){

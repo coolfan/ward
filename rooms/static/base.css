@@ -59,6 +59,11 @@ th.dt-center, td.dt-center { text-align: center; }
 
 td { font-size: 20px; }
 
+.highlight {
+    background-color: whitesmoke !important;
+}
+
+
 /*Source for these 4 navbar things (Making the navbar bigger): https://bootstrapious.com/p/how-to-change-bootstrap-navbar-height*/
  /*.navbar {*/
   /*min-height: 80px;*/

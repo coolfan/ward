@@ -142,7 +142,11 @@ $(document).ready(function() {
 $(document).ready(function() {
     // $.fn.select2.defaults.set( "theme", "bootstrap4" );
 
-    $('#draw_type_select').select2();
-    $('#building_select').select2();
+    $('#draw_type_select').select2({
+        placeholder: "  e.g Independent"
+    });
+    $('#building_select').select2({
+        placeholder: "  e.g Spellman Hall"
+    });
 });
 
