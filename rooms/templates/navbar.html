@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top" style="background-color: #ffffff">
+<nav id = "my_nav" class="navbar navbar-expand-lg navbar-light navbar-fixed-top" style="background-color: #ffffff" >
   <div class="container-fluid">
     <a class="navbar-brand" href="/">
         <img src="{{url_for('static', filename='logo.png')}}" width="100" height="50" alt="">
@@ -9,9 +9,9 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto" id="nav_whole">
+        <ul class="navbar-nav mr-auto" id="nav_whole" >
             <li class="nav-item active" id="nav_table">
-                <a class="nav-link" href="/" style="font-size: 25px">Search <!--<span class="sr-only">(current)</span>--></a>
+                <a class="nav-link" href="/" style="color:white;font-size: 25px">Search <!--<span class="sr-only">(current)</span>--></a>
             </li>
             <li class="nav-item" id="nav_favorites">
                 <a class="nav-link" href="/favorites_page" style="font-size: 25px">Favorites</a>
@@ -20,14 +20,29 @@
 			    <a class="nav-link" href="/reviews_page" style="font-size: 25px">Review</a>
 			</li>
 			<li class="nav-item" id="nav_account">
-			    <a class="nav-link" href="/account_page" style="font-size: 25px">Account</a>
+			    <a class="nav-link" href="/account_page" style="color:white;font-size: 25px">Account</a>
 			</li>
             <li class="nav-item" id="nav_about">
-			    <a class="nav-link" href="/about_page" style="font-size: 25px">FAQ</a>
+			    <a class="nav-link" href="/about_page" style="color:white;font-size: 25px">FAQ</a>
 			</li>
+        </ul>
+
+        <ul class="navbar-nav navbar-right" style="padding-top: 8px">
+            <li class ="nav-item">
+                <p class="nav-link" style="color:white;font-size: 25px">Hello, Eitan!</p>
+            </li>
+            <li class ="nav-item">
+                <a id="guide_btn" class="nav-link" style="font-size: 25px" href="javascript:void(0);">Guide</a>
+            </li>
         </ul>
     </div>
   </div>
 </nav>
+
+<style>
+    a {
+    color:white
+    }
+</style>
 
 <script src="{{url_for('static', filename='javascript/navbar.js')}}"></script>

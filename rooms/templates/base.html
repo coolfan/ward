@@ -8,6 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4= sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+    <script src="{{url_for('static', filename='javascript/intro.min.js')}}"></script>
 
     {# Bootstrap#}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
@@ -17,6 +18,8 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
 	<script src="{{url_for('static', filename='plugins/bootstrap-filestyle.min.js')}}"></script>
+
+
 
     {# Font awesome   #}
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js"
@@ -41,6 +44,8 @@
     <script src="{{url_for('static', filename='javascript/global.js')}}"></script>
 
     <!-- Stylesheets -->
+{#    <link href="{{ url_for('static', filename='bootstrap-tour-standalone.min.css') }}" rel="stylesheet">#}
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
@@ -49,10 +54,11 @@
 
     {# Select2 #}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='select2-bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='introjs.min.css') }}">
 
     <link rel="shortcut icon" href="{{url_for('static', filename='favicon.ico')}}" type="image/x-icon">
     <link rel="icon" href="{{url_for('static', filename='favicon.ico')}}"  type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'base.css') }}">
 
 
 

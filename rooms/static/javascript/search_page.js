@@ -43,7 +43,6 @@ function search_rooms(room_query) {
             // add_rooms(new_rooms);
 
             rooms = new_rooms;
-            console.log(rooms);
             // Temporary, until real likelihoods come in
             for(let i = 0; i < rooms.length; i++){
                 rooms[i]["likelihood"] = 50;
@@ -60,47 +59,6 @@ function search_rooms(room_query) {
         }
     });
 }
-
-// function load_more_rooms() {
-//     let room_query = prev_query;
-//
-//     room_query["continueFrom"] = amount_displayed;
-//     room_query["limit"] = LOADED_PER_QUERY;
-//
-//     $.get({
-//         url: "/query",
-//         traditional:true,
-//         data: room_query,
-//         success: function (new_rooms) {
-//
-//             //Temporary, until real likelihoods come in
-//             for(let i = 0; i < new_rooms.length; i++){
-//                 new_rooms[i]["likelihood"] = 50;
-//             }
-//
-//             add_rooms(new_rooms);
-//
-//             amount_displayed += new_rooms.length;
-//             if (new_rooms.length === 0) {
-//                 done_loading = true;
-//             }
-//         }
-//     });
-// }
-
-
-// function clear_rooms() {
-//     $(".Table_card").empty();
-// }
-
-// function add_rooms(rooms) {
-//     $.each(rooms, function (i, room) {
-//         card = get_medium_card(room);
-//         wrapped = wrap_cards(card, room['id']);
-//         $(".Table_card").append(wrapped);
-//     });
-// }
-
 
 $(document).ready(function () {
     search_rooms({});

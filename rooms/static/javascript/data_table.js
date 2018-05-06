@@ -1,6 +1,7 @@
 $(document).ready(function () {
     $('#rooms_table').DataTable({
         "stripeClasses": [],
+        headerCallback: headerCallback,
         createdRow: call_back_handler,
         data: rooms,
         order: [[2, 'dec']], //Order based on sqft, the 3rd collumn
@@ -254,8 +255,9 @@ function add_modal(row,room,index){
         td = $(td);
         if(i !== n - 1){ //6 is the final collumn
             td.click(function(){
-                $.get("/reviews", {roomid: room.id}, function (data) {
-                    let modal = $(`
+                if(!global_in_intro){
+                    $.get("/reviews", {roomid: room.id}, function (data) {
+                        let modal = $(`
                         <div class="modal fade" tabindex="-1" role="dialog">
                             <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
@@ -266,27 +268,28 @@ function add_modal(row,room,index){
                             </div>
                         </div>`);
 
-                    let body = modal.find(".modal-body");
+                        let body = modal.find(".modal-body");
 
-                    let card = get_big_card(room, data);
-                    body.append(card);
+                        let card = get_big_card(room, data);
+                        body.append(card);
 
-                    console.log(body.prop('outerHTML'));
-                    console.log(modal.prop('outerHTML'));
+                        console.log(body.prop('outerHTML'));
+                        console.log(modal.prop('outerHTML'));
 
-                    modal.modal({
-                        keyboard: true,
-                        focus: true,
-                        show: true,
-                    })
-                });
+                        modal.modal({
+                            keyboard: true,
+                            focus: true,
+                            show: true,
+                        })
+                    });
+                }
             });
         }
     });
 }
 
 function add_highlighting(row,room,index){
-    // console.log('hi');
+
     row = $(row);
     row.hover(
         function(){
@@ -297,6 +300,14 @@ function add_highlighting(row,room,index){
             row.removeClass("highlight");
         }
     );
+}
+
+function headerCallback(thead,data,start,end,display){
+    let tr = $(thead).find("th");
+    console.log(thead);
+    console.log(tr);
+    // $(thead).attr("data-step","3");
+    // $(thead).attr("data-intro","Sort by clicking on the arrows. Shift click to sort by more than one category.");
 }
 
 // $(document).ready(){

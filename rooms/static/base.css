@@ -63,6 +63,21 @@ td { font-size: 20px; }
     background-color: whitesmoke !important;
 }
 
+#my_nav {
+  background: linear-gradient(to right, #333399, #6600cc);
+}
+
+
+a {
+    color:white
+}
+/*.navbar {*/
+  /*background-image: -webkit-linear-gradient(top, #004400 0%, #009900 100%);*/
+  /*background-image: -o-linear-gradient(top, #004400 0%, #009900 100%);*/
+  /*background-image: linear-gradient(to bottom, #004400 0%, #009900 100%);*/
+  /*background-repeat: repeat-x;*/
+  /*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff004400', endColorstr='#ff009900', GradientType=0);*/
+/*}*/
 
 /*Source for these 4 navbar things (Making the navbar bigger): https://bootstrapious.com/p/how-to-change-bootstrap-navbar-height*/
  /*.navbar {*/

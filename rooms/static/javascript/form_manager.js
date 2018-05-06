@@ -123,7 +123,6 @@ function fill_buildings() {
     let building_select = $("#building_select");
 
     let college = draw_type_select.val();
-    console.log(college);
 
     let data = {};
     data['college'] = college;
