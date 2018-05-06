@@ -334,6 +334,7 @@ $(document).ready(function() {
 	//reset_bigcards()
 	card_mgr.bigcard_arr = [$("#bigcard1_body"), $("#bigcard2_body")];
 	let ul = $("<ul>").addClass("draggable no-bullets padding-0").attr("id", "fav-list");
+	ul.css("max-width: 100%")
 	$("#cards").append(ul);
 	$.getJSON("/favorites", /*{groupid: $("groups").val()},*/ function(data) {
 		ul.empty()
@@ -359,7 +360,8 @@ $(document).ready(function() {
 			setTimeout(function() {
 				is_being_sorted = false
 			}, 500)
-		}
+		},
+		scroll: false
 	});
 	$.get("/my_groups", function(data) {
 		$.each(data, function(i, val) {
