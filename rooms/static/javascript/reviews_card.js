@@ -18,7 +18,7 @@ function get_reviews_card(reviews) {
 		pic_row.attr("style", "width: 100%; max-width: 100%; overflow-x: auto; white-space: nowrap")
 		if (pic_urls.length > 0) {
 			$.each(pic_urls, function(i, val) {
-				var img = $("<img>").attr("src", val).attr("style", "max-height: 200px; display: inline-block")
+				var img = $("<img>").attr("src", val).attr("style", "max-height: 200px; display: inline-block; margin-right: 10px")
 				pic_row.append(img)
 			})
 		} else {
