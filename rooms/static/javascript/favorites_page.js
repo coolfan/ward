@@ -3,6 +3,8 @@ var card_mgr = {
 	card_queue: [],
 	bigcard_arr: [null, null],
 	bigcard_disp_arr: [null, null],
+	bigcard_left: [null, null],
+	bigcard_right: [null, null],
 	locked_count: 0
 };
 
@@ -41,20 +43,28 @@ function reset_bigcards() {
 function lock_bigcard(val) {
 	if (is_displaying(0, val)) {
 		get_bigcard_frame(card_mgr.bigcard_arr[0]).addClass("locked")
+		toggle_button(card_mgr.bigcard_left[0], false)
+		toggle_button(card_mgr.bigcard_right[0], false)
 	}
 
 	if (is_displaying(1, val)) {
 		get_bigcard_frame(card_mgr.bigcard_arr[1]).addClass("locked")
+		toggle_button(card_mgr.bigcard_left[1], false)
+		toggle_button(card_bgr.bigcard_right[1], false)
 	}
 }
 
 function unlock_bigcard(val) {
 	if (is_displaying(0, val)) {
 		get_bigcard_frame(card_mgr.bigcard_arr[0]).removeClass("locked")
+		toggle_button(card_mgr.bigcard_left[0], true)
+		toggle_button(card_mgr.bigcard_right[0], true)
 	}
 
 	if (is_displaying(1, val)) {
 		get_bigcard_frame(card_mgr.bigcard_arr[1]).removeClass("locked")
+		toggle_button(card_mgr.bigcard_left[1], true)
+		toggle_button(card_mgr.bigcard_right[1], true)
 	}
 }
 
@@ -94,6 +104,23 @@ function set_compare(card, attr, comp) {
 	} else {
 		box.addClass("worse")
 	}
+}
+
+function toggle_button(button, enable) {
+	if (enable) {
+		$(button.children()[0]).removeClass("disabled")
+	} else {
+		console.log($(button.children()[0]))
+		$(button.children()[0]).addClass("disabled")
+	}
+}
+
+function is_button_enabled(button) {
+	if ($(button.children()[0]).hasClass("disabled")) {
+		return false;
+	}
+
+	return true;
 }
 
 function compare_stats() {
@@ -158,14 +185,19 @@ function display_bigcard(val) {
 		}
 	}
 	if (!in_array(card_mgr.card_queue, val.id)) {
-		console.log("lol")
 		return false;
 	}
 	var index = 0
 	if (!is_displaying(index, null) && is_displaying((index + 1) % 2, null)) {
 		index = (index + 1) % 2
 	}
-	console.log(index)
+	
+	display_bigcard_at(val, index)
+
+	return true;
+}
+
+function display_bigcard_at(val, index) {
 	card_mgr.bigcard_arr[index].empty()
 	
 	$.get("/reviews", {roomid: val.id}, function(data) {
@@ -176,7 +208,9 @@ function display_bigcard(val) {
 	card_mgr.bigcard_disp_arr[index] = val
 	get_bigcard_frame(card_mgr.bigcard_arr[index]).addClass("selected")
 
-	return true;
+	toggle_button(card_mgr.bigcard_left[index], true)
+	toggle_button(card_mgr.bigcard_right[index], true)
+
 }
 
 function undisplay_bigcard(val) {
@@ -184,12 +218,16 @@ function undisplay_bigcard(val) {
 		card_mgr.bigcard_arr[0].empty()
 		card_mgr.bigcard_disp_arr[0] = null
 		get_bigcard_frame(card_mgr.bigcard_arr[0]).removeClass("selected")
+		toggle_button(card_mgr.bigcard_left[0], false)
+		toggle_button(card_mgr.bigcard_right[0], false)
 	}
 
 	if (is_displaying(1, val)) {
 		card_mgr.bigcard_arr[1].empty()
 		card_mgr.bigcard_disp_arr[1] = null
 		get_bigcard_frame(card_mgr.bigcard_arr[1]).removeClass("selected")
+		toggle_button(card_mgr.bigcard_left[0], false)
+		toggle_button(card_mgr.bigcard_right[0], false)
 	}
 
 	for (var i = 0; i < card_mgr.card_queue.length; i++) {
@@ -246,7 +284,7 @@ function get_card(val) {
 	var col2 = $("<div>").addClass("col col-sm-2");
 	var text = $("<p>").addClass("card-text");
 	var del_btn_hitbox = $("<div>")
-	var del_btn = $("<i>").addClass("far fa-trash-alt fa-lg")
+	var del_btn = $("<i>").addClass("far fa-trash-alt fa-lg hover-button")
 
 	del_btn_hitbox.append(del_btn)
 	text.append(to_header(val));
@@ -289,10 +327,12 @@ function get_card(val) {
 					card.click()
 				}
 				lock_bigcard(val)
+				toggle_button(del_btn_hitbox, false)
 				card_mgr.locked_count++
 			} else {
 				card.removeClass("locked")
 				unlock_bigcard(val)
+				toggle_button(del_btn_hitbox, true)
 				card_mgr.locked_count--
 			}
 			val.bool_locked = !val.bool_locked
@@ -334,9 +374,62 @@ function get_new_order() {
 	return ret
 }
 
+function click_card(order, index, step) {
+	if (step == 0) {
+		$("#card" + order[index]).click()
+	} else {
+		index += step;
+		index += order.length;
+		index %= order.length;
+		while ($("#card" + order[index]).hasClass("selected")) {
+			index += step
+			index += order.length
+			index %= order.length
+		}
+		$("#card" + order[index]).click()
+	}
+}
+
 $(document).ready(function() {
 	//reset_bigcards()
-	card_mgr.bigcard_arr = [$("#bigcard1_body"), $("#bigcard2_body")];
+	card_mgr.bigcard_arr = [$("#big-card-0-body"), $("#big-card-1-body")];
+	card_mgr.bigcard_left = [$("#big-card-0-left"), $("#big-card-1-left")];
+	card_mgr.bigcard_right = [$("#big-card-0-right"), $("#big-card-1-right")];
+
+	$.each(card_mgr.bigcard_left, function(i, val) {
+		toggle_button(val, false)
+		val.click(function() {
+			if (is_button_enabled(val)) {
+				var cur_id = card_mgr.bigcard_disp_arr[i].id
+				var order = get_new_order()
+
+				for (var index = 0; index < order.length; index++) {
+					if (order[index] == cur_id) {
+						click_card(order, index, 0)
+						click_card(order, index, -1)
+					}
+				}
+			}
+		})
+	})
+
+	$.each(card_mgr.bigcard_right, function(i, val) {
+		toggle_button(val, false)
+		val.click(function() {
+			if (is_button_enabled(val)) {
+				var cur_id = card_mgr.bigcard_disp_arr[i].id
+				var order = get_new_order()
+
+				for (var index = 0; index < order.length; index++) {
+					if (order[index] == cur_id) {
+						click_card(order, index, 0)
+						click_card(order, index, 1)
+					}
+				}
+			}
+		})
+	})
+
 	let ul = $("<ul>").addClass("draggable no-bullets padding-0").attr("id", "fav-list");
 	ul.css("max-width: 100%")
 	$("#cards").append(ul);

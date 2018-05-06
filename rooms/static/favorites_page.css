@@ -12,18 +12,23 @@
 	border: solid 1px red !important;
 }
 
-.fa-lightbulb {
+.arrow {
+	display: flex;
+	align-items: center;
+}
+
+.hover-button {
+	color: #bbbbbb
+}
+
+.hover-button:hover {
 	color: #888888
 }
 
-.fa-lightbulb:hover {
+.hover-button:active {
 	color: #444444
 }
 
-.fa-trash-alt {
-	color: #888888
-}
-
-.fa-trash-alt:hover {
-	color: #444444
+.hover-button.disabled {
+	color: #bbbbbb !important;
 }
