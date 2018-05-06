@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 from functools import wraps
 
 from flask import g
@@ -79,7 +80,7 @@ def define_entities(db: Database) -> None:
         name = Optional(str)
 
         drawtype = Optional(str)
-        drawtime = Optional(str)
+        drawtime = Optional(datetime)
         timefromstart = Optional(int)
 
         ranked_room_lists = Set(RankedRoomList)
