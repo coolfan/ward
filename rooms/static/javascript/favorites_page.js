@@ -79,6 +79,70 @@ function in_array(arr, id) {
 	return false
 }
 
+function remove_compare(card, attr) {
+	var box = card.find("." + attr)
+	console.log(box)
+	box.removeClass("better")
+	box.removeClass("worse")
+}
+
+function set_compare(card, attr, comp) {
+	var box = card.find("." + attr)
+	console.log(box)
+	if (comp == 1) {
+		box.addClass("better")
+	} else {
+		box.addClass("worse")
+	}
+}
+
+function compare_stats() {
+	var left = card_mgr.bigcard_disp_arr[0]
+	var left_card = card_mgr.bigcard_arr[0]
+
+	var right = card_mgr.bigcard_disp_arr[1]
+	var right_card = card_mgr.bigcard_arr[1]
+
+	if (left == null && right != null) {
+		remove_compare(right_card, "sqft")
+		remove_compare(right_card, "numrooms")
+	}
+
+	if (right == null && left != null) {
+		remove_compare(left_card, "sqft")
+		remove_compare(left_card, "numrooms")
+	}
+
+	if (right != null && left != null) {
+		if (left.occupancy != right.occupancy) {
+			remove_compare(left_card, "sqft")
+			remove_compare(left_card, "numrooms")
+			remove_compare(right_card, "sqft")
+			remove_compare(right_card, "numrooms")
+		} else {
+			if (left.sqft < right.sqft) {
+				set_compare(left_card, "sqft", 0)
+				set_compare(right_card, "sqft", 1)
+			}
+
+			if (right.sqft < left.sqft) {
+				set_compare(right_card, "sqft", 0)
+				set_compare(left_card, "sqft", 1)
+			}
+
+			if (left.numrooms < right.numrooms) {
+				set_compare(left_card, "numrooms", 0)
+				set_compare(right_card, "numrooms", 1)
+			}
+
+			if (right.numrooms < left.numrooms) {
+				set_compare(right_card, "numrooms", 0)
+				set_compare(left_card, "numrooms", 1)
+			}
+		}
+	}
+}
+
 function display_bigcard(val) {
 	card_mgr.card_queue.push(val)
 	if (card_mgr.card_queue.length > 2) {
@@ -106,8 +170,10 @@ function display_bigcard(val) {
 	
 	$.get("/reviews", {roomid: val.id}, function(data) {
 		card_mgr.bigcard_arr[index].append(get_big_card(val, data))
+		card_mgr.bigcard_disp_arr[index] = val
+		compare_stats()
 	})
-	card_mgr.bigcard_disp_arr[index] = val
+
 	return true;
 }
 
@@ -128,6 +194,8 @@ function undisplay_bigcard(val) {
 			break;
 		}
 	}
+
+	compare_stats()
 }
 
 function card_onclick(card, val) {
@@ -314,5 +382,17 @@ $(document).ready(function() {
 		reset_bigcards()
 	})
 
+	$.each(card_mgr.bigcard_arr, function(i, val) {
+		var frame = get_bigcard_frame(val)
+		frame.contextmenu(function() {
+			var room = card_mgr.bigcard_disp_arr[i]
+			console.log(room)
+			if (room != null) {
+				$("#" + get_dom_id(room)).contextmenu()
+			}
+			return false;
+		})
+	})
+	
 	navbar_set("#nav_favorites")
 });

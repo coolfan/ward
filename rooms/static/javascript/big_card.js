@@ -75,11 +75,11 @@ function build_bigcard_inner(val) {
 	rc++
 
 	rows[rc] = $("<div>").addClass("row").css("margin-bottom", "10px")
-	var sqft = $("<h5>").addClass("col col-sm-6")
+	var sqft = $("<h5>").addClass("col col-sm-6 sqft")
 	sqft.text("Area: " + val.sqft + " ft").append($("<sup>").text("2"))
 	rows[rc].append(sqft)
 
-	var numrooms = $("<h5>").addClass("col col-sm-6")
+	var numrooms = $("<h5>").addClass("col col-sm-6 numrooms")
 	numrooms.text("Number of Rooms: ").append(get_icons("<i class=\"fa fa-building fa-lg\"></i>", val.numrooms))
 	rows[rc].append(numrooms)
 	rc++
