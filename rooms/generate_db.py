@@ -147,4 +147,18 @@ if __name__ == "__main__":
     _load_roomsjs(db)
     _load_draw_data(db, fname="roomdraw16.txt")
     _load_draw_data(db, fname="roomdraw13.txt")
-    pass
+
+    # draws = [
+    #     ("../2018drawdata/butler_draw_times.tsv", "Butler College"),
+    #     ("../2018drawdata/forbes_draw_times.tsv", "Forbes College"),
+    #     ("../2018drawdata/independent_draw_times.tsv", "Independent"),
+    #     ("../2018drawdata/mathey_draw_times.tsv", "Mathey College"),
+    #     ("../2018drawdata/rocky_draw_times.tsv", "Rockefeller College"),
+    #     ("../2018drawdata/spelman_draw_times.tsv", "Spelman"),
+    #     ("../2018drawdata/upperclass_draw_times.tsv", "Upperclass"),
+    #     ("../2018drawdata/whitman_draw_times.tsv", "Whitman College"),
+    #     ("../2018drawdata/wilson_draw_times.tsv", "Wilson College")
+    # ]
+    #
+    # for tsv, drawtype in draws:
+    #     _load_curr_drawtimes(db, tsv, drawtype)
