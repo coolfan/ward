@@ -38,17 +38,22 @@ def buildings(db):
 
 
 def likelihood(my_groups, room) -> int:
-    # TODO: This crashes!  make it look for the draw group corresponding to the room
-    return 50
     if len(my_groups) == 0: return 50
-    my_time = my_groups.timefromstart
+
+    potential_groups = my_groups.select(lambda g: g.drawtype == room.college)[:]
+    if len(potential_groups) == 0: return -1
+
+    group = potential_groups[0]
+    my_time = group.timefromstart
     if my_time is None: return 50
-    times = [d.timefromstart for d in room.drawings]
+
+    times = [d.timefromstart for d in room.room_draws]
     if len(times) == 0: return 50
+
     mean = np.mean(times)
     stddev = np.std(times)
-    current_app.logger.debug(f"Mean: {mean}, Std: {stddev}")
-    stddev = stddev if stddev > 0.0 else 10*60*60
+    current_app.logger.debug(f"{room.building} {room.roomnum} | Mean: {mean}, Std: {stddev}, Your time: {my_time}")
+    stddev = stddev if stddev > 0.0 else 5*60*60
     prob = 1.0 - scipy.stats.norm.cdf(my_time, mean, stddev)
     return int(prob * 100.0)
 
@@ -153,8 +158,8 @@ def query(db):
             for rr in group.getfavoritelist().ranked_rooms
         }
 
-    rooms.sort(key=lambda room_dict: room_dict[order_by] if order_by != "sqft" else -room_dict["sqft"])
-    limited = rooms[continue_from:continue_from+limit]
+    rooms.sort(key=lambda room: getattr(room, order_by) if order_by != "sqft" else -1 * getattr(room, "sqft"))
+    limited = rooms[continue_from:continue_from + limit]
 
     room_dicts = []
 
@@ -163,6 +168,5 @@ def query(db):
         d['favorited'] = d['id'] in fave_roomids
         d['likelihood'] = likelihood(groups, room)
         room_dicts.append(d)
-    room_dicts.sort(key=lambda d: d[order_by])
 
     return jsonify(room_dicts)
