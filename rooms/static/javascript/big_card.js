@@ -1,22 +1,100 @@
-function get_big_card(room){
-    let medium_card = get_medium_card(room);
-    let small_card = medium_card[0];
-    medium_card = medium_card[1];
+function to_header(val) {
+	return val.building + " " + val.roomnum
+}
 
-    let html_card = $(`
-    <div>
-        <div class = "collapse row Big_collapse">
-            <div class = "col-sm-12 padding-0">
-                <div class = "container-fluid padding-0">
-                    <p>hi</p>
-                <\div>
-            <\div>
-        <\div>
-    </div>
-    `);
+function get_icons(base_icon_str, count) {
+	var ans = "";
+    if (count > 5) {
+        ans += base_icon_str;
+        ans += ' x ' + count;
+    }
+    else {
+        for (let i = 0; i < count; i++) {
+            ans += base_icon_str;
+        }
+    }
 
-    let big_collapse_div = $(html_card).find(".Big_collapse");
+	return ans
+}
 
-    big_collapse_div.attr('id', room['id'] + 'big_card');
-    return [small_card,medium_card,html_card];
+function build_bigcard_inner(val) {
+
+	var rows = []
+	var rc = 0
+
+	rows[rc] = $("<div>").addClass("row").css("margin-bottom", "10px")
+	var header = $("<h1>").addClass("col col-sm-11")
+	header.text(to_header(val))
+	rows[rc].append(header)
+	if (!val.subfree) {
+		var subfree_icon = $("<span>").addClass("fa-stack fa-lg w-100 col col-sm-1")
+		subfree_icon.append($("<i>").addClass("fa fa-ban fa-stack-2x"))
+		subfree_icon.append($("<i>").addClass("fas fa-glass-martini fa-stack-1x"))
+		rows[rc].append(subfree_icon)
+	}
+	rc++
+
+	rows[rc] = $("<div>").addClass("row").css("margin-bottom", "10px")
+	var drawtype = $("<h3>").addClass("col col-sm-10")
+	drawtype.text(val.college)
+	rows[rc].append(drawtype)
+	var likelihood_col = $("<div>").addClass("col col-sm-2").css("padding-right", "10px")
+	let likelihood_btn = $(`<button type="button" class="btn w-100 h-100" data-toggle="tooltip" ></button>`);
+
+    let likelihood = val.likelihood;
+
+    if (likelihood <= 100 && likelihood >= 66){
+        likelihood_btn.addClass("btn-success");
+        likelihood_btn.text("Likely");
+    }
+
+    if (likelihood < 66 && likelihood >= 33){
+        likelihood_btn.addClass("btn-primary");
+        likelihood_btn.text("Maybe");
+    }
+
+    if (likelihood < 33 && likelihood >= 10){
+        likelihood_btn.addClass("btn-warning");
+        likelihood_btn.text("Unlikely");
+    }
+
+    if (likelihood < 10 && likelihood >= 0){
+        likelihood_btn.addClass("btn-danger");
+        likelihood_btn.text("Doomed");
+    }
+
+	likelihood_col.append(likelihood_btn)
+	rows[rc].append(likelihood_col)
+	rc++
+
+	rows[rc] = $("<div>").addClass("row").css("margin-bottom", "10px")
+	var floor = $("<h5>").addClass("col col-sm-6")
+	floor.text("Floor: " + val.floor)
+	rows[rc].append(floor)
+
+	var occupancy = $("<h5>").addClass("col col-sm-6")
+	occupancy.text("Occupancy: ").append(get_icons("<i class=\"fas fa-male fa-lg\"></i>", val.occupancy))
+	rows[rc].append(occupancy)
+	rc++
+
+	rows[rc] = $("<div>").addClass("row").css("margin-bottom", "10px")
+	var sqft = $("<h5>").addClass("col col-sm-6 sqft")
+	sqft.text("Area: " + val.sqft + " ft").append($("<sup>").text("2"))
+	rows[rc].append(sqft)
+
+	var numrooms = $("<h5>").addClass("col col-sm-6 numrooms")
+	numrooms.text("Number of Rooms: ").append(get_icons("<i class=\"fa fa-building fa-lg\"></i>", val.numrooms))
+	rows[rc].append(numrooms)
+	rc++
+
+	return rows
+}
+
+function get_big_card(room, reviews){
+    var div = $("<div>").addClass("w-100")
+	$.each(build_bigcard_inner(room), function(i, val) {
+		div.append(val)
+	})
+	div.append(get_reviews_card(reviews))
+	return div
 }

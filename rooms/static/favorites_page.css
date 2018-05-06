@@ -1,5 +1,35 @@
 .card_list {
-	height: calc(100vh - 100px);
-    max-height: calc(100vh - 100px);
+	height: calc(100vh - 150px);
+    max-height: calc(100vh - 150px);
     overflow-y: auto;
+}
+
+.locked {
+	border-width: 3px;
+	border-color: #7A7AFF;
+	box-shadow: 5px 10px 18px #888888;
+}
+
+.better {
+	border: solid 1px green !important;
+}
+
+.worse {
+	border: solid 1px red !important;
+}
+
+.fa-lightbulb {
+	color: #888888
+}
+
+.fa-lightbulb:hover {
+	color: #444444
+}
+
+.fa-trash-alt {
+	color: #888888
+}
+
+.fa-trash-alt:hover {
+	color: #444444
 }
