@@ -44,6 +44,16 @@ def _load_roomsjs(db, fname="rooms.json"):
             )
 
 
+@db_session
+def row_to_college(db, row: pd.Series) -> str:
+    roomnum = row["roomnum"]
+    building = row["building"]
+    room = db.Room.get(roomnum=roomnum, building=building)
+    if room is not None:
+        return room.college
+    return ""
+
+
 def compute_timefromstart(draw_time: datetime, draw_start: datetime):
     delta = draw_time - draw_start
     numweekdays = int(np.busday_count(draw_start, draw_time))
@@ -58,7 +68,26 @@ def _load_draw_data(db, fname):
     df = pd.read_csv(fname, sep="\t")
     df["date"] = df["date"].apply(lambda d: datetime.strptime(d, "%b %d, %Y %H:%M:%S %p"))
     df["building"] = df["building"].apply(standardize_building)
-    df["college"] = df["building"].apply(lambda b: building2college[b])
+    df["college"] = df.apply(lambda row: row_to_college(db, row), axis=1)
+
+    # -------------------------------------------------------------------------
+    # HAXXX to fix problem that we don't know what's independent for old years
+    # select upper class rooms
+    upperclass = df[df.college == "Upperclass"]
+    # find if there are any gaps larger than 3 days
+    big_gaps = upperclass["date"].diff() > timedelta(3)
+    # find where that gap occurs
+    gap_idx = big_gaps.idxmax()
+    # Double check because of weird idxmax behavior!
+    if big_gaps.loc[gap_idx] == True:
+        df.loc[(df.college == "Upperclass") & (df.index < gap_idx), "college"] = "Independent"
+
+    independent = df[df.college == "Independent"]
+    big_gaps = independent["date"].diff() > timedelta(3)
+    gap_idx = big_gaps.idxmax()
+    if big_gaps.loc[gap_idx] == True:
+        df.loc[(df.college == "Independent") & (df.index >= gap_idx), "college"] = "Upperclass"
+    # -------------------------------------------------------------------------
 
     draws_by_college = df.groupby("college")
     for college, draws in draws_by_college:
@@ -147,4 +176,18 @@ if __name__ == "__main__":
     _load_roomsjs(db)
     _load_draw_data(db, fname="roomdraw16.txt")
     _load_draw_data(db, fname="roomdraw13.txt")
-    pass
+
+    # draws = [
+    #     ("../2018drawdata/butler_draw_times.tsv", "Butler College"),
+    #     ("../2018drawdata/forbes_draw_times.tsv", "Forbes College"),
+    #     ("../2018drawdata/independent_draw_times.tsv", "Independent"),
+    #     ("../2018drawdata/mathey_draw_times.tsv", "Mathey College"),
+    #     ("../2018drawdata/rocky_draw_times.tsv", "Rockefeller College"),
+    #     ("../2018drawdata/spelman_draw_times.tsv", "Spelman"),
+    #     ("../2018drawdata/upperclass_draw_times.tsv", "Upperclass"),
+    #     ("../2018drawdata/whitman_draw_times.tsv", "Whitman College"),
+    #     ("../2018drawdata/wilson_draw_times.tsv", "Wilson College")
+    # ]
+    #
+    # for tsv, drawtype in draws:
+    #     _load_curr_drawtimes(db, tsv, drawtype)
