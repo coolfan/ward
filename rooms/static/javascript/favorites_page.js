@@ -494,4 +494,7 @@ $(document).ready(function() {
 	})
 	
 	navbar_set("#nav_favorites")
+	if (RegExp('multipage', 'gi').test(window.location.search)) {
+		introJs().start();
+	}
 });
