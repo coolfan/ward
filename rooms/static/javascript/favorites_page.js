@@ -41,28 +41,43 @@ function reset_bigcards() {
 }
 
 function lock_bigcard(val) {
-	if (card_mgr.bigcard_disp_arr[0] !== null && card_mgr.bigcard_disp_arr[0].id === val.id) {
+	if (is_displaying(0, val)) {
 		get_bigcard_frame(card_mgr.bigcard_arr[0]).addClass("locked")
 	}
 
-	if (card_mgr.bigcard_disp_arr[1] !== null && card_mgr.bigcard_disp_arr[1].id === val.id) {
+	if (is_displaying(1, val)) {
 		get_bigcard_frame(card_mgr.bigcard_arr[1]).addClass("locked")
 	}
 }
 
 function unlock_bigcard(val) {
-	if (card_mgr.bigcard_disp_arr[0] !== null && card_mgr.bigcard_disp_arr[0].id === val.id) {
+	if (is_displaying(0, val)) {
 		get_bigcard_frame(card_mgr.bigcard_arr[0]).removeClass("locked")
 	}
 
-	if (card_mgr.bigcard_disp_arr[1] !== null && card_mgr.bigcard_disp_arr[1].id === val.id) {
+	if (is_displaying(1, val)) {
 		get_bigcard_frame(card_mgr.bigcard_arr[1]).removeClass("locked")
 	}
 }
 
+function is_displaying(i, val) {
+	if (val == null && card_mgr.bigcard_disp_arr[i] == null) {
+		return true
+	}
+
+	if (val != null && card_mgr.bigcard_disp_arr[i] != null && card_mgr.bigcard_disp_arr[i].id == val.id) {
+		return true
+	}
+
+	return false
+}
+
 function display_bigcard(val) {
 	var index = card_mgr.cur_bigcard1 ? 0 : 1
-	
+	if (!is_displaying(index, null) && is_displaying((index + 1) % 2, null)) {
+		index = (index + 1) % 2
+	}
+
 	if (get_bigcard_frame(card_mgr.bigcard_arr[index]).hasClass("locked")) {
 		index = (index + 1) % 2
 		if (get_bigcard_frame(card_mgr.bigcard_arr[index]).hasClass("locked")) {
@@ -94,13 +109,13 @@ function display_bigcard(val) {
 }
 
 function undisplay_bigcard(val) {
-	if (card_mgr.bigcard_disp_arr[0] !== null && card_mgr.bigcard_disp_arr[0].id === val.id) {
+	if (is_displaying(0, val)) {
 		card_mgr.bigcard_arr[0].empty()
 		card_mgr.bigcard_disp_arr[0] = null
 		card_mgr.cur_bigcard1 = true
 	}
 
-	if (card_mgr.bigcard_disp_arr[1] !== null && card_mgr.bigcard_disp_arr[1].id === val.id) {
+	if (is_displaying(1, val)) {
 		card_mgr.bigcard_arr[1].empty()
 		card_mgr.bigcard_disp_arr[1] = null
 		card_mgr.cur_bigcard1 = false
@@ -158,7 +173,7 @@ function get_card(val) {
 	var col2 = $("<div>").addClass("col col-sm-2");
 	var text = $("<p>").addClass("card-text");
 	var del_btn_hitbox = $("<div>")
-	var del_btn = $("<i>").addClass("far fa-trash-alt fa-lg")
+	var del_btn = $("<i>").addClass("far fa-trash-alt fa-lg").attr("style", "color: #888888")
 
 	del_btn_hitbox.append(del_btn)
 	text.append(to_header(val));

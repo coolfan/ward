@@ -17,13 +17,15 @@
 	  <div class="row h-100">
 		<div class="col col-sm-2">
 		  <div class="row" style="margin-bottom: 10px">
-			<div class="col col-sm-12">
-			  <select class="form-control" id="groups">
+			<div class="col col-sm-11" style="padding-right: 5px">
+			  <select class="form-control" id="groups" style="display: inline-block">
 				<option id="default" value="-1" selected>Personal</option>
 			  </select>
 			</div>
+			<a class="col col-sm-1" style="padding: 0px" data-toggle="tooltip" title="Select a favorites list from the drop down menu. Then click on a room to view it in more detail. Right click on a room to lock it in place.">
+			  <i class="far fa-lightbulb fa-xs" style="color: #888888"></i>
+			</a>
 		  </div>
-
 		  <div class="row">
 			<div class="col col-sm-12 card_list" id="cards" style="overflow-x: hidden;">
 			</div>

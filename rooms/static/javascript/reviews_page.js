@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	navbar_set("#nav_reviews")
-
+	$(":file").filestyle();
 	// $.get("/buildings", function(data) {
 	// 	$.each(data, function(i, val) {
 	// 		var option = $("<option>").text(val)
