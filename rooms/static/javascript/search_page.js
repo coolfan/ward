@@ -43,6 +43,7 @@ function search_rooms(room_query) {
             // add_rooms(new_rooms);
 
             rooms = new_rooms;
+            console.log(rooms);
             // Temporary, until real likelihoods come in
             for(let i = 0; i < rooms.length; i++){
                 rooms[i]["likelihood"] = 50;
@@ -105,7 +106,7 @@ $(document).ready(function () {
     search_rooms({});
     setup_form();
 
-    navbar_set("#nav_table")
+    navbar_set("#nav_table");
 
     $(".number_only").on("keypress keyup blur", function (event) {
         $(this).val($(this).val().replace(/[^\d].+/, ""));

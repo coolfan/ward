@@ -75,7 +75,7 @@ function render_favorite(data, type, room) {
                                  src = "/static/star.png"
                                  style="height: 37px;width: 37px;padding-top: 2px">
                       </span>`);
-
+        console.log(room.favorited);
         if (room.favorited) {
             star_div.attr("src", "/static/star_fill.png");
         }
