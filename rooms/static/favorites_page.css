@@ -3,3 +3,9 @@
     max-height: calc(100vh - 100px);
     overflow-y: auto;
 }
+
+.locked {
+	border-width: 5px;
+	border-color: #797A7E;
+	box-shadow: 5px 10px 18px #888888;
+}

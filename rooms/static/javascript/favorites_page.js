@@ -3,8 +3,11 @@ var card_mgr = {
 	card_queue: [],
 	bigcard_arr: [null, null],
 	bigcard_disp_arr: [null, null],
-	cur_bigcard1: true
-}
+	cur_bigcard1: true,
+	locked_count: 0
+};
+
+var is_being_sorted = false;
 
 function to_header(val) {
 	return val.roomnum + " " + val.building
@@ -18,9 +21,54 @@ function get_room_id(s) {
 	return s.slice(4)
 }
 
+function get_bigcard_frame(bigcard) {
+	var parent = $(bigcard.parent())
+	parent = $(parent.parent())
+	parent = $(parent.parent())
+	return parent;
+}
+
+function reset_bigcards() {
+	$.each(card_mgr.bigcard_arr, function(i, val) {
+		val.empty()
+		get_bigcard_frame(val).removeClass("locked")
+	})
+
+	card_mgr.card_queue = []
+	card_mgr.bigcard_disp_arr = [null, null]
+	card_mgr.cur_bigcard1 = true
+	card_mgr.locked_count = 0
+}
+
+function lock_bigcard(val) {
+	if (card_mgr.bigcard_disp_arr[0] !== null && card_mgr.bigcard_disp_arr[0].id === val.id) {
+		get_bigcard_frame(card_mgr.bigcard_arr[0]).addClass("locked")
+	}
+
+	if (card_mgr.bigcard_disp_arr[1] !== null && card_mgr.bigcard_disp_arr[1].id === val.id) {
+		get_bigcard_frame(card_mgr.bigcard_arr[1]).addClass("locked")
+	}
+}
+
+function unlock_bigcard(val) {
+	if (card_mgr.bigcard_disp_arr[0] !== null && card_mgr.bigcard_disp_arr[0].id === val.id) {
+		get_bigcard_frame(card_mgr.bigcard_arr[0]).removeClass("locked")
+	}
+
+	if (card_mgr.bigcard_disp_arr[1] !== null && card_mgr.bigcard_disp_arr[1].id === val.id) {
+		get_bigcard_frame(card_mgr.bigcard_arr[1]).removeClass("locked")
+	}
+}
+
 function display_bigcard(val) {
 	var index = card_mgr.cur_bigcard1 ? 0 : 1
 	
+	if (get_bigcard_frame(card_mgr.bigcard_arr[index]).hasClass("locked")) {
+		index = (index + 1) % 2
+		if (get_bigcard_frame(card_mgr.bigcard_arr[index]).hasClass("locked")) {
+			return false;
+		}
+	}
 	card_mgr.bigcard_arr[index].empty()
 	
 	$.get("/reviews", {roomid: val.id}, function(data) {
@@ -32,9 +80,17 @@ function display_bigcard(val) {
 
 	card_mgr.card_queue.push(val)
 	if (card_mgr.card_queue.length > 2) {
-		var ret = card_mgr.card_queue.shift()
-		$("#hitbox" + ret.id).click()
+		for (var i = 0; i < card_mgr.card_queue.length; i++) {
+			if (!card_mgr.card_queue[i].bool_locked) {
+				var ret = card_mgr.card_queue[i]
+				card_mgr.card_queue.splice(i, 1)
+				$("#hitbox" + ret.id).click()
+				break;
+			}
+		}
 	}
+
+	return true;
 }
 
 function undisplay_bigcard(val) {
@@ -102,7 +158,7 @@ function get_card(val) {
 	var col2 = $("<div>").addClass("col col-sm-2");
 	var text = $("<p>").addClass("card-text");
 	var del_btn_hitbox = $("<div>")
-	var del_btn = $("<i>").addClass("fa fa-close")
+	var del_btn = $("<i>").addClass("far fa-trash-alt fa-lg")
 
 	del_btn_hitbox.append(del_btn)
 	text.append(to_header(val));
@@ -116,27 +172,57 @@ function get_card(val) {
 	
 	card.css("margin-bottom", "10px");
 	val.bool_filled = false;
-
-	col1.click(function() {
-		if (val.bool_filled) {
-			card.css("backgroundColor", "white");
-			undisplay_bigcard(val)
-		} else {
-			card.css("backgroundColor", "#f2f5ff");
-			display_bigcard(val)
+	val.bool_locked = false;
+	card.click(function() {
+		if (!is_being_sorted && !val.bool_locked) { 
+			console.log(to_header(val))
+			if (val.bool_filled) {
+				card.css("backgroundColor", "white");
+				undisplay_bigcard(val)
+			} else {
+				if (!display_bigcard(val)) {
+					return;
+				}
+				card.css("backgroundColor", "#f2f5ff");
+			}
+			val.bool_filled = !val.bool_filled
 		}
-		val.bool_filled = !val.bool_filled
 	});
 	card.attr("id", get_dom_id(val));
+	
+	card.contextmenu(function() {
+		if (!is_being_sorted) {
+			if (!val.bool_locked) {
+				if (card_mgr.locked_count >= 2) {
+					return false
+				}
+				card.addClass("locked")
+				if (!val.bool_filled) {
+					card.click()
+				}
+				lock_bigcard(val)
+				card_mgr.locked_count++
+			} else {
+				card.removeClass("locked")
+				unlock_bigcard(val)
+				card_mgr.locked_count--
+			}
+			val.bool_locked = !val.bool_locked
+		}
+		return false
+	})
 
 	del_btn_hitbox.click(function() {
-		$.get("/unfavorite", {groupid: $("#groups").val, roomid: val.id}, function(data) {
+		is_being_sorted = true
+		setTimeout(function() {
+			is_being_sorted = false
+		}, 500)
+		$.get("/unfavorite", {groupid: $("#groups").val(), roomid: val.id}, function(data) {
 			var list = $($("#cards").children()[0]).children()
 			$.each(list, function(i, item) {
-				console.log($(item).attr("id"))
 				if ($(item).attr("id") == "elem" + val.id) {
 					if (val.bool_filled) {
-						$("#hitbox" + val.id).click()
+						undisplay_bigcard(val)
 					}
 					$("#cards").children()[0].removeChild(item)
 				}
@@ -159,6 +245,7 @@ function get_new_order() {
 }
 
 $(document).ready(function() {
+	//reset_bigcards()
 	card_mgr.bigcard_arr = [$("#bigcard1_body"), $("#bigcard2_body")];
 	let ul = $("<ul>").addClass("draggable no-bullets padding-0").attr("id", "fav-list");
 	$("#cards").append(ul);
@@ -176,17 +263,16 @@ $(document).ready(function() {
 		}
 	});
 	ul.sortable({
+		start: function(a, b, c) {
+			is_being_sorted = true
+		},
 		stop: function(a, b, c) {
 			let order = get_new_order();
 			console.log(order);
-			$.ajax({
-				url:"/reorder_favorites",
-				type:"POST",
-				data:JSON.stringify({"data": order}),
-				contentType: "application/json",
-				dataType: "json",
-				success: null
-			})
+			//$.post("/reorder_favorites", {}
+			setTimeout(function() {
+				is_being_sorted = false
+			}, 500)
 		}
 	});
 	$.get("/my_groups", function(data) {
@@ -207,6 +293,7 @@ $(document).ready(function() {
 				ul.append(get_empty_card())
 			}
 		});
+		reset_bigcards()
 	})
 
 	navbar_set("#nav_favorites")
