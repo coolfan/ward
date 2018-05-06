@@ -173,6 +173,7 @@ function display_bigcard(val) {
 		card_mgr.bigcard_disp_arr[index] = val
 		compare_stats()
 	})
+	card_mgr.bigcard_disp_arr[index] = val
 
 	return true;
 }
