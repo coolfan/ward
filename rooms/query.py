@@ -153,7 +153,10 @@ def query(db):
         }
 
     limited = rooms[continue_from:continue_from+limit]
+    res.sort(key=lambda room_dict: room_dict[order_by] if order_by != "sqft" else -room_dict["sqft"])
+    limited = res[continue_from:continue_from+limit]
     room_dicts = []
+
     for room in limited:
         d = room.to_dict()
         d['favorited'] = d['id'] in fave_roomids
