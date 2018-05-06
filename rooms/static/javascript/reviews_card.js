@@ -1,5 +1,5 @@
 function get_reviews_card(reviews) {
-	var card = $("<div>").addClass("card w-100").attr("style", "max-height: 100%");
+	var card = $("<div>").addClass("card w-100 y-stalwart").attr("style", "max-height: 100%");
 	var container_fluid = $("<div>").addClass("container-fluid");
 	var card_body = $("<div>").addClass("card-body");
 
@@ -55,7 +55,7 @@ function get_reviews_card(reviews) {
 		})
 	} else {
 		var row = $("<div>").addClass("row");
-		var col = $("<div>").addClass("col-sm-12");
+		var col = $("<div>").addClass("col-sm-12").attr("align", "center");
 		var rating = $("<h6>").text("No reviews yet.")
 		col.append(rating)
 		row.append(col)

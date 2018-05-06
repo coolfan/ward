@@ -28,8 +28,8 @@ $(document).ready(function() {
 	})
 	
 	$("#button").click(function() {
-		$.get("/query", {q: ("#q").val()}, function(data) {
-			if (data.length > 0) {
+		$.get("/query", {q: $("#q").val()}, function(data) {
+			if (data.length == 1) {
 				$("#roomid").val(data[0].id)
 
 				var rating = $("input[name=ratings-choice]:checked")
@@ -40,7 +40,7 @@ $(document).ready(function() {
 				}
 				
 				$("#review").submit()
-				$("#notif").text("Review for " + $("#building").val() + " " + $("#roomnum").val() + " has been submitted!")
+				$("#notif").text("Review for " + data[0].building + " " + data[0].roomnum + " has been submitted!")
 				$("#review")[0].reset()
 				$("input[name=ratings-choice]:checked").removeAttr("checked")
 				$("label").removeClass("active")

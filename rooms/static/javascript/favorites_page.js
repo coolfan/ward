@@ -5,6 +5,7 @@ var card_mgr = {
 	bigcard_disp_arr: [null, null],
 	bigcard_left: [null, null],
 	bigcard_right: [null, null],
+	bigcard_editing: [false, false],
 	locked_count: 0
 };
 
@@ -50,7 +51,7 @@ function lock_bigcard(val) {
 	if (is_displaying(1, val)) {
 		get_bigcard_frame(card_mgr.bigcard_arr[1]).addClass("locked")
 		toggle_button(card_mgr.bigcard_left[1], false)
-		toggle_button(card_bgr.bigcard_right[1], false)
+		toggle_button(card_mgr.bigcard_right[1], false)
 	}
 }
 
@@ -198,9 +199,8 @@ function display_bigcard(val) {
 }
 
 function display_bigcard_at(val, index) {
-	card_mgr.bigcard_arr[index].empty()
-	
 	$.get("/reviews", {roomid: val.id}, function(data) {
+		card_mgr.bigcard_arr[index].empty()
 		card_mgr.bigcard_arr[index].append(get_big_card(val, data))
 		card_mgr.bigcard_disp_arr[index] = val
 		compare_stats()
