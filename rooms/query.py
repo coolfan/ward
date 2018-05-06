@@ -62,7 +62,7 @@ def rich_query(q: str, db):
     all_roomnums = list(select(r.roomnum for r in db.Room))
 
     college_aliases = {c.split()[0].lower(): i for i, c in enumerate(all_colleges)}
-    building_aliases = {b.split()[0].lower(): i for i, b in enumerate(all_buildings)}
+    building_aliases = {" ".join(b.split()[:-1]).lower(): i for i, b in enumerate(all_buildings)}
     room_aliases = {r.lower(): i for i, r in enumerate(all_roomnums)}
 
     print(building_aliases)
@@ -75,6 +75,7 @@ def rich_query(q: str, db):
         if tok == "hall": continue
         if tok == "college": continue
         if tok == "rocky": tok = "rockefeller"
+        if tok in {"dodge", "osborn"}: tok = "dodge osborn"
         if len(tok) < 3 and tok.isdecimal(): tok = f"{int(tok):03d}"
         if tok in college_aliases:
             colleges.append(all_colleges[college_aliases[tok]])
