@@ -494,6 +494,7 @@ $(document).ready(function() {
 	})
 	
 	navbar_set("#nav_favorites")
+	console.log(RegExp('multipage', 'gi'))
 	if (RegExp('multipage', 'gi').test(window.location.search)) {
 		introJs().start();
 	}
