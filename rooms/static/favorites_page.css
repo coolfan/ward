@@ -9,3 +9,19 @@
 	border-color: #7A7AFF;
 	box-shadow: 5px 10px 18px #888888;
 }
+
+.fa-lightbulb {
+	color: #888888
+}
+
+.fa-lightbulb:hover {
+	color: #444444
+}
+
+.fa-trash-alt {
+	color: #888888
+}
+
+.fa-trash-alt:hover {
+	color: #444444
+}

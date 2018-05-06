@@ -3,7 +3,6 @@ var card_mgr = {
 	card_queue: [],
 	bigcard_arr: [null, null],
 	bigcard_disp_arr: [null, null],
-	cur_bigcard1: true,
 	locked_count: 0
 };
 
@@ -36,7 +35,6 @@ function reset_bigcards() {
 
 	card_mgr.card_queue = []
 	card_mgr.bigcard_disp_arr = [null, null]
-	card_mgr.cur_bigcard1 = true
 	card_mgr.locked_count = 0
 }
 
@@ -72,39 +70,44 @@ function is_displaying(i, val) {
 	return false
 }
 
-function display_bigcard(val) {
-	var index = card_mgr.cur_bigcard1 ? 0 : 1
-	if (!is_displaying(index, null) && is_displaying((index + 1) % 2, null)) {
-		index = (index + 1) % 2
-	}
-
-	if (get_bigcard_frame(card_mgr.bigcard_arr[index]).hasClass("locked")) {
-		index = (index + 1) % 2
-		if (get_bigcard_frame(card_mgr.bigcard_arr[index]).hasClass("locked")) {
-			return false;
+function in_array(arr, id) {
+	for (var i = 0; i < arr.length; i++) {
+		if (arr[i].id == id) {
+			return true;
 		}
 	}
-	card_mgr.bigcard_arr[index].empty()
-	
-	$.get("/reviews", {roomid: val.id}, function(data) {
-		card_mgr.bigcard_arr[index].append(get_big_card(val, data))
-	})
-	card_mgr.bigcard_disp_arr[index] = val
-	
-	card_mgr.cur_bigcard1 = !card_mgr.cur_bigcard1;
+	return false
+}
 
+function display_bigcard(val) {
 	card_mgr.card_queue.push(val)
 	if (card_mgr.card_queue.length > 2) {
 		for (var i = 0; i < card_mgr.card_queue.length; i++) {
 			if (!card_mgr.card_queue[i].bool_locked) {
 				var ret = card_mgr.card_queue[i]
 				card_mgr.card_queue.splice(i, 1)
-				$("#hitbox" + ret.id).click()
+				if (ret.id != val.id) {
+					$("#hitbox" + ret.id).click()
+				}
 				break;
 			}
 		}
 	}
-
+	if (!in_array(card_mgr.card_queue, val.id)) {
+		console.log("lol")
+		return false;
+	}
+	var index = 0
+	if (!is_displaying(index, null) && is_displaying((index + 1) % 2, null)) {
+		index = (index + 1) % 2
+	}
+	console.log(index)
+	card_mgr.bigcard_arr[index].empty()
+	
+	$.get("/reviews", {roomid: val.id}, function(data) {
+		card_mgr.bigcard_arr[index].append(get_big_card(val, data))
+	})
+	card_mgr.bigcard_disp_arr[index] = val
 	return true;
 }
 
@@ -112,13 +115,11 @@ function undisplay_bigcard(val) {
 	if (is_displaying(0, val)) {
 		card_mgr.bigcard_arr[0].empty()
 		card_mgr.bigcard_disp_arr[0] = null
-		card_mgr.cur_bigcard1 = true
 	}
 
 	if (is_displaying(1, val)) {
 		card_mgr.bigcard_arr[1].empty()
 		card_mgr.bigcard_disp_arr[1] = null
-		card_mgr.cur_bigcard1 = false
 	}
 
 	for (var i = 0; i < card_mgr.card_queue.length; i++) {
@@ -173,7 +174,7 @@ function get_card(val) {
 	var col2 = $("<div>").addClass("col col-sm-2");
 	var text = $("<p>").addClass("card-text");
 	var del_btn_hitbox = $("<div>")
-	var del_btn = $("<i>").addClass("far fa-trash-alt fa-lg").attr("style", "color: #888888")
+	var del_btn = $("<i>").addClass("far fa-trash-alt fa-lg")
 
 	del_btn_hitbox.append(del_btn)
 	text.append(to_header(val));
@@ -228,7 +229,7 @@ function get_card(val) {
 	})
 
 	del_btn_hitbox.click(function() {
-		if (!val.bool_locked) {
+		if (!is_being_sorted && !val.bool_locked) {
 			is_being_sorted = true
 			setTimeout(function() {
 				is_being_sorted = false
