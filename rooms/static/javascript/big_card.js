@@ -38,7 +38,8 @@ function build_bigcard_inner(val) {
 	var drawtype = $("<h3>").addClass("col col-sm-10")
 	drawtype.text(val.college)
 	rows[rc].append(drawtype)
-	let likelihood_btn = $(`<button type="button" class="btn col-sm-2" data-toggle="tooltip"></button>`);
+	var likelihood_col = $("<div>").addClass("col col-sm-2").css("padding-right", "10px")
+	let likelihood_btn = $(`<button type="button" class="btn w-100 h-100" data-toggle="tooltip" ></button>`);
     let likelihood = val.likelihood;
 
     if (likelihood <= 100 && likelihood >= 66){
@@ -61,7 +62,8 @@ function build_bigcard_inner(val) {
         likelihood_btn.text("Doomed");
     }
 
-	rows[rc].append(likelihood_btn)
+	likelihood_col.append(likelihood_btn)
+	rows[rc].append(likelihood_col)
 	rc++
 
 	rows[rc] = $("<div>").addClass("row").css("margin-bottom", "10px")
