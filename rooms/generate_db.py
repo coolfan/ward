@@ -8,7 +8,7 @@ from pony.orm import select, db_session
 
 # python -m rooms.generate_db
 
-college2building = json.load(open("../college2building.json"))
+college2building = json.load(open("college2building.json"))
 building2college = {}
 for c, bldgs in college2building.items():
     for b in bldgs:
@@ -18,6 +18,10 @@ for c, bldgs in college2building.items():
 def standardize_building(building: str) -> str:
     if building == "FORBES":
         building = "Forbes College"
+    elif building == "MURLEY":
+        building = "Murley-Pivirotto Hall"
+    elif building == "DODGEOSBORN":
+        building = "Dodge Osborn Hall"
     else:
         building = building.capitalize() + " Hall"
     return building
@@ -40,8 +44,15 @@ def _load_roomsjs(db, fname="rooms.json"):
             )
 
 
+def compute_timefromstart(draw_time: datetime, draw_start: datetime):
+    delta = draw_time - draw_start
+    numweekdays = int(np.busday_count(draw_start, draw_time))
+    numweekenddays = delta.days - numweekdays
+    delta -= timedelta(numweekenddays, 0)
+    return int(delta.total_seconds())
+
 @db_session
-def _load_drawtimes(db, fname):
+def _load_draw_data(db, fname):
     # TODO: Use csv to do this more nicely
     num_rooms_rejected = 0
     df = pd.read_csv(fname, sep="\t")
@@ -49,36 +60,63 @@ def _load_drawtimes(db, fname):
     df["building"] = df["building"].apply(standardize_building)
     df["college"] = df["building"].apply(lambda b: building2college[b])
 
-    draws_by_college = db.groupby("college")
-    for college, draws in draws_by_college
-    draw_start = min(row[2] for row in data)
-    for roomnum, building, draw_time in data:
-        draw_year = draw_time.year
-        delta = draw_time - draw_start
-        numweekdays = int(np.busday_count(draw_start, draw_time))
-        numweekenddays = delta.days - numweekdays
-        delta -= timedelta(numweekenddays, 0)
-        timefromstart = int(delta.total_seconds())
+    draws_by_college = df.groupby("college")
+    for college, draws in draws_by_college:
+        draw_start = draws['date'].min()
+        for ix, row in draws.iterrows():
+            draw_time = row['date']
+            roomnum = row['roomnum']
+            building = row['building']
+            draw_year = draw_time.year
+            timefromstart = compute_timefromstart(draw_time, draw_start)
 
-        if building == "FORBES":
-            building = "Forbes College"
-        else:
-            building = building.capitalize() + " Hall"
+            try:
+                room = db.Room.get(building=building, roomnum=roomnum)
+            except:
+                print(building, roomnum)
+                num_rooms_rejected += 1
+                continue
 
-        room = db.Room.get(building=building, roomnum=roomnum)
-        if room is None:
-            print(building, roomnum)
-            num_rooms_rejected += 1
-            continue
-        if not db.RoomDraw.exists(draw_year=draw_year, room=room):
-            db.RoomDraw(
-                draw_year=str(draw_year),
-                timefromstart=timefromstart,
-                room=room
-            )
+            if room is None:
+                # print(building, roomnum)
+                num_rooms_rejected += 1
+                continue
+
+            if not db.RoomDraw.exists(draw_year=draw_year, room=room):
+                db.RoomDraw(
+                    draw_year=str(draw_year),
+                    timefromstart=timefromstart,
+                    room=room
+                )
     print("Rooms rejected: %d" % num_rooms_rejected)
 
+@db_session
+def _load_curr_drawtimes(db, fname, drawtype):
+    """
+    :param db: 
+    :param fname: e.g.: "butler_draw_times.tsv"
+    :param drawtype: e.g.: Butler College
+    """
+    df = pd.read_csv(fname, sep="\t", index_col=0)
 
+    df['draw_datetime'] = df['draw_time'].apply(pd.to_datetime)
+    draw_start = df['draw_datetime'].min().to_pydatetime()
+
+    by_group = df.groupby("group_number")
+    for group_id, group in by_group:
+        g = db.Group()
+        g.drawtype = drawtype
+        g.name = drawtype + " Draw Group"
+        g.drawtime = group['draw_datetime'].iloc[0].to_pydatetime()
+        g.timefromstart = compute_timefromstart(g.drawtime, draw_start)
+        for ix, row in group.iterrows():
+            netid = row["netid"]
+            user = db.User.get_or_create(netid=netid)
+            user.name = row["first_name"] + " " + row["last_name"]
+            g.members.add(user)
+
+
+@db_session
 def _load_reviews(db, fname="reviews.csv"):
     df = pd.read_csv(fname)
     missed = []
@@ -107,6 +145,6 @@ if __name__ == "__main__":
     # uncomment this and run python -m rooms.dbmanager from the first directory
     db = connect("rooms.sqlite", create_db=True, create_tables=True)
     _load_roomsjs(db)
-    _load_drawtimes(db, fname="roomdraw16.txt")
-    _load_drawtimes(db, fname="roomdraw13.txt")
+    _load_draw_data(db, fname="roomdraw16.txt")
+    _load_draw_data(db, fname="roomdraw13.txt")
     pass
