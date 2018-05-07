@@ -40,7 +40,7 @@ def _load_roomsjs(db, fname="rooms.json"):
                 sqft=int(row[4]),
                 occupancy=int(row[5]),
                 numrooms=int(row[6]),
-                subfree=(row[7] == "Y")
+                subfree=(row[8] == "Y")
             )
 
 
