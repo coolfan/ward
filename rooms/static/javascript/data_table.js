@@ -48,7 +48,7 @@ $(document).ready(function () {
         // colReorder: true,
         lengthChange: true,
         pageResize: true,
-        scrollY:  '80vh',
+        scrollY:  '70vh',
         deferRender:    true,
         scroller:       true
     });
