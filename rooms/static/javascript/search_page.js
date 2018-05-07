@@ -42,9 +42,9 @@ function search_rooms(room_query) {
 
             rooms = new_rooms;
             // Temporary, until real likelihoods come in
-            for(let i = 0; i < rooms.length; i++){
-                rooms[i]["likelihood"] = 50;
-            }
+            // for(let i = 0; i < rooms.length; i++){
+            //     rooms[i]["likelihood"] = 50;
+            // }
 
             redraw_table();
 
@@ -131,11 +131,11 @@ $(document).ready(function(){
   </div>
 </div>`);
 
-    console.log(Cookies.get('first_time'));
+    // console.log(Cookies.get('first_time'));
 
     if(Cookies.get('first_time') !== 'false'){
 
-        Cookies.set('first_time', 'false');
+        Cookies.set('first_time', 'false',{expires:300});
 
 
         let btn = $(modal_popup).find("#start_guide_btn");

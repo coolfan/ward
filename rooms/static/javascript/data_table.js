@@ -67,7 +67,7 @@ function render_favorite(data, type, room) {
         console.log('null');
         return null;
     }
-
+    console.log(room);
     if (type === "display") {
         let star_div = $(`
                       <span class = "Stardiv padding-0">
@@ -174,8 +174,14 @@ function render_college(data, type, room) {
         console.log('null');
         return null;
     }
+    let college = room.college;
+    let words = college.split();
+    if(words[words.length - 1] === 'College'){
+        words.pop();
+        college = words.join(" ");
+    }
 
-    return room.college;
+    return college;
 }
 
 function render_likelihood(data, type, room) {
@@ -183,7 +189,7 @@ function render_likelihood(data, type, room) {
         console.log('null');
         return null;
     }
-    let likelihood_btn = $(`<button type="button" class="btn Likelihood" data-toggle="tooltip"></button>`);
+    let likelihood_btn = $(`<button type="button" class="btn Likelihood btn-block" data-toggle="tooltip"></button>`);
     let likelihood = room.likelihood;
 
     if (likelihood <= 100 && likelihood >= 66){
@@ -206,7 +212,15 @@ function render_likelihood(data, type, room) {
         likelihood_btn.text("Doomed");
     }
 
-    likelihood_btn.attr("title","We think you will get this room around " + likelihood + "% of the time. See FAQ page for more detail.");
+    likelihood_btn.attr("title","We think you will be able to select this room around " + likelihood + "% of the time. See FAQ page for more detail.");
+
+    if(likelihood === -1){
+        likelihood_btn.addClass("btn-secondary");
+        likelihood_btn.text("N/A");
+        likelihood_btn.attr("title","You are not in the same draw as this room. If you think this is in error, please contact ezlatin@");
+    }
+
+
     return likelihood_btn.prop('outerHTML');
 }
 
@@ -293,7 +307,6 @@ function add_modal(row,room,index){
 }
 
 function add_highlighting(row,room,index){
-
     row = $(row);
     row.hover(
         function(){
@@ -308,14 +321,4 @@ function add_highlighting(row,room,index){
 
 function headerCallback(thead,data,start,end,display){
     let tr = $(thead).find("th");
-    console.log(thead);
-    console.log(tr);
-    // $(thead).attr("data-step","3");
-    // $(thead).attr("data-intro","Sort by clicking on the arrows. Shift click to sort by more than one category.");
 }
-
-// $(document).ready(){
-//     $('#myModal').on('shown.bs.modal', function () {
-//         $('#myInput').trigger('focus')
-//     })
-// }
