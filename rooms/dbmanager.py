@@ -5,6 +5,8 @@ from functools import wraps
 from flask import g
 from pony.orm import Database, Required, Optional, LongStr, db_session, PrimaryKey, Set, exists
 
+from rooms.likelihood import likelihood
+
 
 def define_entities(db: Database) -> None:
     class Room(db.Entity):
@@ -22,11 +24,41 @@ def define_entities(db: Database) -> None:
         reviews = Set('Review')
         room_draws = Set('RoomDraw')
 
+        def getdraw(self):
+            """Returns the draw type of the room"""
+            if self.building == "Spelman":
+                return "Spelman"
+            return self.college
+
+        def to_dict(self, user=None):
+            d = super(Room, self).to_dict()
+            # draw = self.getdraw()
+            # if len(draw.split()) == 2:
+            #     draw = draw.replace(" College", "")
+            # d["college"] = draw
+
+            if user is not None:
+                d['favorited'] = self in user.getfavoritelist()
+                d['likelihood'] = likelihood(user, self)
+            else:
+                d['favorited'] = False
+                d['likelihood'] = 50
+            return d
+
     class RankedRoom(db.Entity):
         id = PrimaryKey(int, auto=True)
+        creator = Required('User', reverse="ranked_rooms")
         room = Required(Room)
+
         ranked_room_list = Required('RankedRoomList')
         rank = Required(int)
+
+        def to_dict(self, user=None):
+            d = self.room.to_dict(user=user)
+            d['creator'] = self.creator.netid
+            if self.creator.name:
+                d['creator'] = self.creator.name
+            return d
 
     class RankedRoomList(db.Entity):
         id = PrimaryKey(int, auto=True)
@@ -66,6 +98,8 @@ def define_entities(db: Database) -> None:
         reviews = Set('Review')
         group_invites = Set('GroupInvite')
 
+        ranked_rooms = Set(RankedRoom, reverse="creator")
+
         @classmethod
         def get_or_create(cls, **kwargs):
             o = cls.get(**kwargs)
@@ -88,8 +122,7 @@ def define_entities(db: Database) -> None:
                 return self.ranked_room_lists.select()[:][0]
 
         def getgroup(self, room):
-            drawtype = room.college
-            if room.building == "Independent": drawtype = "Spelman"
+            drawtype = room.getdraw()
             for group in self.groups:
                 if group.drawtype == drawtype:
                     return group
@@ -118,7 +151,8 @@ def define_entities(db: Database) -> None:
         def to_dict(self, netid=""):
             d = super(Group, self).to_dict()
             d["members"] =[
-                member.netid for member in self.members
+                member.name if member.name else member.netid
+                for member in self.members
                 if member.netid != netid
             ]
             return d
