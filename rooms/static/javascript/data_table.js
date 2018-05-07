@@ -208,7 +208,7 @@ function render_likelihood(data, type, room) {
 
     if (likelihood < 10 && likelihood >= 0){
         likelihood_btn.addClass("btn-danger");
-        likelihood_btn.text("Doomed");
+        likelihood_btn.text("Rarely");
     }
 
     likelihood_btn.attr("title","We think you will be able to select this room around " + likelihood + "% of the time. See FAQ page for more detail.");

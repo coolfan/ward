@@ -23,7 +23,7 @@ function build_bigcard_inner(val) {
 	var rc = 0
 
 	rows[rc] = $("<div>").addClass("row").css("margin-bottom", "10px")
-	var header = $("<h1>").addClass("col col-sm-11")
+	var header = $("<h1>").addClass("col col-sm-11 big-card")
 	header.text(to_header(val))
 	rows[rc].append(header);
 	
@@ -39,7 +39,7 @@ function build_bigcard_inner(val) {
 	rc++
 
 	rows[rc] = $("<div>").addClass("row").css("margin-bottom", "10px")
-	var drawtype = $("<h3>").addClass("col col-sm-10")
+	var drawtype = $("<h3>").addClass("col col-sm-10 big-card")
 	drawtype.text(val.college)
 	rows[rc].append(drawtype)
 	var likelihood_col = $("<div>").addClass("col col-sm-2").css("padding-right", "10px")
@@ -64,7 +64,7 @@ function build_bigcard_inner(val) {
 
     if (likelihood < 10 && likelihood >= 0){
         likelihood_btn.addClass("btn-danger");
-        likelihood_btn.text("Doomed");
+        likelihood_btn.text("Rarely");
     }
 
     likelihood_btn.attr("title","We think you will be able to select this room around " + likelihood + "% of the time. See FAQ page for more detail.");
@@ -81,21 +81,21 @@ function build_bigcard_inner(val) {
 	rc++
 
 	rows[rc] = $("<div>").addClass("row").css("margin-bottom", "10px")
-	var floor = $("<h5>").addClass("col col-sm-6")
+	var floor = $("<h5>").addClass("col col-sm-6 big-card")
 	floor.text("Floor: " + val.floor)
 	rows[rc].append(floor)
 
-	var occupancy = $("<h5>").addClass("col col-sm-6")
+	var occupancy = $("<h5>").addClass("col col-sm-6 big-card")
 	occupancy.text("Occupancy: ").append(get_icons("<i class=\"fas fa-male fa-lg\"></i>", val.occupancy))
 	rows[rc].append(occupancy)
 	rc++
 
 	rows[rc] = $("<div>").addClass("row").css("margin-bottom", "10px")
-	var sqft = $("<h5>").addClass("col col-sm-6 sqft")
+	var sqft = $("<h5>").addClass("col col-sm-6 sqft big-card")
 	sqft.text("Area: " + val.sqft + " ft").append($("<sup>").text("2"))
 	rows[rc].append(sqft)
 
-	var numrooms = $("<h5>").addClass("col col-sm-6 numrooms")
+	var numrooms = $("<h5>").addClass("col col-sm-6 numrooms big-card")
 	numrooms.text("Rooms: ").append(get_icons("<i class=\"fa fa-building fa-lg\"></i>", val.numrooms))
 	rows[rc].append(numrooms)
 	rc++

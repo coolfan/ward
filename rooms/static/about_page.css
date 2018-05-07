@@ -4,13 +4,17 @@
     }
 
   .btn {
-      font-size: 18px;
+      font-size: 1em;
   }
 
     .card-header{
-        background: white !important;
+        background: whitesmoke !important;
     }
 
     strong{
         color: #6480d0;
+    }
+
+    body{
+        font-size: 1em;
     }
