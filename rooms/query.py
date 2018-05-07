@@ -5,11 +5,12 @@ import numpy as np
 from pony.orm import db_session, select
 import scipy.stats
 
+from rooms.flask_extensions import AuthBlueprint
 from .conf import DB_NAME, DB_TYPE, LOGGER
 import rooms.dbmanager as dbm
 from rooms import cas
 
-blueprint = Blueprint("query", __name__)
+blueprint = AuthBlueprint("query", __name__)
 
 logger = logging.getLogger(LOGGER)
 
@@ -37,13 +38,12 @@ def buildings(db):
     return jsonify(building_by_college)
 
 
-def likelihood(my_groups, room) -> int:
-    if len(my_groups) == 0: return 50
+def likelihood(user, room) -> int:
+    if len(user.groups) == 0: return 50
 
-    potential_groups = my_groups.select(lambda g: g.drawtype == room.college)[:]
-    if len(potential_groups) == 0: return -1
+    group = user.getgroup(room)
+    if group is None: return -1
 
-    group = potential_groups[0]
     my_time = group.timefromstart
     if my_time is None: return 50
 
@@ -92,9 +92,8 @@ def rich_query(q: str, db):
     return colleges, buildings, roomnums
 
 
-@blueprint.route("/query", methods=["GET"])
-@dbm.use_app_db
-def query(db):
+@blueprint.auth_route("/query", methods=["GET"])
+def query(user, db):
     q = request.args.get("q", "")
     rich_colleges, rich_buildings, rich_roomnums = rich_query(q, db)
     current_app.logger.debug(f"Discovered colleges: {rich_colleges}")
@@ -143,20 +142,11 @@ def query(db):
 
     # get the ids of logged in user's favorite user
     fave_roomids = set()
-    groups = []
-    if cas.netid() is not None:
-        netid = cas.netid()
-        user = db.User.get_or_create(netid=netid)
-        groups = user.groups
-        fave_roomids |= {
-            rr.room.id
-            for rr in user.getfavoritelist().ranked_rooms
-        }
-        fave_roomids |= {
-            rr.room.id
-            for group in groups
-            for rr in group.getfavoritelist().ranked_rooms
-        }
+    groups = user.groups
+    fave_roomids |= {
+        rr.room.id
+        for rr in user.getfavoritelist().ranked_rooms
+    }
 
     rooms.sort(key=lambda room: getattr(room, order_by) if order_by != "sqft" else -1 * getattr(room, "sqft"))
     limited = rooms[continue_from:continue_from + limit]
@@ -166,7 +156,7 @@ def query(db):
     for room in limited:
         d = room.to_dict()
         d['favorited'] = d['id'] in fave_roomids
-        d['likelihood'] = likelihood(groups, room)
+        d['likelihood'] = likelihood(user, room)
         room_dicts.append(d)
 
     return jsonify(room_dicts)
