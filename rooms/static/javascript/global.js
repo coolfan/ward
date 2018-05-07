@@ -27,26 +27,3 @@ $(document).ready(function(){
 });
 
 let global_in_intro = false;
-
-$(document).ready(function(){
-    $("#guide_btn").click(function(){
-       start_guide();
-    })
-});
-
-function start_guide(){
-     var intro = introJs();
-        intro.oncomplete(function(){
-           global_in_intro = false;
-        });
-        intro.onexit(function(){
-            // alert("hi");
-            global_in_intro = false;
-        });
-
-        global_in_intro = true;
-
-        intro.setOption('doneLabel', 'Next page').start().oncomplete(function() {
-          window.location.href = 'favorites_page?multipage=true';
-        });
-}

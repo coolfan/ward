@@ -247,6 +247,8 @@ function add_favorite_event(row, room, index) {
     });
 }
 
+let loading_modal = false;
+
 function add_modal(row,room,index){
     row = $(row);
     let cells = row.find('td');
@@ -255,7 +257,9 @@ function add_modal(row,room,index){
         td = $(td);
         if(i !== n - 1){ //6 is the final collumn
             td.click(function(){
-                if(!global_in_intro){
+
+                if(!global_in_intro && !loading_modal){
+                    loading_modal = true;
                     $.get("/reviews", {roomid: room.id}, function (data) {
                         let modal = $(`
                         <div class="modal fade" tabindex="-1" role="dialog">
@@ -273,14 +277,14 @@ function add_modal(row,room,index){
                         let card = get_big_card(room, data);
                         body.append(card);
 
-                        console.log(body.prop('outerHTML'));
-                        console.log(modal.prop('outerHTML'));
 
                         modal.modal({
                             keyboard: true,
                             focus: true,
                             show: true,
-                        })
+                        });
+
+                        loading_modal = false;
                     });
                 }
             });

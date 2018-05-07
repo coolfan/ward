@@ -173,21 +173,21 @@ def _load_reviews(db, fname="reviews.csv"):
 if __name__ == "__main__":
     # uncomment this and run python -m rooms.dbmanager from the first directory
     db = connect("rooms.sqlite", create_db=True, create_tables=True)
-    _load_roomsjs(db)
-    _load_draw_data(db, fname="roomdraw16.txt")
-    _load_draw_data(db, fname="roomdraw13.txt")
+    _load_roomsjs(db, fname="./rooms.json")
+    _load_draw_data(db, fname="./roomdraw16.tsv")
+    _load_draw_data(db, fname="./roomdraw13.tsv")
 
-    # draws = [
-    #     ("../2018drawdata/butler_draw_times.tsv", "Butler College"),
-    #     ("../2018drawdata/forbes_draw_times.tsv", "Forbes College"),
-    #     ("../2018drawdata/independent_draw_times.tsv", "Independent"),
-    #     ("../2018drawdata/mathey_draw_times.tsv", "Mathey College"),
-    #     ("../2018drawdata/rocky_draw_times.tsv", "Rockefeller College"),
-    #     ("../2018drawdata/spelman_draw_times.tsv", "Spelman"),
-    #     ("../2018drawdata/upperclass_draw_times.tsv", "Upperclass"),
-    #     ("../2018drawdata/whitman_draw_times.tsv", "Whitman College"),
-    #     ("../2018drawdata/wilson_draw_times.tsv", "Wilson College")
-    # ]
-    #
-    # for tsv, drawtype in draws:
-    #     _load_curr_drawtimes(db, tsv, drawtype)
+    draws = [
+        ("../2018drawdata/butler_draw_times.tsv", "Butler College"),
+        ("../2018drawdata/forbes_draw_times.tsv", "Forbes College"),
+        ("../2018drawdata/independent_draw_times.tsv", "Independent"),
+        ("../2018drawdata/mathey_draw_times.tsv", "Mathey College"),
+        ("../2018drawdata/rocky_draw_times.tsv", "Rockefeller College"),
+        ("../2018drawdata/spelman_draw_times.tsv", "Spelman"),
+        ("../2018drawdata/upperclass_draw_times.tsv", "Upperclass"),
+        ("../2018drawdata/whitman_draw_times.tsv", "Whitman College"),
+        ("../2018drawdata/wilson_draw_times.tsv", "Wilson College")
+    ]
+
+    for tsv, drawtype in draws:
+        _load_curr_drawtimes(db, tsv, drawtype)

@@ -83,7 +83,7 @@ function build_bigcard_inner(val) {
 	rows[rc].append(sqft)
 
 	var numrooms = $("<h5>").addClass("col col-sm-6 numrooms")
-	numrooms.text("Number of Rooms: ").append(get_icons("<i class=\"fa fa-building fa-lg\"></i>", val.numrooms))
+	numrooms.text("Rooms: ").append(get_icons("<i class=\"fa fa-building fa-lg\"></i>", val.numrooms))
 	rows[rc].append(numrooms)
 	rc++
 
