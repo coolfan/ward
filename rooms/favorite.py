@@ -137,11 +137,11 @@ def favorites(user, db):
             # Sort by rank
             ranked_room_list.sort(key=lambda ranked_room: ranked_room.rank)
 
-            name = group.name if group.name else f"Group {group.id}"
+            name = str(group.id)
             lists[name] = [rr.to_dict(user=user) for rr in ranked_room_list]
 
         rrl = user.getfavoritelist()
-        lists["Personal Favorites"] = [rr.to_dict(user=user) for rr in rrl.ranked_rooms.select()]
+        lists["-1"] = [rr.to_dict(user=user) for rr in rrl.ranked_rooms.select()]
 
         return jsonify(lists)
     else:
