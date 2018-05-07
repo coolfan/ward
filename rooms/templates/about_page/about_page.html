@@ -22,7 +22,59 @@
 
     <br/>
 
+    <h2>About <strong>WARD</strong></h2>
+    <div id="accordion">
+        <div class="faqHeader">FAQ</div>
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                    <button id="about_popup_dismiss" class="btn btn-link" data-toggle="collapse" data-target="#collapseLikelihood" aria-expanded="true" aria-controls="collapseOne">
+                        How are likelihoods calculated?
+                    </button>
+                </h5>
+            </div>
 
+            <div id="collapseLikelihood" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    We fit the draw times of the room in previous years to a normal distribution. and then evaluate the tail cdf at your draw time.
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseGetData" aria-expanded="false" aria-controls="collapseDrawGroups">
+                        How do we get our data?
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseGetData" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                        We download the full list of all the draw times when it is released by housing and enter it into our system. That's how we know what your draw group when you log on, and how we know your draw time so we can estimate your likelihood. We also use previous years draw data, obtained in a similar manner, to assist in the likelihood calculations.
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseStored" aria-expanded="false" aria-controls="collapseDrawGroups">
+                        What data do we store?
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseStored" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                        We store draw times from this year and previous years.
+                        We store your favorites data and any submitted reviews, and use google analytics to help improve the user experience.
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <br/>
 
     <h2>Room Draw Guide</h2>
     <div id="accordion">
@@ -38,7 +90,7 @@
 
             <div id="collapseApplication" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                 <div class="card-body">
-                    Typically in early March, room draw applications go live at <a href="https://rescenter-prod.princeton.edu/undergraduate/">my undergraduate housing</a>, and are usually up for a few weeks. What this means is you need to decide what draws to participate in, organize draw groups for those draws, and apply before that the application goes down. For rising sophmores, that first step is easy - you can only apply to the draw for your residential college. Rising juniors and seniors, on the other hand, can apply to any of the six residential college draws, the independent draw, the upperclass draw, or the spellman draw. Stayed tuned for more details about the differences between the draws.
+                    Typically in early March, room draw applications go live at <a href="https://rescenter-prod.princeton.edu/undergraduate/">my undergraduate housing</a>, and are usually up for a few weeks. What this means is you need to decide what draws to participate in, organize draw groups for those draws, and apply before that the application goes down. For rising sophmores, that first step is easy - you can only apply to the draw for your residential college. Rising juniors and seniors, on the other hand, can apply to any of the six residential college draws, the independent draw, the upperclass draw, or the Spelman draw. Stayed tuned for more details about the differences between the draws.
 
 
 
@@ -131,7 +183,7 @@
 
             <div id="collapseResCollege" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                 <div class="card-body">
-                    <p>The Residential College Draws usually occur after the Independent and Spellman draws and before the Upperclass draw.</p>
+                    <p>The Residential College Draws usually occur after the Independent and Spelman draws and before the Upperclass draw.</p>
                     <p>
 
                     As I mentioned when discussing the point system, those who lived in a residential college for longer have an advantage when drawing into that college. However, for But there are other considerations when drawing into a residential college.
@@ -148,23 +200,23 @@
             <div class="card-header" id="headingTwo">
                 <h5 class="mb-0">
                     <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseIndependent" aria-expanded="false" aria-controls="collapseTwo">
-                        Independent and Spellman Draws
+                        Independent and Spelman Draws
                     </button>
                 </h5>
             </div>
             <div id="collapseIndependent" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                 <div class="card-body">
-                    <p>The Spellman and Independent draws are usually the first and second draws to occur, respectivley. That means you can usually just sign up and wait to see if there are any good rooms available, and if there aren't any, just continue to one of the other draws.</p>
+                    <p>The Spelman and Independent draws are usually the first and second draws to occur, respectivley. That means you can usually just sign up and wait to see if there are any good rooms available, and if there aren't any, just continue to one of the other draws.</p>
 
-                    <p>When you make your draw group for the Independent or Spellman draw, you will be asked if you want to sign the independent pledge, which reads: </p>
+                    <p>When you make your draw group for the Independent or Spelman draw, you will be asked if you want to sign the independent pledge, which reads: </p>
                     <p> <i>“My signature on the Housing/Dining Agreement acknowledges my full understanding of the University’s definition of an Independent. I certify by my signature that I am aware if I fail to abide by the Pledge, I will be referred to the Office of the Dean of Undergraduate students for disciplinary action. If I am found in violation of the Independent Pledge, I understand the penalty is normally probation. I am aware that the probation is a matter of permanent record.”</i> </p>
 
                     <p>According to the <a href="https://www.princeton.edu/uservices/UG-RoomDrawGuide.pdf">university website</a> an independent is "A student who provides his/her own meals. Independents choose not to contract with Dining Services or
                         join an off-campus eating club or eating co-op, and cannot participate in Residential College or Upperclass Room Draws." This definition is wrong. An independent <strong>can</strong> join a co-op, and <strong>can</strong> join an eating club as a social member only. I bring this up to demonstrate the risks of taking anything the university says about room draw at face value. (Indeed, <a href = "http://hres.princeton.edu/undergraduates/my-housing/room-draw-guide/rising-junior-senior-room-draw">another part</a> of the university website does not mention the prohibition against joining a co-op, but it still wrong about social membership)</p>
 
-                    <p>It is important to note that you are only obligated to follow the pledge if you end up selecting an independent room. Signing the independent pledge does more than boost your draw time. Any Independent/Spellman room needs at least half of the members to have signed the independent pledge, and to even be able to sign up for the draw, at least half of you draw group needs to sign the pledge.</p>
+                    <p>It is important to note that you are only obligated to follow the pledge if you end up selecting an independent room. Signing the independent pledge does more than boost your draw time. Any Independent/Spelman room needs at least half of the members to have signed the independent pledge, and to even be able to sign up for the draw, at least half of you draw group needs to sign the pledge.</p>
 
-                    <p>The Spellam draw is usually immensly popular, and so almost all of the Spellman rooms are typically drawn by rising senior draw groups. This is because all rooms in the Spellman draw contain four bedrooms, a kitchen, and a sizeable living room. As all rooms are quads, only four person and eight person draw groups are allowed to enter the Spellman draw.  </p>
+                    <p>The Spelam draw is usually immensly popular, and so almost all of the Spelman rooms are typically drawn by rising senior draw groups. This is because all rooms in the Spelman draw contain four bedrooms, a kitchen, and a sizeable living room. As all rooms are quads, only four person and eight person draw groups are allowed to enter the Spelman draw.  </p>
 
 
                     <p></p>

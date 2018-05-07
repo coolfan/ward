@@ -1,6 +1,5 @@
 *.ipynb
 *.pyc
-*.sqlite
 .idea/
 .ipynb_checkpoints/
 .vagrant/
@@ -12,3 +11,4 @@ node_modules/
 Gruntfile.js
 package.json
 package-lock.json
+rooms/static/sass/

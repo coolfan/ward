@@ -1,76 +1,109 @@
-var card_mgr = {
-	card_data_arr: [],
-	card_queue: [],
-	bigcard_arr: [null, null],
-	bigcard_disp_arr: [null, null],
+var card_manager = {
+	lru_cache: [],
+	big_card_bodies: [null, null],
+	big_card_values: [null, null],
+	big_card_left: [null, null],
+	big_card_right: [null, null],
 	locked_count: 0
 };
 
-var is_being_sorted = false;
+var is_sorting = false;
 
-function to_header(val) {
-	return val.roomnum + " " + val.building
+function click_card(order, index, step, left, avoid) {
+	if (step == 0) {
+		if (left) {
+			console.log("clicking " + order[index])
+			$("#card-" + order[index]).click()
+		} else {
+			$("#card-" + order[index]).contextmenu()
+		}
+	} else {
+		index += step;
+		index += order.length;
+		index %= order.length;
+		while (avoid && $("#card-" + order[index]).hasClass("selected")) {
+			index += step
+			index += order.length
+			index %= order.length
+		}
+		if (left) {
+			console.log("clicking " + order[index])
+			$("#card-" + order[index]).click()
+		} else {
+			$("#card-" + order[index]).contextmenu()
+		}
+	}
 }
 
-function get_dom_id(val) {
-	return "card" + val.id
+function get_order() {
+	let list = $($("#cards").children()[0]).children();
+	let ret = [];
+	$.each(list, function(i, val) {
+		ret.push($(val).attr("id").slice(5))
+	});
+	
+	return ret
 }
 
-function get_room_id(s) {
-	return s.slice(4)
-}
-
-function get_bigcard_frame(bigcard) {
-	var parent = $(bigcard.parent())
+function get_big_card_frame(big_card) {
+	var parent = $(big_card.parent())
 	parent = $(parent.parent())
 	parent = $(parent.parent())
 	return parent;
 }
 
-function reset_bigcards() {
-	$.each(card_mgr.bigcard_arr, function(i, val) {
+function reset_big_cards() {
+	$.each(card_manager.big_card_bodies, function(i, val) {
 		val.empty()
-		get_bigcard_frame(val).removeClass("locked")
+		get_big_card_frame(val).removeClass("locked")
 	})
 
-	card_mgr.card_queue = []
-	card_mgr.bigcard_disp_arr = [null, null]
-	card_mgr.locked_count = 0
+	card_manager.lru_cache = []
+	card_manager.big_card_values = [null, null]
+	card_manager.locked_count = 0
 }
 
-function lock_bigcard(val) {
+function lock_big_card(val) {
 	if (is_displaying(0, val)) {
-		get_bigcard_frame(card_mgr.bigcard_arr[0]).addClass("locked")
+		get_big_card_frame(card_manager.big_card_bodies[0]).addClass("locked")
+		toggle_button(card_manager.big_card_left[0], false)
+		toggle_button(card_manager.big_card_right[0], false)
 	}
 
 	if (is_displaying(1, val)) {
-		get_bigcard_frame(card_mgr.bigcard_arr[1]).addClass("locked")
+		get_big_card_frame(card_manager.big_card_bodies[1]).addClass("locked")
+		toggle_button(card_manager.big_card_left[1], false)
+		toggle_button(card_manager.big_card_right[1], false)
 	}
 }
 
-function unlock_bigcard(val) {
+function unlock_big_card(val) {
 	if (is_displaying(0, val)) {
-		get_bigcard_frame(card_mgr.bigcard_arr[0]).removeClass("locked")
+		get_big_card_frame(card_manager.big_card_bodies[0]).removeClass("locked")
+		toggle_button(card_manager.big_card_left[0], true)
+		toggle_button(card_manager.big_card_right[0], true)
 	}
 
 	if (is_displaying(1, val)) {
-		get_bigcard_frame(card_mgr.bigcard_arr[1]).removeClass("locked")
+		get_big_card_frame(card_manager.big_card_bodies[1]).removeClass("locked")
+		toggle_button(card_manager.big_card_left[1], true)
+		toggle_button(card_manager.big_card_right[1], true)
 	}
 }
 
 function is_displaying(i, val) {
-	if (val == null && card_mgr.bigcard_disp_arr[i] == null) {
+	if (val == null && card_manager.big_card_values[i] == null) {
 		return true
 	}
 
-	if (val != null && card_mgr.bigcard_disp_arr[i] != null && card_mgr.bigcard_disp_arr[i].id == val.id) {
+	if (val != null && card_manager.big_card_values[i] != null && card_manager.big_card_values[i].id == val.id) {
 		return true
 	}
 
 	return false
 }
 
-function in_array(arr, id) {
+function is_in_array(arr, id) {
 	for (var i = 0; i < arr.length; i++) {
 		if (arr[i].id == id) {
 			return true;
@@ -96,12 +129,29 @@ function set_compare(card, attr, comp) {
 	}
 }
 
-function compare_stats() {
-	var left = card_mgr.bigcard_disp_arr[0]
-	var left_card = card_mgr.bigcard_arr[0]
+function toggle_button(button, enable) {
+	if (enable) {
+		$(button.children()[0]).removeClass("disabled")
+	} else {
+		console.log($(button.children()[0]))
+		$(button.children()[0]).addClass("disabled")
+	}
+}
 
-	var right = card_mgr.bigcard_disp_arr[1]
-	var right_card = card_mgr.bigcard_arr[1]
+function is_button_enabled(button) {
+	if ($(button.children()[0]).hasClass("disabled")) {
+		return false;
+	}
+
+	return true;
+}
+
+function compare_stats() {
+	var left = card_manager.big_card_values[0]
+	var left_card = card_manager.big_card_bodies[0]
+
+	var right = card_manager.big_card_values[1]
+	var right_card = card_manager.big_card_bodies[1]
 
 	if (left == null && right != null) {
 		remove_compare(right_card, "sqft")
@@ -143,71 +193,73 @@ function compare_stats() {
 	}
 }
 
-function display_bigcard(val) {
-	card_mgr.card_queue.push(val)
-	if (card_mgr.card_queue.length > 2) {
-		for (var i = 0; i < card_mgr.card_queue.length; i++) {
-			if (!card_mgr.card_queue[i].bool_locked) {
-				var ret = card_mgr.card_queue[i]
-				card_mgr.card_queue.splice(i, 1)
+function display_big_card(val) {
+	card_manager.lru_cache.push(val)
+	if (card_manager.lru_cache.length > 2) {
+		for (var i = 0; i < card_manager.lru_cache.length; i++) {
+			if (!card_manager.lru_cache[i].bool_locked) {
+				var ret = card_manager.lru_cache[i]
+				card_manager.lru_cache.splice(i, 1)
 				if (ret.id != val.id) {
-					$("#hitbox" + ret.id).click()
+					click_card([ret.id], 0, 0, true, false)
 				}
 				break;
 			}
 		}
 	}
-	if (!in_array(card_mgr.card_queue, val.id)) {
-		console.log("lol")
+	if (!is_in_array(card_manager.lru_cache, val.id)) {
 		return false;
 	}
 	var index = 0
 	if (!is_displaying(index, null) && is_displaying((index + 1) % 2, null)) {
 		index = (index + 1) % 2
 	}
-	console.log(index)
-	card_mgr.bigcard_arr[index].empty()
 	
-	$.get("/reviews", {roomid: val.id}, function(data) {
-		card_mgr.bigcard_arr[index].append(get_big_card(val, data))
-		card_mgr.bigcard_disp_arr[index] = val
-		compare_stats()
-	})
-	card_mgr.bigcard_disp_arr[index] = val
+	display_big_card_at(val, index)
 
 	return true;
 }
 
-function undisplay_bigcard(val) {
+function display_big_card_at(val, index) {
+	$.get("/reviews", {roomid: val.id}, function(data) {
+		card_manager.big_card_bodies[index].empty()
+		card_manager.big_card_bodies[index].append(get_big_card(val, data))
+		card_manager.big_card_values[index] = val
+		compare_stats()
+	})
+	card_manager.big_card_values[index] = val
+	get_big_card_frame(card_manager.big_card_bodies[index]).addClass("selected")
+
+	toggle_button(card_manager.big_card_left[index], true)
+	toggle_button(card_manager.big_card_right[index], true)
+
+}
+
+function undisplay_big_card(val) {
 	if (is_displaying(0, val)) {
-		card_mgr.bigcard_arr[0].empty()
-		card_mgr.bigcard_disp_arr[0] = null
+		card_manager.big_card_bodies[0].empty()
+		card_manager.big_card_values[0] = null
+		get_big_card_frame(card_manager.big_card_bodies[0]).removeClass("selected")
+		toggle_button(card_manager.big_card_left[0], false)
+		toggle_button(card_manager.big_card_right[0], false)
 	}
 
 	if (is_displaying(1, val)) {
-		card_mgr.bigcard_arr[1].empty()
-		card_mgr.bigcard_disp_arr[1] = null
+		card_manager.big_card_bodies[1].empty()
+		card_manager.big_card_values[1] = null
+		get_big_card_frame(card_manager.big_card_bodies[1]).removeClass("selected")
+		toggle_button(card_manager.big_card_left[1], false)
+		toggle_button(card_manager.big_card_right[1], false)
 	}
 
-	for (var i = 0; i < card_mgr.card_queue.length; i++) {
-		if (card_mgr.card_queue[i].id === val.id) {
-			card_mgr.card_queue.splice(i, 1)
+	for (var i = 0; i < card_manager.lru_cache.length; i++) {
+		if (card_manager.lru_cache[i].id === val.id) {
+			card_manager.lru_cache.splice(i, 1)
 			break;
 		}
 	}
 
 	compare_stats()
-}
-
-function card_onclick(card, val) {
-	if (val.bool_filled) {
-		card.css("backgroundColor", "white")
-		undisplay_bigcard(val)
-	} else {
-		card.css("backgroundColor", "#f2f5ff")
-		display_bigcard(val)
-	}
-	val.bool_filled = !val.bool_filled
 }
 
 function get_empty_card() {
@@ -234,8 +286,8 @@ function get_empty_card() {
 }
 
 function get_card(val) {
-	let li = $("<li>").attr("id", "elem" + val.id);
-	let card = $("<div>").addClass("card");
+	let li = $("<li>").attr("id", "elem-" + val.id);
+	let card = $("<div>").addClass("card selectable-card");
 	var container_fluid = $("<div>").addClass("container-fluid");
 	var card_body = $("<div>").addClass("card-body");
 	var row = $("<div>").addClass("row");
@@ -243,10 +295,10 @@ function get_card(val) {
 	var col2 = $("<div>").addClass("col col-sm-2");
 	var text = $("<p>").addClass("card-text");
 	var del_btn_hitbox = $("<div>")
-	var del_btn = $("<i>").addClass("far fa-trash-alt fa-lg")
+	var del_btn = $("<i>").addClass("far fa-trash-alt fa-lg hover-button")
 
 	del_btn_hitbox.append(del_btn)
-	text.append(to_header(val));
+	text.append(val.building + " " + val.roomnum);
 	col1.append(text);
 	col2.append(del_btn_hitbox)
 	row.append(col1);
@@ -259,38 +311,39 @@ function get_card(val) {
 	val.bool_filled = false;
 	val.bool_locked = false;
 	card.click(function() {
-		if (!is_being_sorted && !val.bool_locked) { 
-			console.log(to_header(val))
+		if (!is_sorting && !val.bool_locked) {
 			if (val.bool_filled) {
-				card.css("backgroundColor", "white");
-				undisplay_bigcard(val)
+				card.removeClass("selected")
+				undisplay_big_card(val)
 			} else {
-				if (!display_bigcard(val)) {
+				if (!display_big_card(val)) {
 					return;
 				}
-				card.css("backgroundColor", "#f2f5ff");
+				card.addClass("selected")
 			}
 			val.bool_filled = !val.bool_filled
 		}
 	});
-	card.attr("id", get_dom_id(val));
+	card.attr("id", "card-" + val.id);
 	
 	card.contextmenu(function() {
-		if (!is_being_sorted) {
+		if (!is_sorting) {
 			if (!val.bool_locked) {
-				if (card_mgr.locked_count >= 2) {
+				if (card_manager.locked_count >= 2) {
 					return false
 				}
 				card.addClass("locked")
 				if (!val.bool_filled) {
-					card.click()
+					click_card([val.id], 0, 0, true, false)
 				}
-				lock_bigcard(val)
-				card_mgr.locked_count++
+				lock_big_card(val)
+				toggle_button(del_btn_hitbox, false)
+				card_manager.locked_count++
 			} else {
 				card.removeClass("locked")
-				unlock_bigcard(val)
-				card_mgr.locked_count--
+				unlock_big_card(val)
+				toggle_button(del_btn_hitbox, true)
+				card_manager.locked_count--
 			}
 			val.bool_locked = !val.bool_locked
 		}
@@ -298,17 +351,17 @@ function get_card(val) {
 	})
 
 	del_btn_hitbox.click(function() {
-		if (!is_being_sorted && !val.bool_locked) {
-			is_being_sorted = true
+		if (!is_sorting && !val.bool_locked) {
+			is_sorting = true
 			setTimeout(function() {
-				is_being_sorted = false
+				is_sorting = false
 			}, 500)
 			$.get("/unfavorite", {groupid: $("#groups").val(), roomid: val.id}, function(data) {
 				var list = $($("#cards").children()[0]).children()
 				$.each(list, function(i, item) {
 					if ($(item).attr("id") == "elem" + val.id) {
 						if (val.bool_filled) {
-							undisplay_bigcard(val)
+							undisplay_big_card(val)
 						}
 						$("#cards").children()[0].removeChild(item)
 					}
@@ -321,26 +374,52 @@ function get_card(val) {
 	return li
 }
 
-function get_new_order() {
-	let list = $($("#cards").children()[0]).children();
-	let ret = [];
-	$.each(list, function(i, val) {
-		ret.push(get_room_id($(val).attr("id")))
-	});
-	
-	return ret
-}
-
 $(document).ready(function() {
-	//reset_bigcards()
-	card_mgr.bigcard_arr = [$("#bigcard1_body"), $("#bigcard2_body")];
+	card_manager.big_card_bodies = [$("#big-card-0-body"), $("#big-card-1-body")];
+	card_manager.big_card_left = [$("#big-card-0-left"), $("#big-card-1-left")];
+	card_manager.big_card_right = [$("#big-card-0-right"), $("#big-card-1-right")];
+
+	$.each(card_manager.big_card_left, function(i, val) {
+		toggle_button(val, false)
+		val.click(function() {
+			if (is_button_enabled(val)) {
+				var cur_id = card_manager.big_card_values[i].id
+				var order = get_order()
+				console.log(cur_id)
+				console.log(order)
+				for (var index = 0; index < order.length; index++) {
+					if (order[index] == cur_id) {
+						click_card(order, index, 0, true, false)
+						click_card(order, index, -1, true, true)
+					}
+				}
+			}
+		})
+	})
+
+	$.each(card_manager.big_card_right, function(i, val) {
+		toggle_button(val, false)
+		val.click(function() {
+			if (is_button_enabled(val)) {
+				var cur_id = card_manager.big_card_values[i].id
+				var order = get_order()
+
+				for (var index = 0; index < order.length; index++) {
+					if (order[index] == cur_id) {
+						click_card(order, index, 0, true, false)
+						click_card(order, index, 1, true, true)
+					}
+				}
+			}
+		})
+	})
+
 	let ul = $("<ul>").addClass("draggable no-bullets padding-0").attr("id", "fav-list");
 	ul.css("max-width: 100%")
 	$("#cards").append(ul);
-	$.getJSON("/favorites", /*{groupid: $("groups").val()},*/ function(data) {
+	$.get("/favorites",  function(data) {
 		ul.empty()
 		data = data["-1"]
-		//console.log(data)
 		if (data.length > 0) {
 			$.each(data, function(i, val) {
 				let card = get_card(val);
@@ -352,14 +431,14 @@ $(document).ready(function() {
 	});
 	ul.sortable({
 		start: function(a, b, c) {
-			is_being_sorted = true
+			is_sorting = true
 		},
 		stop: function(a, b, c) {
-			let order = get_new_order();
+			let order = get_order();
 			console.log(order);
 			//$.post("/reorder_favorites", {}
 			setTimeout(function() {
-				is_being_sorted = false
+				is_sorting = false
 			}, 500)
 		},
 		scroll: false
@@ -382,20 +461,26 @@ $(document).ready(function() {
 				ul.append(get_empty_card())
 			}
 		});
-		reset_bigcards()
+		reset_big_cards()
 	})
 
-	$.each(card_mgr.bigcard_arr, function(i, val) {
-		var frame = get_bigcard_frame(val)
+	$.each(card_manager.big_card_bodies, function(i, val) {
+		var frame = get_big_card_frame(val)
 		frame.contextmenu(function() {
-			var room = card_mgr.bigcard_disp_arr[i]
+			var room = card_manager.big_card_values[i]
 			console.log(room)
 			if (room != null) {
-				$("#" + get_dom_id(room)).contextmenu()
+				click_card([room.id], 0, 0, false, false)
 			}
 			return false;
 		})
 	})
 	
 	navbar_set("#nav_favorites")
+	console.log(RegExp('multipage', 'gi'))
+	if (RegExp('multipage', 'gi').test(window.location.search)) {
+		introJs().setOptions({prevLabel: " < ", nextLabel: " > ", skipLabel: " X "}).start().oncomplete(function() {
+			window.location.href = "/";
+		});
+	}
 });

@@ -53,7 +53,7 @@
 }*/
 
 function get_group_card(val) {
-	var card = $("<div>").addClass("card")
+	var card = $("<div>").addClass("card selectable-card")
 	var container_fluid = $("<div>").addClass("container-fluid")
 	var card_body = $("<div>").addClass("card-body")
 	var row1 = $("<div>").addClass("row")
@@ -143,9 +143,9 @@ function update_selected(id) {
 	$.each(cardlist, function(i, val) {
 		var card = $(val)
 		if (card.attr("id") != "group" + id) {
-			card.css("backgroundColor", "white")
+			card.removeClass("selected")
 		} else {
-			card.css("backgroundColor", "#f2f5ff")
+			card.addClass("selected")
 		}
 	})
 }
