@@ -26,17 +26,7 @@ def _verify_args(request_args, user, db):
         return False, Response("Invalid roomid", 422), None
     room = db.Room[room_id]
 
-    group = None
-    if "groupid" in request_args:
-        group_id = request_args["groupid"]
-        if not db.Group.exists(id=group_id):
-            return False, Response("Invalid groupid", 422), None
-        group = db.Group[group_id]
-
-        if user not in group.members:
-            return False, Response("You are not in this group", 403), None
-
-    return True, room, group
+    return True, room
 
 
 
@@ -50,11 +40,11 @@ def favorite(user, db) -> Response:
     :return: Response(200) if successful
     """
 
-    # falg indicates validity.  Other holds error response, or tuple room, group
-    flag, *other = _verify_args(request.args, user, db)
-    if not flag:
-        return other[0]
-    room, group = other
+    # flag indicates validity.  room might actuall be an error,
+    # which can be returned
+    flag, room = _verify_args(request.args, user, db)
+    if not flag: return room
+
     ranked_room_list = user.getfavoritelist()
     group_rrl = user.getfavoritelist(room=room)
 
@@ -84,10 +74,11 @@ def unfavorite(user, db):
         - roomid: id of the room to remove from favorite list
     :return:
     """
-    flag, *other = _verify_args(request.args, user, db)
-    if not flag:
-        return other[0]
-    room, group = other
+    # flag indicates validity.  room might actuall be an error,
+    # which can be returned
+    flag, room = _verify_args(request.args, user, db)
+    if not flag: return room
+
     ranked_room_list = user.getfavoritelist()
     group_rrl = user.getfavoritelist(room=room)
 
