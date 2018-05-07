@@ -68,7 +68,7 @@ function render_favorite(data, type, room) {
         console.log('null');
         return null;
     }
-    console.log(room);
+    // console.log(room.favorited);
     if (type === "display") {
         let star_div = $(`
                       <span class = "Stardiv padding-0">
@@ -78,9 +78,9 @@ function render_favorite(data, type, room) {
                                  src = "/static/star.png"
                                  style="height: 37px;width: 37px;padding-top: 2px">
                       </span>`);
-        // console.log(room.favorited);
+        console.log(room.favorited);
         if (room.favorited) {
-            star_div.attr("src", "/static/star_fill.png");
+            star_div.find('.Star_img').attr("src", "/static/starfill.png");
         }
         star_div.find(".Star_img").attr("id", room.id + "star");
 
@@ -176,11 +176,6 @@ function render_college(data, type, room) {
         return null;
     }
     let college = room.college;
-    let words = college.split();
-    if(words[words.length - 1] === 'College'){
-        words.pop();
-        college = words.join(" ");
-    }
 
     return college;
 }

@@ -40,6 +40,19 @@ function search_rooms(room_query) {
 
             rooms = new_rooms;
 
+            for (let i = 0; i < rooms.length; i++){
+                                // console.log(words);
+                let college = rooms[i].college;
+                let words = college.split(" ");
+                console.log(words[words.length - 1]);
+                if(words[words.length - 1] === "College"){
+                    console.log('hi');
+                    words.pop();
+                    college = words.join(" ");
+                }
+                rooms[i].college = college;
+            }
+
             redraw_table();
 
             prev_query = room_query;

@@ -66,7 +66,7 @@ function search(){
     }
 
     if (subfree) {
-        room_query["subfree"] = subfree
+        room_query["subfree"] = subfree;
     }
 
     if (building !== "") {

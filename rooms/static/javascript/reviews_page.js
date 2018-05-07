@@ -1,6 +1,6 @@
 function get_search_overflow_card() {
 	var card = $("<div>").addClass("w-100").attr("align", "center")
-	var header = $("<p>").addClass("card-text")
+	var header = $("<p style=\"font-size: 20px\">").addClass("card-text")
 
 	header.text("Multiple rooms found. Please try refining your search.")
 	card.append(header)
@@ -8,6 +8,16 @@ function get_search_overflow_card() {
 	return card
 }
 
+function get_empty_search_card(){
+	var card = $("<div>").addClass("w-100").attr("align", "center")
+	var header = $("<p style=\"font-size: 20px\">").addClass("card-text")
+
+
+	header.text("No rooms found. Perhaps you misspelled the name?")
+	card.append(header)
+
+	return card
+}
 
 $(document).ready(function() {
 	navbar_set("#nav_reviews")
@@ -23,6 +33,9 @@ $(document).ready(function() {
 				})
 			} else if (data.length > 1) {
 				$("#bigcard_body").append(get_search_overflow_card())
+			}
+			else if (data.length == 0){
+				$("#bigcard_body").append(get_empty_search_card())
 			}
 		})
 	})
