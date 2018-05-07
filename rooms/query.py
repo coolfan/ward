@@ -93,6 +93,8 @@ def query(user, db):
     occupancy = request.args.get("occupancy")
     numrooms = request.args.get("numrooms")
     subfree = request.args.get("subfree")
+    if subfree == "Y": subfree = True
+    elif subfree == "N": subfree = False
 
     sqft = int(sqft) if sqft is not None else 0
     occupancy = int(occupancy) if occupancy else occupancy

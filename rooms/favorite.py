@@ -137,7 +137,7 @@ def favorites(user, db):
             # Sort by rank
             ranked_room_list.sort(key=lambda ranked_room: ranked_room.rank)
 
-            name = group.id
+            name = str(group.id)
             lists[name] = [rr.to_dict(user=user) for rr in ranked_room_list]
 
         rrl = user.getfavoritelist()
