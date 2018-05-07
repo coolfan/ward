@@ -1,7 +1,6 @@
 function favorite(id) {
     $.get({
         url: "/favorite", data: {roomid: id}, success: function () {
-            // change_star_color(id);
         }
     });
 }
@@ -9,7 +8,6 @@ function favorite(id) {
 function un_favorite(id){
     $.get({
         url: "/unfavorite", data: {roomid: id}, success: function () {
-            // change_star_color(id);
         }
     });
 }
@@ -104,7 +102,7 @@ $(document).ready(function() {
         placeholder: "  e.g Independent"
     });
     $('#building_select').select2({
-        placeholder: "  e.g Spellman Hall"
+        placeholder: "  e.g Spelman Hall"
     });
 });
 
@@ -153,3 +151,29 @@ $(document).ready(function(){
     }
 
 });
+
+
+$(document).ready(function(){
+    $("#guide_btn").show();
+    $("#guide_btn").click(function(){
+       start_guide();
+    })
+});
+
+function start_guide(){
+     var intro = introJs();
+        intro.oncomplete(function(){
+           global_in_intro = false;
+        });
+        intro.onexit(function(){
+            // alert("hi");
+            global_in_intro = false;
+        });
+
+        global_in_intro = true;
+
+
+        intro.setOptions({doneLabel: 'Next Page', prevLabel: " < ", nextLabel: " > ", skipLabel: " X "}).start().oncomplete(function() {
+          window.location.href = 'favorites_page?multipage=true';
+        });
+}

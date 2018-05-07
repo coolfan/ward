@@ -6,4 +6,4 @@ function navbar_set(tag) {
 	})
 	$(tag).addClass("active");
 	$($(tag).children()[0]).attr("style","font-size:25px;color: lightgrey !important");
-}$
+}
