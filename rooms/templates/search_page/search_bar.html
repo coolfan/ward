@@ -1,12 +1,11 @@
-<div class="container">
-    <div class="row">
-        <form id="search_form" class="col-sm-12">
+<div class="container" >
+    <div class="row" >
 
-
+        <form id="search_form" class="col-sm-12" data-step="1" data-intro="Try searching by room name, building, draw type, occupancy, and more.">
             <div class="form-group row">
                 <div class="col">
-                    <label for="room_num_input">Room Number</label>
-                    <input class="form-control filter number_only" id="room_num_input">
+                    <label for="room_name_input">Room</label>
+                    <input class="form-control filter" id="room_name_input" placeholder="e.g Little 71">
                 </div>
             </div>
 
@@ -22,33 +21,38 @@
                 <div class="col">
                     <label for="building_select">Building </label>
                     <select class="form-control filter" id="building_select" multiple="multiple">
-{#                        <option id="building_fake_option" value="" selected></option>#}
+
                     </select>
                 </div>
             </div>
 
-
-            <div class="form-group row">
-                <div class="col col-sm-4">
-                    <label for="num_rooms_input">Number of Rooms </label>
+             <div class="form-group row">
+                <div class="col col-sm-6">
+                    <label for="num_rooms_input"># of Rooms  &nbsp; <i class="fas fa-building fa-lg"></i></label>
                     <input class="form-control filter number_only" id="num_rooms_input">
                 </div>
 
-                <div class="col col-sm-4">
-                    <label for="floor_input">Floor Number</label>
-                    <input class="form-control filter number_only" id="floor_input">
-                </div>
-
-                 <div class="col col-sm-4">
-                    <label for="occupancy_input">Occupancy </label>
+                 <div class="col col-sm-6">
+                    <label for="occupancy_input">Occupancy  &nbsp;<i class="fas fa-male fa-lg"></i></label>
                     <input class="form-control filter number_only" id="occupancy_input">
                 </div>
+
             </div>
 
             <div class="form-group row">
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input filter" id="check_subfree">
-                    <label class="form-check-label" for="check_subfree">Subfree</label>
+                <div class="col col-sm-6">
+                    <label for="subfree_select">Subfree</label>
+                    <select class="form-control filter" id="subfree_select">
+                        <option value =""></option>
+                        <option value = "n">No</option>
+                        <option value= ="y">Yes</option>
+                    </select>
+                </div>
+
+
+                <div class="col col-sm-6">
+                    <label for="floor_input">Floor</label>
+                    <input class="form-control filter number_only" id="floor_input" placeholder="">
                 </div>
             </div>
 

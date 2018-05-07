@@ -6,6 +6,7 @@
 	{% include 'base.html' %}
 	<script src="{{url_for('static', filename='javascript/reviews_page.js')}}"></script>
 	<script src="{{url_for('static', filename='javascript/reviews_card.js')}}"></script>
+	<script src="{{url_for('static', filename='javascript/big_card.js')}}"></script>
 	<link rel="stylesheet" href="{{url_for('static', filename = 'base.css')}}">
 	<link rel="stylesheet" href="{{url_for('static', filename = 'reviews_page.css')}}">
   </head>
@@ -61,7 +62,7 @@
 			</div>
 			<div class="form-group row">
 			  <div class="col col-sm-12">
-				<input class="form-control" type="file" name="pictures" id="pictures" multiple="multiple" />
+				<input class="form-control filestyle" style="background-color: white" data-btnClass="btn btn-secondary" data-buttonBefore="true" data-text="Select Images..." placeholder="No files selected." type="file" name="pictures" id="pictures" multiple="multiple" />
 			  </div>
 			</div>
 			<div class="form-group row">

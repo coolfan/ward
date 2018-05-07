@@ -6,53 +6,42 @@
     <script src="{{ url_for('static', filename='javascript/small_card.js') }}"></script>
     <script src="{{ url_for('static', filename='javascript/medium_card.js') }}"></script>
     <script src="{{ url_for('static', filename='javascript/big_card.js') }}"></script>
-	<script src="{{ url_for('static', filename='javascript/reviews_card.js') }}"></script>
+    <script src="{{ url_for('static', filename='javascript/reviews_card.js') }}"></script>
     <script src="{{ url_for('static', filename='javascript/card_wrapper.js') }}"></script>
     <script src="{{ url_for('static', filename='javascript/form_manager.js') }}"></script>
     <script src="{{ url_for('static', filename='javascript/sorting_controls.js') }}"></script>
+    <script src="{{ url_for('static', filename='javascript/data_table.js') }}"></script>
 
 
-    <link rel="stylesheet" href="{{ url_for('static', filename = 'base.css') }}">
+
 </head>
 <body>
 {% include 'navbar.html' %}
 
+
 <div class="container-fluid" style="">
+    <div class = "row" >
+        <div id="search_popup" class="alert alert-warning alert-dismissible" role="alert" style="margin: auto; display: none;">
+            <button id="search_popup_dismiss" type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            This data will not be updated during room draw. For the most up-to-date information, visit the
+            <a href="https://rescenter-prod.princeton.edu/undergraduate/">official housing site.</a>
+            <br/>
+            <small style="float:right">Last updated: May 2018</small>
+        </div>
+    </div>
+
     <div class="row">
-        <div class="col col-sm-4">
+
+        <div class="col col-sm-4" style="">
             {% include 'search_page/search_bar.html' %}
         </div>
 
 
         <div class = "col col-sm-8">
-            <div class="row" id="Sorting_controls">
-                    <h4>Results: (50)</h4>
-
-                        <div class = "ml-auto">
-                            <select class="form-control filter" id="sorting_select">
-                                <option value="building" >Sort by building</option>
-                                <option value="floor" >Sort by floor</option>
-                                <option value="sqft" >Sort by square footage</option>
-                                <option value="occupancy" >Sort by occupancy</option>
-                                <option value="college" selected>Sort by draw type</option>
-{#                                <option value="likelihood" >Sort by likelihood</option>#}
-                                <option value="numrooms" >Sort by number of rooms</option>
-{#                                <option value="favorited" >Sort by favorited</option>#}
-                            </select>
-                        </div>
-            </div>
 
             <div class = "row">
-            <div id = "scroller" style="overflow-x: hidden;overflow-y: auto; height: calc(100vh - 150px); max-height: calc(100vh - 150px)">
-            <div class="container-fluid padding-0">
 
-
-                <div class="row Table_card">
-                    {# Cards are dynamically inserted here using jquery #}
-                </div>
-
-                </div>
-            </div>
+                {% include 'search_page/rooms_table.html' %}
             </div>
         </div>
     </div>

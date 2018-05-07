@@ -41,7 +41,7 @@ def review(db):
     text = request.form.get('text')
 
     # TODO: # automate this with the rating attributes
-    room_review = db.Review(owner=user, room=room, rating=rating, text=text)
+    room_review = db.Review(user=user, room=room, rating=rating, text=text)
     flush()
     pictures = []
 

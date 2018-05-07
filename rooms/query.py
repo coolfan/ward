@@ -88,6 +88,9 @@ def rich_query(q: str, db):
             buildings.append(all_buildings[building_aliases[tok]])
         elif tok in room_aliases:
             roomnums.append(all_roomnums[room_aliases[tok]])
+        else:
+            colleges = ["FAKE COLLEGE"]
+            break
 
     return colleges, buildings, roomnums
 
@@ -150,7 +153,6 @@ def query(user, db):
 
     rooms.sort(key=lambda room: getattr(room, order_by) if order_by != "sqft" else -1 * getattr(room, "sqft"))
     limited = rooms[continue_from:continue_from + limit]
-
     room_dicts = []
 
     for room in limited:

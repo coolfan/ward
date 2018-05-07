@@ -31,3 +31,8 @@ def reviews():
 @blueprint.route("/account_page")
 def account():
     return render_template('account_page/account_page.html')
+
+
+@blueprint.route("/about_page")
+def about():
+    return render_template('about_page/about_page.html')
