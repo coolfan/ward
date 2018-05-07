@@ -496,7 +496,7 @@ $(document).ready(function() {
 	navbar_set("#nav_favorites")
 	console.log(RegExp('multipage', 'gi'))
 	if (RegExp('multipage', 'gi').test(window.location.search)) {
-		introJs().start().oncomplete(function() {
+		introJs().setOptions({prevLabel: " < ", nextLabel: " > ", skipLabel: " X "}).start().oncomplete(function() {
 			window.location.href = "/";
 		});
 	}

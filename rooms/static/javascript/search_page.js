@@ -173,7 +173,7 @@ function start_guide(){
         global_in_intro = true;
 
 
-        intro.setOption('doneLabel', 'Next page').start().oncomplete(function() {
+        intro.setOptions({doneLabel: 'Next Page', prevLabel: " < ", nextLabel: " > ", skipLabel: " X "}).start().oncomplete(function() {
           window.location.href = 'favorites_page?multipage=true';
         });
 }
