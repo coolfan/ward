@@ -37,14 +37,8 @@ function search_rooms(room_query) {
         data: room_query,
         traditional:true,
         success: function (new_rooms) {
-            // clear_rooms();
-            // add_rooms(new_rooms);
 
             rooms = new_rooms;
-            // Temporary, until real likelihoods come in
-            // for(let i = 0; i < rooms.length; i++){
-            //     rooms[i]["likelihood"] = 50;
-            // }
 
             redraw_table();
 

@@ -41,7 +41,8 @@ $(document).ready(function () {
             },
             {
                 data: 'favorited',
-                render: render_favorite, orderable: false
+                render: render_favorite, orderable: false,
+                className: "dt-head-right"
             },
         ],
         searching: false,
@@ -189,6 +190,9 @@ function render_likelihood(data, type, room) {
         console.log('null');
         return null;
     }
+    if(type !== "display"){
+        return room.likelihood;
+    }
     let likelihood_btn = $(`<button type="button" class="btn Likelihood btn-block" data-toggle="tooltip"></button>`);
     let likelihood = room.likelihood;
 
@@ -217,7 +221,7 @@ function render_likelihood(data, type, room) {
     if(likelihood === -1){
         likelihood_btn.addClass("btn-secondary");
         likelihood_btn.text("N/A");
-        likelihood_btn.attr("title","You are not in the same draw as this room. If you think this is in error, please contact ezlatin@");
+        likelihood_btn.attr("title","You are not in the same draw as this room. If you think this is in error, please contact ezlatin@princeton.edu");
     }
 
 
