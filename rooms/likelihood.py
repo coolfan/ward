@@ -26,4 +26,5 @@ def likelihood(user, room) -> int:
     current_app.logger.debug(f"{room.building} {room.roomnum} | Mean: {mean}, Std: {stddev}, Your time: {my_time}")
     stddev = stddev if stddev > 0.0 else 5*60*60
     prob = 1.0 - scipy.stats.norm.cdf(my_time, mean, stddev)
-    return int(prob * 100.0)
+    prob = int(prob * 100.0)
+    return min(max(2, prob), 98)
