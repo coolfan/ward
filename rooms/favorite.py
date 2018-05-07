@@ -52,13 +52,15 @@ def favorite(user, db) -> Response:
         fav_personal = db.RankedRoom(
             room=room,
             rank=len(ranked_room_list.ranked_rooms),
-            ranked_room_list=ranked_room_list
+            ranked_room_list=ranked_room_list,
+            creator=user
         )
         if group_rrl is not None:
             fav_group = db.RankedRoom(
                 room=room,
                 rank=len(group_rrl.ranked_rooms),
-                ranked_room_list=group_rrl
+                ranked_room_list=group_rrl,
+                creator=user
             )
 
     return jsonify({'success': True})
@@ -135,11 +137,11 @@ def favorites(user, db):
             # Sort by rank
             ranked_room_list.sort(key=lambda ranked_room: ranked_room.rank)
 
-            name = group.id
-            lists[name] = [ranked_room.room.to_dict() for ranked_room in ranked_room_list]
+            name = group.name if group.name else f"Group {group.id}"
+            lists[name] = [rr.to_dict(user=user) for rr in ranked_room_list]
 
         rrl = user.getfavoritelist()
-        lists[-1] = [rr.room.to_dict() for rr in rrl.ranked_rooms.select()]
+        lists["Personal Favorites"] = [rr.to_dict(user=user) for rr in rrl.ranked_rooms.select()]
 
         return jsonify(lists)
     else:
@@ -151,4 +153,4 @@ def favorites(user, db):
         group_list = group.getfavoritelist()
         rrl = group_list.ranked_rooms.select()[:]
         rrl.sort(key=lambda rr: rr.rank)
-        return jsonify([rr.room.to_dict() for rr in rrl])
+        return jsonify([rr.to_dict(user=user) for rr in rrl])

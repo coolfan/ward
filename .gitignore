@@ -1,6 +1,5 @@
 *.ipynb
 *.pyc
-*.sqlite
 .idea/
 .ipynb_checkpoints/
 .vagrant/

@@ -1,14 +1,10 @@
-import math
+from flask import request, logging, jsonify, current_app
+from pony.orm import select
 
-from flask import request, logging, jsonify, Blueprint, current_app
-import numpy as np
-from pony.orm import db_session, select
-import scipy.stats
-
-from rooms.flask_extensions import AuthBlueprint
-from .conf import DB_NAME, DB_TYPE, LOGGER
 import rooms.dbmanager as dbm
-from rooms import cas
+from rooms.flask_extensions import AuthBlueprint
+from rooms.likelihood import likelihood
+from .conf import LOGGER
 
 blueprint = AuthBlueprint("query", __name__)
 
@@ -36,26 +32,6 @@ def buildings(db):
         building_by_college[college] = q[:]
 
     return jsonify(building_by_college)
-
-
-def likelihood(user, room) -> int:
-    if len(user.groups) == 0: return 50
-
-    group = user.getgroup(room)
-    if group is None: return -1
-
-    my_time = group.timefromstart
-    if my_time is None: return 50
-
-    times = [d.timefromstart for d in room.room_draws]
-    if len(times) == 0: return 50
-
-    mean = np.mean(times)
-    stddev = np.std(times)
-    current_app.logger.debug(f"{room.building} {room.roomnum} | Mean: {mean}, Std: {stddev}, Your time: {my_time}")
-    stddev = stddev if stddev > 0.0 else 5*60*60
-    prob = 1.0 - scipy.stats.norm.cdf(my_time, mean, stddev)
-    return int(prob * 100.0)
 
 
 def rich_query(q: str, db):
@@ -145,7 +121,6 @@ def query(user, db):
 
     # get the ids of logged in user's favorite user
     fave_roomids = set()
-    groups = user.groups
     fave_roomids |= {
         rr.room.id
         for rr in user.getfavoritelist().ranked_rooms
@@ -153,12 +128,7 @@ def query(user, db):
 
     rooms.sort(key=lambda room: getattr(room, order_by) if order_by != "sqft" else -1 * getattr(room, "sqft"))
     limited = rooms[continue_from:continue_from + limit]
-    room_dicts = []
 
-    for room in limited:
-        d = room.to_dict()
-        d['favorited'] = d['id'] in fave_roomids
-        d['likelihood'] = likelihood(user, room)
-        room_dicts.append(d)
+    room_dicts = [r.to_dict(user=user) for r in limited]
 
     return jsonify(room_dicts)
