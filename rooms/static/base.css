@@ -32,12 +32,12 @@ th.dt-center, td.dt-center { text-align: center; }
 }
 
 .padding-0{
-    padding-right:0;
-    padding-left:0;
+    padding-right:0 !important;
+    padding-left:0 !important;
 }
 
 .margin-0{
-    margin:0
+    margin:0 !important;
 }
 
 .card-text{

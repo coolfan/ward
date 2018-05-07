@@ -7,6 +7,6 @@
       font-size: 18px;
   }
 
-  .panel-default > .panel-heading {
-    background-color:#000;
-}
+    .card-header{
+        background: white !important;
+    }
