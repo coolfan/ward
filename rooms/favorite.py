@@ -26,20 +26,7 @@ def _verify_args(request_args, user, db):
         return False, Response("Invalid roomid", 422), None
     room = db.Room[room_id]
 
-    group_id = request_args.get("groupid", "-1")
-    if group_id != "-1":
-        if not db.Group.exists(id=group_id):
-            return False, Response("Invalid groupid", 422), None
-        group = db.Group[group_id]
-
-        if user not in group.members:
-            return False, Response("You are not in this group", 403), None
-    else:
-        group = None
-
-    return True, room, group
-
-
+    return True, room
 
 
 @blueprint.auth_route("/favorite", methods=["GET"])
@@ -51,23 +38,28 @@ def favorite(user, db) -> Response:
     :return: Response(200) if successful
     """
 
-    # falg indicates validity.  Other holds error response, or tuple room, group
-    flag, *other = _verify_args(request.args, user, db)
-    if not flag:
-        return other[0]
-    room, group = other
+    # flag indicates validity.  room might actuall be an error,
+    # which can be returned
+    flag, room = _verify_args(request.args, user, db)
+    if not flag: return room
+
     ranked_room_list = user.getfavoritelist()
-    if group is not None:
-        ranked_room_list = group.getfavoritelist()
+    group_rrl = user.getfavoritelist(room=room)
 
     if room in ranked_room_list:
         current_app.logger.debug("Favoriting an already favorite room")
     else:
-        fav = db.RankedRoom(
+        fav_personal = db.RankedRoom(
             room=room,
             rank=len(ranked_room_list.ranked_rooms),
             ranked_room_list=ranked_room_list
         )
+        if group_rrl is not None:
+            fav_group = db.RankedRoom(
+                room=room,
+                rank=len(group_rrl.ranked_rooms),
+                ranked_room_list=group_rrl
+            )
 
     return jsonify({'success': True})
 
@@ -80,40 +72,32 @@ def unfavorite(user, db):
         - roomid: id of the room to remove from favorite list
     :return:
     """
-    flag, *other = _verify_args(request.args, user, db)
-    if not flag:
-        return other[0]
-    room, group = other
-    ranked_room_list = user.getfavoritelist()
-    if group is not None:
-        ranked_room_list = group.getfavoritelist()
+    # flag indicates validity.  room might actuall be an error,
+    # which can be returned
+    flag, room = _verify_args(request.args, user, db)
+    if not flag: return room
 
-    if room in ranked_room_list:
-        rr = ranked_room_list.get_by_room(room)
-        current_app.logger.debug(f"Deleting ranked room {rr}")
-        deleted_rank = rr.rank
-        rr.delete()
-        for rr in ranked_room_list.ranked_rooms:
-            if rr.rank > deleted_rank:
-                rr.rank -= 1
-    else:
-        current_app.logger.debug("Unfavoriting a non favorite room")
+    ranked_room_list = user.getfavoritelist()
+    group_rrl = user.getfavoritelist(room=room)
+
+    ranked_room_list.remove(room)
+    if group_rrl is not None: group_rrl.remove(room)
 
     return jsonify({'success': True})
 
 
 @blueprint.auth_route("/reorder_favorites", methods=["POST"])
 def reorder_favorites(user, db):
-    flag, *other = _verify_args(request.args, user, db)
-    if not flag:
-        return other[0]
-    room, group = other
+    post_data = json.loads(request.get_data())
+    group_id = post_data.get("groupid", "-1")
     ranked_room_list = user.getfavoritelist()
-    if group is not None:
+    if group_id != "-1":
+        group = db.Group.get(id=group_id)
+        if group is None: return Response("Invalid groupid", 422)
         ranked_room_list = group.getfavoritelist()
 
     # Ensure that they give us a list of all the room ids
-    roomid_list = json.loads(request.get_data())["data"]
+    roomid_list = post_data["data"]
     real_roomid_list = {rr.room.id for rr in ranked_room_list.ranked_rooms}
     if set(roomid_list) != set(real_roomid_list):
         abort(400)

@@ -46,6 +46,15 @@ def define_entities(db: Database) -> None:
                 if rr.room == room: return rr
             return None
 
+        def remove(self, room):
+            rr = self.get_by_room(room)
+            if rr is None: return
+            deleted_rank = rr.rank
+            rr.delete()
+            for rr in self.ranked_rooms:
+                if rr.rank > deleted_rank:
+                    rr.rank -= 1
+
     class User(db.Entity):
         id = PrimaryKey(int, auto=True)
         netid = Required(str, unique=True)
@@ -66,13 +75,25 @@ def define_entities(db: Database) -> None:
             u.ranked_room_lists.create(name="Personal Favorites")
             return u
 
-        def getfavoritelist(self):
+        def getfavoritelist(self, room=None):
+            if room is not None:
+                group = self.getgroup(room)
+                if group: return group.getfavoritelist()
+                return None
             rrls = self.ranked_room_lists.select()[:]
             if len(rrls) > 0:
                 return rrls[0]
             else:
                 self.ranked_room_lists.create()
                 return self.ranked_room_lists.select()[:][0]
+
+        def getgroup(self, room):
+            drawtype = room.college
+            if room.building == "Independent": drawtype = "Spelman"
+            for group in self.groups:
+                if group.drawtype == drawtype:
+                    return group
+            return None
 
     class Group(db.Entity):
         id = PrimaryKey(int, auto=True)
