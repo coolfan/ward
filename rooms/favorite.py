@@ -56,11 +56,7 @@ def favorite(user, db) -> Response:
         return other[0]
     room, group = other
     ranked_room_list = user.getfavoritelist()
-    group_rrl = None
-    for group in user.groups:
-        if group.drawtype == room.college:
-            group_rrl = group.getfavoritelist()
-            break
+    group_rrl = user.getfavoritelist(room=room)
 
     if room in ranked_room_list:
         current_app.logger.debug("Favoriting an already favorite room")
@@ -93,11 +89,7 @@ def unfavorite(user, db):
         return other[0]
     room, group = other
     ranked_room_list = user.getfavoritelist()
-    group_rrl = None
-    for group in user.groups:
-        if group.drawtype == room.college:
-            group_rrl = group.getfavoritelist()
-            break
+    group_rrl = user.getfavoritelist(room=room)
 
     ranked_room_list.remove(room)
     if group_rrl is not None: group_rrl.remove(room)
