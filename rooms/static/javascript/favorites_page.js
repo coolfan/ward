@@ -359,7 +359,7 @@ function get_card(val) {
 			$.get("/unfavorite", {groupid: $("#groups").val(), roomid: val.id}, function(data) {
 				var list = $($("#cards").children()[0]).children()
 				$.each(list, function(i, item) {
-					if ($(item).attr("id") == "elem" + val.id) {
+					if ($(item).attr("id") == "elem-" + val.id) {
 						if (val.bool_filled) {
 							undisplay_big_card(val)
 						}
