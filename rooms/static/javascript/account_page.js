@@ -74,7 +74,8 @@ function get_group_card(val) {
 
 	card.click(function() {
 		update_members(val.members)
-		update_addinfo(val.timefromstart)
+		// console.log(val.drawtime);
+		update_addinfo(val.drawtime)
 		update_selected(val.id)
 	})
 

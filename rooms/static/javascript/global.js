@@ -24,6 +24,8 @@ $(document).ready(function(){
         about_popup.show();
     }
 
+    // introJs().addHints();
 });
 
 let global_in_intro = false;
+

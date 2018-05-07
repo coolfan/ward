@@ -25,11 +25,15 @@ function build_bigcard_inner(val) {
 	rows[rc] = $("<div>").addClass("row").css("margin-bottom", "10px")
 	var header = $("<h1>").addClass("col col-sm-11")
 	header.text(to_header(val))
-	rows[rc].append(header)
-	if (!val.subfree) {
-		var subfree_icon = $("<span>").addClass("fa-stack fa-lg w-100 col col-sm-1")
+	rows[rc].append(header);
+	
+	if (val.subfree) {
+		var subfree_icon = $("<span data-toggle=\"tooltip\" data-placement=\"top\" title=\"Sub-free room\">").addClass("fa-stack fa-lg w-100 col col-sm-1")
 		subfree_icon.append($("<i>").addClass("fa fa-ban fa-stack-2x"))
 		subfree_icon.append($("<i>").addClass("fas fa-glass-martini fa-stack-1x"))
+		subfree_icon.attr("data-toggle","tooltip");
+		// subfree_icon.
+		//
 		rows[rc].append(subfree_icon)
 	}
 	rc++
@@ -62,6 +66,15 @@ function build_bigcard_inner(val) {
         likelihood_btn.addClass("btn-danger");
         likelihood_btn.text("Doomed");
     }
+
+    likelihood_btn.attr("title","We think you will be able to select this room around " + likelihood + "% of the time. See FAQ page for more detail.");
+
+    if(likelihood === -1){
+        likelihood_btn.addClass("btn-secondary");
+        likelihood_btn.text("N/A");
+        likelihood_btn.attr("title","You are not in the same draw as this room. If you think this is in error, please contact ezlatin@princeton.edu");
+    }
+
 
 	likelihood_col.append(likelihood_btn)
 	rows[rc].append(likelihood_col)

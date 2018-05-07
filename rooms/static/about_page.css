@@ -10,3 +10,7 @@
     .card-header{
         background: white !important;
     }
+
+    strong{
+        color: #6480d0;
+    }

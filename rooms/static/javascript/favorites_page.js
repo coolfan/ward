@@ -10,9 +10,9 @@ var card_manager = {
 var is_sorting = false;
 
 function click_card(order, index, step, left, avoid) {
-	if (step == 0) {
+	if (step === 0) {
 		if (left) {
-			console.log("clicking " + order[index])
+			// // console.log("clicking " + order[index])
 			$("#card-" + order[index]).click()
 		} else {
 			$("#card-" + order[index]).contextmenu()
@@ -22,12 +22,12 @@ function click_card(order, index, step, left, avoid) {
 		index += order.length;
 		index %= order.length;
 		while (avoid && $("#card-" + order[index]).hasClass("selected")) {
-			index += step
-			index += order.length
-			index %= order.length
+			index += step;
+			index += order.length;
+			index %= order.length;
 		}
 		if (left) {
-			console.log("clicking " + order[index])
+			// // console.log("clicking " + order[index])
 			$("#card-" + order[index]).click()
 		} else {
 			$("#card-" + order[index]).contextmenu()
@@ -114,14 +114,14 @@ function is_in_array(arr, id) {
 
 function remove_compare(card, attr) {
 	var box = card.find("." + attr)
-	console.log(box)
+	// // console.log(box)
 	box.removeClass("better")
 	box.removeClass("worse")
 }
 
 function set_compare(card, attr, comp) {
 	var box = card.find("." + attr)
-	console.log(box)
+	// // console.log(box)
 	if (comp == 1) {
 		box.addClass("better")
 	} else {
@@ -133,7 +133,7 @@ function toggle_button(button, enable) {
 	if (enable) {
 		$(button.children()[0]).removeClass("disabled")
 	} else {
-		console.log($(button.children()[0]))
+		// // console.log($(button.children()[0]))
 		$(button.children()[0]).addClass("disabled")
 	}
 }
@@ -385,8 +385,8 @@ $(document).ready(function() {
 			if (is_button_enabled(val)) {
 				var cur_id = card_manager.big_card_values[i].id
 				var order = get_order()
-				console.log(cur_id)
-				console.log(order)
+				// // console.log(cur_id)
+				// // console.log(order)
 				for (var index = 0; index < order.length; index++) {
 					if (order[index] == cur_id) {
 						click_card(order, index, 0, true, false)
@@ -435,7 +435,7 @@ $(document).ready(function() {
 		},
 		stop: function(a, b, c) {
 			let order = get_order();
-			console.log(order);
+			// console.log(order);
 			//$.post("/reorder_favorites", {}
 			setTimeout(function() {
 				is_sorting = false
@@ -468,7 +468,7 @@ $(document).ready(function() {
 		var frame = get_big_card_frame(val)
 		frame.contextmenu(function() {
 			var room = card_manager.big_card_values[i]
-			console.log(room)
+			// console.log(room)
 			if (room != null) {
 				click_card([room.id], 0, 0, false, false)
 			}
@@ -477,7 +477,7 @@ $(document).ready(function() {
 	})
 	
 	navbar_set("#nav_favorites")
-	console.log(RegExp('multipage', 'gi'))
+	// console.log(RegExp('multipage', 'gi'))
 	if (RegExp('multipage', 'gi').test(window.location.search)) {
 		introJs().setOptions({prevLabel: " < ", nextLabel: " > ", skipLabel: " X "}).start().oncomplete(function() {
 			window.location.href = "/";

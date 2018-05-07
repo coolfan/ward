@@ -41,14 +41,15 @@ $(document).ready(function () {
             },
             {
                 data: 'favorited',
-                render: render_favorite, orderable: false
+                render: render_favorite, orderable: false,
+                className: "dt-head-right"
             },
         ],
         searching: false,
         // colReorder: true,
         lengthChange: true,
         pageResize: true,
-        scrollY:  '80vh',
+        scrollY:  '70vh',
         deferRender:    true,
         scroller:       true
     });
@@ -56,7 +57,7 @@ $(document).ready(function () {
 
 function render_room_name(data, type, room) {
     if (room === undefined) {
-        console.log('null');
+        // console.log('null');
         return null;
     }
     return room.building + " " + room.roomnum;
@@ -64,10 +65,10 @@ function render_room_name(data, type, room) {
 
 function render_favorite(data, type, room) {
     if (room === undefined) {
-        console.log('null');
+        // console.log('null');
         return null;
     }
-
+    // console.log(room.favorited);
     if (type === "display") {
         let star_div = $(`
                       <span class = "Stardiv padding-0">
@@ -79,7 +80,7 @@ function render_favorite(data, type, room) {
                       </span>`);
         // console.log(room.favorited);
         if (room.favorited) {
-            star_div.attr("src", "/static/star_fill.png");
+            star_div.find('.Star_img').attr("src", "/static/starfill.png");
         }
         star_div.find(".Star_img").attr("id", room.id + "star");
 
@@ -91,7 +92,7 @@ function render_favorite(data, type, room) {
 
 function render_floor(data, type, room) {
     if (room === undefined) {
-        console.log('null');
+        // console.log('null');
         return null;
     }
 
@@ -133,7 +134,7 @@ function render_floor(data, type, room) {
 
 function render_sqft(data, type, room) {
     if (room === undefined) {
-        console.log('null');
+        // console.log('null');
         return null;
     }
 
@@ -146,7 +147,7 @@ function render_sqft(data, type, room) {
 
 function render_occupancy(data, type, room) {
     if (room === undefined) {
-        console.log('null');
+        // console.log('null');
         return null;
     }
 
@@ -171,19 +172,23 @@ function render_occupancy(data, type, room) {
 
 function render_college(data, type, room) {
     if (room === undefined) {
-        console.log('null');
+        // console.log('null');
         return null;
     }
+    let college = room.college;
 
-    return room.college;
+    return college;
 }
 
 function render_likelihood(data, type, room) {
     if (room === undefined) {
-        console.log('null');
+        // console.log('null');
         return null;
     }
-    let likelihood_btn = $(`<button type="button" class="btn Likelihood" data-toggle="tooltip"></button>`);
+    if(type !== "display"){
+        return room.likelihood;
+    }
+    let likelihood_btn = $(`<button type="button" class="btn Likelihood btn-block" data-toggle="tooltip"></button>`);
     let likelihood = room.likelihood;
 
     if (likelihood <= 100 && likelihood >= 66){
@@ -206,7 +211,15 @@ function render_likelihood(data, type, room) {
         likelihood_btn.text("Doomed");
     }
 
-    likelihood_btn.attr("title","We think you will get this room around " + likelihood + "% of the time. See FAQ page for more detail.");
+    likelihood_btn.attr("title","We think you will be able to select this room around " + likelihood + "% of the time. See FAQ page for more detail.");
+
+    if(likelihood === -1){
+        likelihood_btn.addClass("btn-secondary");
+        likelihood_btn.text("N/A");
+        likelihood_btn.attr("title","You are not in the same draw as this room. If you think this is in error, please contact ezlatin@princeton.edu");
+    }
+
+
     return likelihood_btn.prop('outerHTML');
 }
 
@@ -293,7 +306,6 @@ function add_modal(row,room,index){
 }
 
 function add_highlighting(row,room,index){
-
     row = $(row);
     row.hover(
         function(){
@@ -308,14 +320,4 @@ function add_highlighting(row,room,index){
 
 function headerCallback(thead,data,start,end,display){
     let tr = $(thead).find("th");
-    console.log(thead);
-    console.log(tr);
-    // $(thead).attr("data-step","3");
-    // $(thead).attr("data-intro","Sort by clicking on the arrows. Shift click to sort by more than one category.");
 }
-
-// $(document).ready(){
-//     $('#myModal').on('shown.bs.modal', function () {
-//         $('#myInput').trigger('focus')
-//     })
-// }

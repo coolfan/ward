@@ -37,13 +37,19 @@ function search_rooms(room_query) {
         data: room_query,
         traditional:true,
         success: function (new_rooms) {
-            // clear_rooms();
-            // add_rooms(new_rooms);
 
             rooms = new_rooms;
-            // Temporary, until real likelihoods come in
-            for(let i = 0; i < rooms.length; i++){
-                rooms[i]["likelihood"] = 50;
+
+            for (let i = 0; i < rooms.length; i++){
+
+                let college = rooms[i].college;
+                let words = college.split(" ");
+                if(words[words.length - 1] === "College"){
+                    words.pop();
+                    college = words.join(" ");
+                }
+
+                rooms[i].college = college;
             }
 
             redraw_table();
@@ -131,11 +137,11 @@ $(document).ready(function(){
   </div>
 </div>`);
 
-    console.log(Cookies.get('first_time'));
+    // console.log(Cookies.get('first_time'));
 
     if(Cookies.get('first_time') !== 'false'){
 
-        Cookies.set('first_time', 'false');
+        Cookies.set('first_time', 'false',{expires:300});
 
 
         let btn = $(modal_popup).find("#start_guide_btn");

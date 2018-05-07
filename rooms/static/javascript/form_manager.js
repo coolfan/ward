@@ -42,7 +42,7 @@ function setup_form() {
 
 function search(){
     let draw_type_select = $("#draw_type_select");
-    let check_subfree = $("#check_subfree");
+    let check_subfree = $("#subfree_select");
     let building_select = $("#building_select");
     let occupancy_input = $("#occupancy_input");
     let num_rooms_input = $("#num_rooms_input");
@@ -50,7 +50,7 @@ function search(){
     let room_name_input = $("#room_name_input");
 
     let college = draw_type_select.val();
-    let subfree = check_subfree.val() === "off";
+    let subfree = check_subfree.val();
     let building = building_select.val();
     let occupancy = occupancy_input.val();
     let num_rooms = num_rooms_input.val();
@@ -65,8 +65,8 @@ function search(){
         room_query["college"] = college
     }
 
-    if (subfree) {
-        room_query["subfree"] = subfree
+    if (subfree !== "") {
+        room_query["subfree"] = subfree;
     }
 
     if (building !== "") {
