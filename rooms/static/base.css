@@ -89,6 +89,9 @@ td { font-size: 20px; }
   background: linear-gradient(to right, #333399, #6600cc);
 }
 
+.martini-stack {
+	vertical-align: bottom !important;
+}
 
 /*a {*/
     /*color:white*/
