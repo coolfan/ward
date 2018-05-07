@@ -73,7 +73,7 @@ $(document).ready(function () {
     $(".number_only").on("keypress keyup blur", function (event) {
         $(this).val($(this).val().replace(/[^\d].+/, ""));
 
-        if ((event.which < 48 || event.which > 57 && event.which !==10) && event.which !==13) {
+        if ((event.which < 48 || event.which > 57 && event.which !==10) && event.which !==13 && event.which !== 8) {
             event.preventDefault();
         }
     });
