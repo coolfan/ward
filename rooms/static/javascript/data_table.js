@@ -57,7 +57,7 @@ $(document).ready(function () {
 
 function render_room_name(data, type, room) {
     if (room === undefined) {
-        console.log('null');
+        // console.log('null');
         return null;
     }
     return room.building + " " + room.roomnum;
@@ -65,7 +65,7 @@ function render_room_name(data, type, room) {
 
 function render_favorite(data, type, room) {
     if (room === undefined) {
-        console.log('null');
+        // console.log('null');
         return null;
     }
     // console.log(room.favorited);
@@ -78,7 +78,7 @@ function render_favorite(data, type, room) {
                                  src = "/static/star.png"
                                  style="height: 37px;width: 37px;padding-top: 2px">
                       </span>`);
-        console.log(room.favorited);
+        // console.log(room.favorited);
         if (room.favorited) {
             star_div.find('.Star_img').attr("src", "/static/starfill.png");
         }
@@ -92,7 +92,7 @@ function render_favorite(data, type, room) {
 
 function render_floor(data, type, room) {
     if (room === undefined) {
-        console.log('null');
+        // console.log('null');
         return null;
     }
 
@@ -134,7 +134,7 @@ function render_floor(data, type, room) {
 
 function render_sqft(data, type, room) {
     if (room === undefined) {
-        console.log('null');
+        // console.log('null');
         return null;
     }
 
@@ -147,7 +147,7 @@ function render_sqft(data, type, room) {
 
 function render_occupancy(data, type, room) {
     if (room === undefined) {
-        console.log('null');
+        // console.log('null');
         return null;
     }
 
@@ -172,7 +172,7 @@ function render_occupancy(data, type, room) {
 
 function render_college(data, type, room) {
     if (room === undefined) {
-        console.log('null');
+        // console.log('null');
         return null;
     }
     let college = room.college;
@@ -182,7 +182,7 @@ function render_college(data, type, room) {
 
 function render_likelihood(data, type, room) {
     if (room === undefined) {
-        console.log('null');
+        // console.log('null');
         return null;
     }
     if(type !== "display"){
