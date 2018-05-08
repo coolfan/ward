@@ -155,6 +155,7 @@ def define_entities(db: Database) -> None:
                 for member in self.members
                 if member.netid != netid
             ]
+            d["members"] = sorted(d["members"])
             d["drawtime"] = self.drawtime.strftime("%a, %m/%d/%y %I:%M %p")
             return d
 
