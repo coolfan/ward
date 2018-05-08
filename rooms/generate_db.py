@@ -30,18 +30,27 @@ def standardize_building(building: str) -> str:
 def _load_roomsjs(db, fname="rooms.json"):
     with open(fname) as db_file:
         data = json.load(db_file)
+        total_added = 0
         for row in data["rooms"]:
+            building = row[1]
+            roomnum = row[3]
+            if db.Room.get(building=building, roomnum=roomnum):
+                continue
+            print(f"Adding {building} {roomnum}")
+            total_added += 1
             room = db.Room(
                 reserved=False,
                 college=row[0],
-                building=row[1],
+                building=building,
                 floor=row[2],
-                roomnum=row[3],
+                roomnum=roomnum,
                 sqft=int(row[4]),
                 occupancy=int(row[5]),
-                numrooms=int(row[6]),
+                numrooms=int(row[6]) if row[6] else -1,
                 subfree=(row[8] == "Y")
             )
+
+        print(f"Total added: {total_added}")
 
 
 @db_session
