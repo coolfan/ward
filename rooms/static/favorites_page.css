@@ -5,11 +5,15 @@
 }
 
 .better {
-	border: solid 1px green !important;
+	color: green;
 }
 
 .worse {
-	border: solid 1px red !important;
+	color: red;
+}
+
+.comparator {
+	margin-left: 10px;
 }
 
 .arrow {

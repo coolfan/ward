@@ -27,7 +27,7 @@ function build_bigcard_inner(val) {
 	header.text(to_header(val))
 	rows[rc].append(header);
 	
-	if (!val.subfree) {
+	if (val.subfree) {
 		var subfree_icon = $("<span data-toggle=\"tooltip\" data-placement=\"top\" title=\"Sub-free room\">").addClass("fa-stack w-100 col-sm-1")
 		subfree_icon.append($("<i>").addClass("fa fa-ban fa-stack-2x"))
 		subfree_icon.append($("<i>").addClass("fas fa-glass-martini fa-stack-1x"))

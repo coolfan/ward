@@ -114,19 +114,17 @@ function is_in_array(arr, id) {
 
 function remove_compare(card, attr) {
 	var box = card.find("." + attr)
-	// // console.log(box)
-	box.removeClass("better")
-	box.removeClass("worse")
+	box.find(".comparator").remove()
 }
 
 function set_compare(card, attr, comp) {
 	var box = card.find("." + attr)
-	// // console.log(box)
 	if (comp == 1) {
-		box.addClass("better")
+		var comparator = $("<i>").addClass("fa fa-angle-double-up better comparator")
 	} else {
-		box.addClass("worse")
+		var comparator = $("<i>").addClass("fa fa-angle-double-down worse comparator")
 	}
+	box.append(comparator)
 }
 
 function toggle_button(button, enable) {

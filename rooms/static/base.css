@@ -133,6 +133,19 @@ h5.big-card {
     max-height: calc(100vh - 175px);
 }
 
+.nav-text {
+	font-size: 25px;
+	color: white !important;
+}
+
+.nav-text.selected {
+	color: lightgrey !important;
+}
+
+.nav-text.nav-hidden {
+	display: none;
+}
+
 /*a {*/
     /*color:white*/
 /*}*/

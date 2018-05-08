@@ -160,7 +160,7 @@ $(document).ready(function(){
 
 
 $(document).ready(function(){
-    $("#guide_btn").show();
+    $("#guide_btn").removeClass("nav-hidden");
     $("#guide_btn").click(function(){
        start_guide();
     })
