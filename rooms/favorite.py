@@ -90,8 +90,8 @@ def unfavorite(user, db):
 
 @blueprint.auth_route("/reorder_favorites", methods=["POST"])
 def reorder_favorites(user, db):
-    post_data = json.loads(request.get_data())
-    group_id = post_data.get("groupid", "-1")
+    print(request.form)
+    group_id = request.form.get("groupid", "-1")
     ranked_room_list = user.getfavoritelist()
     if group_id != "-1":
         group = db.Group.get(id=group_id)
@@ -99,8 +99,11 @@ def reorder_favorites(user, db):
         ranked_room_list = group.getfavoritelist()
 
     # Ensure that they give us a list of all the room ids
-    roomid_list = post_data["data"]
+    roomid_list = request.form.getlist("data")
+    roomid_list = [int(roomid) for roomid in roomid_list]
     real_roomid_list = {rr.room.id for rr in ranked_room_list.ranked_rooms}
+    print("Roomid List", roomid_list)
+    print("Real Roomid List", real_roomid_list)
     if set(roomid_list) != set(real_roomid_list):
         abort(400)
 
@@ -110,6 +113,9 @@ def reorder_favorites(user, db):
     ]
 
     for newrank, ranked_room in enumerate(ranked_rooms):
+        print(ranked_room.room.to_dict())
+        print(newrank)
+        print()
         ranked_room.rank = newrank
 
     return jsonify({"success": True})
@@ -140,8 +146,9 @@ def favorites(user, db):
             name = str(group.id)
             lists[name] = [rr.to_dict(user=user) for rr in ranked_room_list]
 
-        rrl = user.getfavoritelist()
-        lists["-1"] = [rr.to_dict(user=user) for rr in rrl.ranked_rooms.select()]
+        rrl = user.getfavoritelist().ranked_rooms.select()[:]
+        rrl.sort(key=lambda ranked_room: ranked_room.rank)
+        lists["-1"] = [rr.to_dict(user=user) for rr in rrl]
 
         return jsonify(lists)
     else:
