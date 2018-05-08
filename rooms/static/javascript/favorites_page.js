@@ -440,9 +440,11 @@ $(document).ready(function() {
 		stop: function(a, b, c) {
 			let order = get_order();
 			// console.log(order);
-			$.post("/reorder_favorites", {groupid: $("#groups").val(), data: order}, function() {
-				console.log("success")
-			})
+			$.ajax({type: "POST",
+					url: "/reorder_favorites",
+					traditional: true,
+					data: {groupid: $("#groups").val(), data: order}
+				   })
 			setTimeout(function() {
 				is_sorting = false
 			}, 500)

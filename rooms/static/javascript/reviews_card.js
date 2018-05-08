@@ -1,7 +1,5 @@
 function get_reviews_card(reviews) {
-	var card = $("<div>").addClass("card w-100").attr("style", "max-height: 50%; overflow-y: auto");
-	var container_fluid = $("<div>").addClass("container-fluid y-stalwart");
-	var card_body = $("<div>").addClass("card-body y-stalwart");
+	var card_body = $("<div>").addClass("w-100");
 
 	if (reviews.length > 0) {
 		var pic_urls = []
@@ -9,7 +7,7 @@ function get_reviews_card(reviews) {
 			pic_urls = pic_urls.concat(val.pictures)
 		})
 		
-		var pic_header = $("<div>").addClass("row")
+		var pic_header = $("<div>").addClass("row w-100")
 			.append($("<div>").addClass("col col-sm-12")
 					.append($("<h5>").text("Available Images:")))
 		card_body.append(pic_header)
@@ -29,14 +27,14 @@ function get_reviews_card(reviews) {
 
 		card_body.append($("<hr>"))
 		$.each(reviews, function(i, val) {
-			var row = $("<div>").addClass("row");
+			var row = $("<div>").addClass("row w-100");
 			var col = $("<div>").addClass("col-sm-12");
 			var rating = $("<h5>").text("Rating: " + val.rating + "/5")
 			col.append(rating)
 			row.append(col)
 			card_body.append(row)
 			
-			row = $("<div>").addClass("row");
+			row = $("<div>").addClass("row w-100");
 			col = $("<div>").addClass("col-sm-12");
 			var comment = $("<p>").text(val.text)
 			col.append(comment)
@@ -54,7 +52,7 @@ function get_reviews_card(reviews) {
 			})*/
 		})
 	} else {
-		var row = $("<div>").addClass("row");
+		var row = $("<div>").addClass("row w-100");
 		var col = $("<div>").addClass("col-sm-12").attr("align", "center");
 		var rating = $("<h6>").text("No reviews yet.")
 		col.append(rating)
@@ -63,8 +61,5 @@ function get_reviews_card(reviews) {
 			
 	}
 	
-	container_fluid.append(card_body);
-	card.append(container_fluid);
-
-	return card
+	return card_body
 }

@@ -109,7 +109,7 @@ function get_big_card(room, reviews){
 		div.append(val)
 	})
 	div.append(get_reviews_card(reviews))
-	if (typeof(room.creator) !== undefined) {
+	if (typeof(room.creator) !== "undefined") {
 		var blame = $("<p>").text("Favorited by " + room.creator).css("padding-top", "10px")
 		div.append(blame)
 	}
