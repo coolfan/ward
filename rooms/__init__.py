@@ -32,7 +32,8 @@ app.config.update(dict(
     USERNAME='admin',
     PASSWORD='admin',
     SERVICE_URL=service_url,
-    UPLOAD_DIR=UPLOAD_DIR
+    UPLOAD_DIR=UPLOAD_DIR,
+    MAX_CONTENT_LENGTH=16 * 1024 * 1024  # 16MB File Limit
 ))
 
 app.logger.addHandler(handler)
