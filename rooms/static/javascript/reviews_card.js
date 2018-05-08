@@ -1,7 +1,7 @@
 function get_reviews_card(reviews) {
-	var card = $("<div>").addClass("card w-100 y-stalwart").attr("style", "max-height: 100%");
-	var container_fluid = $("<div>").addClass("container-fluid");
-	var card_body = $("<div>").addClass("card-body");
+	var card = $("<div>").addClass("card w-100").attr("style", "max-height: 50%; overflow-y: auto");
+	var container_fluid = $("<div>").addClass("container-fluid y-stalwart");
+	var card_body = $("<div>").addClass("card-body y-stalwart");
 
 	if (reviews.length > 0) {
 		var pic_urls = []

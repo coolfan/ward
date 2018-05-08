@@ -291,8 +291,8 @@ function get_card(val) {
 	var container_fluid = $("<div>").addClass("container-fluid");
 	var card_body = $("<div>").addClass("card-body");
 	var row = $("<div>").addClass("row");
-	var col1 = $("<div>").addClass("col col-sm-10").attr("id", "hitbox" + val.id);
-	var col2 = $("<div>").addClass("col col-sm-2");
+	var col1 = $("<div>").addClass("col-sm-10").attr("id", "hitbox" + val.id);
+	var col2 = $("<div>").addClass("col-sm-2");
 	var text = $("<p>").addClass("card-text");
 	var del_btn_hitbox = $("<div>")
 	var del_btn = $("<i>").addClass("far fa-trash-alt fa-lg hover-button")
@@ -349,6 +349,9 @@ function get_card(val) {
 		}
 		return false
 	})
+
+//	card.attr("data-toggle", "tooltip")
+//	card.attr("title", "Favorited by " + val.creator)
 
 	del_btn_hitbox.click(function() {
 		if (!is_sorting && !val.bool_locked) {
@@ -428,6 +431,7 @@ $(document).ready(function() {
 		} else {
 			ul.append(get_empty_card())
 		}
+		$('[data-toggle="tooltip"]').tooltip(); 
 	});
 	ul.sortable({
 		start: function(a, b, c) {
@@ -436,7 +440,9 @@ $(document).ready(function() {
 		stop: function(a, b, c) {
 			let order = get_order();
 			// console.log(order);
-			//$.post("/reorder_favorites", {}
+			$.post("/reorder_favorites", {groupid: $("#groups").val(), data: order}, function() {
+				console.log("success")
+			})
 			setTimeout(function() {
 				is_sorting = false
 			}, 500)
@@ -460,6 +466,7 @@ $(document).ready(function() {
 			} else {
 				ul.append(get_empty_card())
 			}
+			$('[data-toggle="tooltip"]').tooltip(); 
 		});
 		reset_big_cards()
 	})

@@ -22,13 +22,13 @@ function build_bigcard_inner(val) {
 	var rows = []
 	var rc = 0
 
-	rows[rc] = $("<div>").addClass("row").css("margin-bottom", "10px")
-	var header = $("<h1>").addClass("col col-sm-11 big-card")
+	rows[rc] = $("<div>").addClass("row w-100").css("margin-bottom", "10px")
+	var header = $("<h1>").addClass("col-sm-11 big-card")
 	header.text(to_header(val))
 	rows[rc].append(header);
 	
-	if (val.subfree) {
-		var subfree_icon = $("<span data-toggle=\"tooltip\" data-placement=\"top\" title=\"Sub-free room\">").addClass("fa-stack fa-lg w-100 col col-sm-1")
+	if (!val.subfree) {
+		var subfree_icon = $("<span data-toggle=\"tooltip\" data-placement=\"top\" title=\"Sub-free room\">").addClass("fa-stack w-100 col-sm-1")
 		subfree_icon.append($("<i>").addClass("fa fa-ban fa-stack-2x"))
 		subfree_icon.append($("<i>").addClass("fas fa-glass-martini fa-stack-1x"))
 		subfree_icon.attr("data-toggle","tooltip");
@@ -38,12 +38,12 @@ function build_bigcard_inner(val) {
 	}
 	rc++
 
-	rows[rc] = $("<div>").addClass("row").css("margin-bottom", "10px")
-	var drawtype = $("<h3>").addClass("col col-sm-10 big-card")
+	rows[rc] = $("<div>").addClass("row w-100").css("margin-bottom", "10px")
+	var drawtype = $("<h3>").addClass("col-md-6 col-lg-8 big-card")
 	drawtype.text(val.college)
 	rows[rc].append(drawtype)
-	var likelihood_col = $("<div>").addClass("col col-sm-2").css("padding-right", "10px")
-	let likelihood_btn = $(`<button type="button" class="btn w-100 h-100" data-toggle="tooltip" ></button>`);
+	var likelihood_col = $("<div>").addClass("col-md-6 col-lg-4").css("padding-right", "10px")
+	let likelihood_btn = $(`<button type="button" class="btn w-100" data-toggle="tooltip" ></button>`);
 
     let likelihood = val.likelihood;
 
@@ -80,22 +80,22 @@ function build_bigcard_inner(val) {
 	rows[rc].append(likelihood_col)
 	rc++
 
-	rows[rc] = $("<div>").addClass("row").css("margin-bottom", "10px")
-	var floor = $("<h5>").addClass("col col-sm-6 big-card")
+	rows[rc] = $("<div>").addClass("row w-100").css("margin-bottom", "10px")
+	var floor = $("<h5>").addClass("col-xs-12 col-sm-6 big-card")
 	floor.text("Floor: " + val.floor)
 	rows[rc].append(floor)
 
-	var occupancy = $("<h5>").addClass("col col-sm-6 big-card")
+	var occupancy = $("<h5>").addClass("col-xs-12 col-sm-6 big-card")
 	occupancy.text("Occupancy: ").append(get_icons("<i class=\"fas fa-male fa-lg\"></i>", val.occupancy))
 	rows[rc].append(occupancy)
 	rc++
 
-	rows[rc] = $("<div>").addClass("row").css("margin-bottom", "10px")
-	var sqft = $("<h5>").addClass("col col-sm-6 sqft big-card")
+	rows[rc] = $("<div>").addClass("row w-100").css("margin-bottom", "10px")
+	var sqft = $("<h5>").addClass("col-xs-12 col-sm-6 sqft big-card")
 	sqft.text("Area: " + val.sqft + " ft").append($("<sup>").text("2"))
 	rows[rc].append(sqft)
 
-	var numrooms = $("<h5>").addClass("col col-sm-6 numrooms big-card")
+	var numrooms = $("<h5>").addClass("col-xs-12 col-sm-6 numrooms big-card")
 	numrooms.text("Rooms: ").append(get_icons("<i class=\"fa fa-building fa-lg\"></i>", val.numrooms))
 	rows[rc].append(numrooms)
 	rc++
@@ -104,10 +104,14 @@ function build_bigcard_inner(val) {
 }
 
 function get_big_card(room, reviews){
-    var div = $("<div>").addClass("w-100")
+    var div = $("<div>").addClass("w-100 h-100 y-stalwart")
 	$.each(build_bigcard_inner(room), function(i, val) {
 		div.append(val)
 	})
 	div.append(get_reviews_card(reviews))
+	if (typeof(room.creator) !== undefined) {
+		var blame = $("<p>").text("Favorited by " + room.creator).css("padding-top", "10px")
+		div.append(blame)
+	}
 	return div
 }

@@ -76,7 +76,7 @@ function render_favorite(data, type, room) {
                             <img id = "{{ room['id']}}star"
                                  class="Star_img"
                                  src = "/static/star.png"
-                                 style="height: 37px;width: 37px;padding-top: 2px">
+                                 style="height: 32px;width: 32px;padding-top: 2px">
                       </span>`);
         // console.log(room.favorited);
         if (room.favorited) {
@@ -188,7 +188,7 @@ function render_likelihood(data, type, room) {
     if(type !== "display"){
         return room.likelihood;
     }
-    let likelihood_btn = $(`<button type="button" class="btn Likelihood btn-block" data-toggle="tooltip"></button>`);
+    let likelihood_btn = $(`<button type="button" class="btn btn-sm Likelihood btn-block" data-toggle="tooltip"></button>`);
     let likelihood = room.likelihood;
 
     if (likelihood <= 100 && likelihood >= 66){

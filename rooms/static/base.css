@@ -37,8 +37,7 @@ th.dt-center, td.dt-center { text-align: center; }
 }
 
 .card-text{
-    height:100%;
-    padding-top: 7px;
+    font-size: 1em;
 }
 
 .no-bullets {
@@ -54,7 +53,7 @@ th.dt-center, td.dt-center { text-align: center; }
 }
 
 .y-stalwart {
-	max-height: 100%
+	max-height: 100%;
 	overflow-y: auto;
 }
 
@@ -75,7 +74,9 @@ th.dt-center, td.dt-center { text-align: center; }
 	background-color: white !important;
 }
 
-td { font-size: 20px; }
+td { font-size: 1em}
+
+/*tr {align-items: center}*/
 
 .highlight {
     background-color: whitesmoke !important;
@@ -116,15 +117,20 @@ body{
 /*td { font-size: 1em; }*/
 
 h1.big-card {
-	font-size: 3em;
-}
-
-h3.big-card {
 	font-size: 2em;
 }
 
+h3.big-card {
+	font-size: 1.25em;
+}
+
 h5.big-card {
-	font-size: 1.5em;
+	font-size: 1em;
+}
+
+.bigcard_col {
+	height: calc(100vh - 175px);
+    max-height: calc(100vh - 175px);
 }
 
 /*a {*/
