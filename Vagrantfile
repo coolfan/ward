@@ -16,10 +16,17 @@ Vagrant.configure("2") do |config|
         sudo apt-get update
         sudo add-apt-repository ppa:deadsnakes/ppa
         sudo apt-get update
-        sudo apt-get install -y python3.6
+        sudo apt-get upgrade gcc
+        sudo apt-get install -y gfortran libopenblas-dev liblapack-dev
+        sudo apt-get install -y python3.6-dev
         curl https://bootstrap.pypa.io/ez_setup.py -o - | sudo python3.6 && sudo python3.6 -m easy_install pip
 
         sudo pip3 install flask pony
+        sudo apt-get install -y python3-numpy
+        sudo apt-get install -y python3-scipy
+        sudo pip3 install --upgrade numpy
+        sudo pip3 install --upgrade scipy
+        sudo pip3 install pandas
 
         # Start in /vagrant instead of /home/vagrant
         if ! grep -Fxq "cd /vagrant" /home/vagrant/.bashrc

@@ -61,6 +61,7 @@ def compute_timefromstart(draw_time: datetime, draw_start: datetime):
     delta -= timedelta(numweekenddays, 0)
     return int(delta.total_seconds())
 
+
 @db_session
 def _load_draw_data(db, fname):
     # TODO: Use csv to do this more nicely
@@ -148,6 +149,7 @@ def _load_curr_drawtimes(db, fname, drawtype):
 @db_session
 def _load_reviews(db, fname="reviews.csv"):
     df = pd.read_csv(fname)
+    df = df.fillna(value="")
     missed = []
     for ix, row in df.iterrows():
         tokens = row["room_name"].split()
@@ -167,7 +169,31 @@ def _load_reviews(db, fname="reviews.csv"):
             continue
         rating = sum(row[["bunk_beds", "lighting", "bathrooms", "kitchens", "facilities", "heating"]]) / 6
         text = row["text"]
-        db.Review(owner=db.User.get(netid="tando"), room=room, rating=int(round(rating)), text=text)
+        db.Review(
+            user=db.User.get(netid="tando"),
+            room=room,
+            rating=int(round(rating)),
+            pictures="[]",
+            text=text
+        )
+
+
+@db_session
+def _load_instructor_groups(db):
+    instructor_netids = ["bwk", "lumbroso", "akling", "lanceg", "jywei"]
+    instructors = [
+        db.User.get_or_create(netid=netid)
+        for netid in instructor_netids
+    ]
+    drawtypes = [
+        "Butler College", "Forbes College", "Independent", "Mathey College",
+        "Rockefeller College", "Spelman", "Upperclass", "Whitman College",
+        "Wilson College"
+    ]
+    for drawtype in drawtypes:
+        g = db.Group()
+        g.drawtype = drawtype
+        g.name = drawtype + " Draw Group"
 
 
 if __name__ == "__main__":
