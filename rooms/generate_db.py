@@ -178,6 +178,24 @@ def _load_reviews(db, fname="reviews.csv"):
         )
 
 
+@db_session
+def _load_instructor_groups(db):
+    instructor_netids = ["bwk", "lumbroso", "akling", "lanceg", "jywei"]
+    instructors = [
+        db.User.get_or_create(netid=netid)
+        for netid in instructor_netids
+    ]
+    drawtypes = [
+        "Butler College", "Forbes College", "Independent", "Mathey College",
+        "Rockefeller College", "Spelman", "Upperclass", "Whitman College",
+        "Wilson College"
+    ]
+    for drawtype in drawtypes:
+        g = db.Group()
+        g.drawtype = drawtype
+        g.name = drawtype + " Draw Group"
+
+
 if __name__ == "__main__":
     # uncomment this and run python -m rooms.dbmanager from the first directory
     db = connect("rooms.sqlite", create_db=True, create_tables=True)
