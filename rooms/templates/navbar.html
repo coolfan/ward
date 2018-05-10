@@ -11,29 +11,30 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto" id="nav_whole" >
             <li class="nav-item active" id="nav_table">
-                <a class="nav-link nav-text" href="/" style="font-size: 25px">Search <!--<span class="sr-only">(current)</span>--></a>
+                <a class="nav-link nav-text" href="/">Search</a>
             </li>
             <li class="nav-item" id="nav_favorites">
-                <a class="nav-link nav-text" href="/favorites_page" style="font-size: 25px">Favorites</a>
+                <a class="nav-link nav-text" href="/favorites_page">Favorites</a>
             </li>
 			<li class="nav-item" id="nav_reviews">
-			    <a class="nav-link nav-text" href="/reviews_page" style="font-size: 25px">Review</a>
-			</li>
-			<li class="nav-item" id="nav_account">
-			    <a class="nav-link nav-text" href="/account_page" style="font-size: 25px">Account</a>
+			    <a class="nav-link nav-text" href="/reviews_page">Review</a>
 			</li>
             <li class="nav-item" id="nav_about">
-			    <a class="nav-link nav-text" href="/about_page" style="font-size: 25px">FAQ</a>
+			    <a class="nav-link nav-text" href="/about_page">FAQ</a>
 			</li>
         </ul>
 
         <ul class="navbar-nav navbar-right">
             <li class ="nav-item">
-                <a class="nav-link nav-text">Hello, {{ name }}!</a>
+                <a id="nav_account" class="nav-link nav-text" href="/account_page">Hello, {{ name }}!</a>
             </li>
             <li class ="nav-item">
-                <a id="guide_btn" class="nav-link nav-text nav-hidden" href="javascript:void(0);">Guide</a>
+                <a id="guide_btn" class="nav-link nav-text nav-hidden" href="javascript:void(0);">Help</a>
             </li>
+			<li class ="nav-item">
+                <a class="nav-link nav-text" href="/logout">Logout</a>
+            </li>
+			
         </ul>
     </div>
   </div>

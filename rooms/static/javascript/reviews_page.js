@@ -23,21 +23,32 @@ $(document).ready(function() {
 	navbar_set("#nav_reviews")
 	$(":file").filestyle();
 
-	$("#q").change(function() {
-		$.get("/query", {q: $("#q").val()}, function(data) {
-			$("#bigcard_body").empty()
-			if (data.length == 1) {
-				$("#roomid").val(data[0].id)
-				$.get("/reviews", {roomid: data[0].id}, function(rev) {
+
+	var delay = (function(){
+        var timer = 0;
+        return function(callback, ms){
+            clearTimeout (timer);
+            timer = setTimeout(callback, ms);
+        };
+    })();
+
+	$("#q").keyup(function() {
+		delay(function() {
+			$.get("/query", {q: $("#q").val()}, function(data) {
+				$("#bigcard_body").empty()
+				if (data.length == 1) {
+					$("#roomid").val(data[0].id)
+					$.get("/reviews", {roomid: data[0].id}, function(rev) {
 					$("#bigcard_body").append(get_big_card(data[0], rev))
-				})
-			} else if (data.length > 1) {
-				$("#bigcard_body").append(get_search_overflow_card())
-			}
-			else if (data.length == 0){
-				$("#bigcard_body").append(get_empty_search_card())
-			}
-		})
+					})
+				} else if (data.length > 1) {
+					$("#bigcard_body").append(get_search_overflow_card())
+				}
+				else if (data.length == 0){
+					$("#bigcard_body").append(get_empty_search_card())
+				}
+			})
+		}, 400)
 	})
 	
 	$("#button").click(function() {
