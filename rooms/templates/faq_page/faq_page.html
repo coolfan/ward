@@ -17,7 +17,7 @@
             <strong>WARD</strong> is not part of university housing, and so any information here is not necessarily the official stance of the university.
             Unfortunately, the university does not maintain any up to date information, you can try <a href="https://hres.princeton.edu/undergraduates/my-housing/room-draw-guide">this</a> for outdated official information
             <br/>
-            <small style="float:right">Last updated: May 2018</small>
+            <div align="right"><small>Last updated: May 2018</small></div>
     </div>
 
     <br/>
@@ -36,7 +36,7 @@
 
             <div id="collapseLikelihood" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                 <div class="card-body">
-                    We fit the draw times of the room in previous years to a normal distribution. and then evaluate the tail cdf at your draw time.  Because the probabilities at the extremes are inaccurate, we cut off the tail so that your probability is never less than 2% or more than 98%.
+                    We fit the draw times of each room in previous years to a normal distribution. We then calculate the z-score of your draw time with respect that distribution, and report the percentile of the z-score.  Because the exact estimates near the tails of the distribution are uninformative and often inaccurate, we cut off the values so that we do not report values less than 2% or more than 98%.
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
             </div>
             <div id="collapseGetData" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                 <div class="card-body">
-                        We download the full list of all the draw times when it is released by housing and enter it into our system. That's how we know what your draw group is when you log on, and how we know your draw time so we can estimate your likelihood. We also use previous year's draw data, obtained in a similar manner, to assist in the likelihood calculations.
+                        We download the full list of all the draw times when it is released by Housing and enter it into our system. That's how we know your draw group(s) when you first log on, and how we know what draw time(s) to use to estimate your likelihood of getting a room. We also use draw times from previous years, obtained in a similar manner, to assist in the likelihood calculations. We obtained the various statistics for individual rooms, such as area, number of rooms, etc., from the Rooms TigerApp. You can find their website <a href="http://rooms.tigerapps.org/">here</a>.
                 </div>
             </div>
 
@@ -66,8 +66,7 @@
             </div>
             <div id="collapseStored" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                 <div class="card-body">
-                        We store draw times from this year and previous years.
-                        We store your favorites data and any submitted reviews, and use google analytics to help improve the user experience.
+                        We store your draw times and draw groups from this year. We also store what rooms you and your draw group have favorited, as well as the order in which you have arranged the rooms on your lists, as well as any reviews of rooms that you have submitted. We also use Google Analytics to help improve the user experience.
                 </div>
             </div>
 
@@ -90,7 +89,7 @@
 
             <div id="collapseApplication" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                 <div class="card-body">
-                    Typically in early March, room draw applications go live at <a href="https://rescenter-prod.princeton.edu/undergraduate/">my undergraduate housing</a>, and are usually up for a few weeks. What this means is you need to decide what draws to participate in, organize draw groups for those draws, and apply before that the application goes down. For rising sophomores, that first step is easy - you can only apply to the draw for your residential college. Rising juniors and seniors, on the other hand, can apply to any of the three 4-year residential college draws, the independent draw, the upperclass draw, or the Spelman draw. Stayed tuned for more details about the differences between the draws.
+                    Typically in early March, Room Draw applications go live at <a href="https://rescenter-prod.princeton.edu/undergraduate/">My Undergraduate Housing</a>, and are usually up for a few weeks. What this means is that you need to decide what draws to participate in, organize draw groups for those draws, and apply before that the application period ends. For rising sophomores, that first step is easy - you can only apply to the draw into your current residential college. Rising juniors and seniors, on the other hand, can apply to any of the three 4-year residential college draws, the Independent Draw, the Upperclass Draw, and/or the Spelman Draw. Stayed tuned for more details about the differences between the draws.
                 </div>
             </div>
         </div>
@@ -104,7 +103,7 @@
             </div>
             <div id="collapseDrawGroups" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                 <div class="card-body">
-                                        For each draw you apply to, you need to create a draw group. Your draw group could be the same across every draw you apply to, or different every time, and must be between one to eight people (except the Wilson draw goes up to ten people, as Wilson has a ten room suite). Everyone in a draw group has the same draw time for that draw. Most importantly, you will only be able to select a room with people in your draw group for that room's draw - so make sure you pick people you like! Note that for those in multiple draws, a draw group isn't an all or nothing type of thing - a subset of your draw group can pick a room for that draw, while the rest pass and wait for a different draw.
+                                        For each draw you apply to, you need to create a draw group. Your draw group could be the same across every draw you apply to, or different every time, and must consist of one to eight people (except for the Wilson draw, which can have up to ten people, as Wilson has a ten-person suite). Everyone in a draw group has the same draw time for that draw. Most importantly, when you draw into a room, you will only be able to choose to room with people in your draw group for that room's draw (if you don't/can't choose to live in a single), so make sure you pick people you like! Note that for those in multiple draws, draw groups are non-binding: a subset of your draw group can pick a room for that draw, while the rest can pass and wait for a different draw.
                 </div>
             </div>
         </div>
@@ -127,16 +126,16 @@
             <div id="collapsePointSystem" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                 <div class="card-body">
                     <p>
-                   You setup your draw groups, and sent off the applications. It's early April, and draw times are finally released - but how are they chosen? It's pretty simple - every draw group has a point value, which is the average of the points of each individual in the group. Groups with higher point values always draw before those with lower point values, and the order is chosen randomly when there is a tie.
+                   You've set up your draw groups, and have sent off the applications. It's early April, and draw times are finally released - but how are they chosen? It's pretty simple - every draw group has a point value, which is the average of the points of each individual in the group. Groups with higher point values always draw before those with lower point values, and the order is chosen randomly when there is a tie.
                     </p>
                     <p>
                     So how do you compute and individual's point value?
                     A main contributor is class year - rising sophomores have a base value of 1 point, rising juniors a base value of 2 points, and rising seniors a base value of 3 points.
                     </p>
                     <p>
-                    For residential college draws, for each year you lived in that residential college or its 4-year sister college, you get an additional 0.1 points, to encourage people to stay in their home res colleges.
+                    For residential college draws, for each year you have lived in that residential college or its 2-year sister college (i.e. Mathey-Rocky, Butler-Wilson, Whitman-Forbes), you get an additional 0.1 points. This is meant to encourage people to stay in their home residential colleges.
                     </p>
-                    <p>For the independent and spelman draws, you get an additional 2 points if you sign the independent pledge, which basically is a commitment not to get a University meal plan or get food from an eating club. More details on that coming soon.</p>
+                    <p>For the Independent and Spelman draws, you get an additional 2 points if you sign the independent pledge, which basically is a commitment not to get a University meal plan or get food from an eating club. More details on that coming soon.</p>
                 </div>
             </div>
         </div>
@@ -150,10 +149,10 @@
             </div>
             <div id="collapseScouting" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                 <div class="card-body">
-                    <p>You just got all your draw times, and its time to prepare for the big moment. You know your draw time is only four minutes long. If you don't pick in that time interval, the next group will be able to select rooms while you still are deciding, possibly nabbing the one you were going for out from your very nose.   Being a responsible and well prepared Princeton student, you decide to do a bit of planning before that time to figure out what rooms you really want. </p>
+                    <p>You just got all your draw times, and its time to prepare for the big moment. You know your draw time is only four minutes long. If you don't pick in that time interval, the next group will be able to select rooms while you still are deciding, possibly nabbing the one you were going for out from under your very nose. Being a responsible and well-prepared Princeton student, you decide to do a bit of planning before that time to figure out what rooms you really want. </p>
 
                     <p>
-                      This is where <strong>WARD</strong> comes in! Use the search page to browse through the rooms in your draw, filter and sort based on qualities you care about, read room reviews by those who lived in that room for a whole year, see photos of the rooms, and seamlessly share your findings with the rest of your draw group by favoriting rooms.
+                      This is where <strong>WARD</strong> comes in! Use the search page to browse through the rooms in your draw, filter and sort based on qualities you care about, read room reviews by those who have lived in that room for a whole year, see photos of the rooms, and seamlessly share your findings with the rest of your draw group by favoriting rooms.
                     </p>
 
                     <p>After picking out some likely candidates, consider doing a bit of ground work and visiting the room yourself, to get a feel for what it's like living there for a year. People are always happy to give a tour!</p>
@@ -182,12 +181,11 @@
                     <p>The Residential College Draws usually occur after the Independent and Spelman draws and before the Upperclass draw.</p>
                     <p>
 
-                    As I mentioned when discussing the point system, those who lived in a residential college for longer have an advantage when drawing into that college. However, there are other considerations when drawing into a residential college.
+                    As mentioned when discussing the point system, those who lived in a residential college for a longer time have an advantage when drawing into that college. However, there are other points to consider when drawing into a residential college.
                     </p>
-                    <p>The first thing to note is that residential colleges have quotas for the maximum amount of juniors and the maximum amount of seniors that can draw into that college, which can vary from college to college and from year to year. These are in place to make sure sophomores drawing into that college still can get good rooms.</p>
+                    <p>The first thing to note is that residential colleges have quotas for the maximum number of upperclassmen that can draw into that college, which can vary from college to college and from year to year (typically between 40-80 per class). These are in place to make sure that all sophomores are still able to draw into their own residential colleges.</p>
                     <p>
-                        The big difference between a residential college draw and other draws is that, if you end up selecting a room in a residential college, you <strong>have</strong> to get a meal plan, meaning you can't go independent. Some eating clubs have a limited supply of shared meal plans, which do count.
-                        Also note that as a rising junior or senior, one can select the Block 90 plan and still do a significant share of one's eating outside of the dining halls.
+                        The big difference between a residential college draw and other draws is that, if you end up selecting a room in a residential college, you <strong>have</strong> to get a meal plan, which meaning you <strong>cannot</strong> go independent. Some eating clubs have a limited supply of shared meal plans, which do count. However, you should also note that as a rising junior or senior, you can select the Block 95 plan and still do a significant share of your eating outside of the dining halls, if you so choose.
                     </p>
                 </div>
             </div>
@@ -208,14 +206,11 @@
                     <p> <i>“My signature on the Housing/Dining Agreement acknowledges my full understanding of the University’s definition of an Independent. I certify by my signature that I am aware if I fail to abide by the Pledge, I will be referred to the Office of the Dean of Undergraduate students for disciplinary action. If I am found in violation of the Independent Pledge, I understand the penalty is normally probation. I am aware that the probation is a matter of permanent record.”</i> </p>
 
                     <p>According to the <a href="https://www.princeton.edu/uservices/UG-RoomDrawGuide.pdf">university website</a> an independent is "A student who provides his/her own meals. Independents choose not to contract with Dining Services or
-                        join an off-campus eating club or eating co-op, and cannot participate in Residential College or Upperclass Room Draws." This definition is wrong. An independent <strong>can</strong> join a co-op, and <strong>can</strong> join an eating club as a social member only. I bring this up to demonstrate the risks of taking anything the university says about room draw at face value. (Indeed, <a href = "http://hres.princeton.edu/undergraduates/my-housing/room-draw-guide/rising-junior-senior-room-draw">another part</a> of the university website does not mention the prohibition against joining a co-op, but it still wrong about social membership)</p>
+                        join an off-campus eating club or eating co-op, and cannot participate in Residential College or Upperclass Room Draws." This definition is wrong. An independent <strong>can</strong> join a co-op, and <strong>can</strong> join an eating club as a social member only. I bring this up to demonstrate the risks of taking anything the university says about room draw at face value. (Indeed, <a href="http://hres.princeton.edu/undergraduates/my-housing/room-draw-guide/rising-junior-senior-room-draw">another part</a> of the university website does not mention the prohibition against joining a co-op, but it still wrong about social membership)</p>
 
-                    <p>It is important to note that you are only obligated to follow the pledge if you end up selecting an independent room. Signing the independent pledge does more than boost your draw time. Any Independent/Spelman room needs at least half of the members to have signed the independent pledge, and to even be able to sign up for the draw, at least half of you draw group needs to sign the pledge.</p>
+                    <p>It is important to note that you are only obligated to follow the pledge if you end up selecting a room in either the Spelman or the Independent draw. Signing the independent pledge does more than simply boosting your draw time. Any Independent/Spelman room needs at least half of its occupants to have signed the independent pledge, and to even be able to sign up for the draw, at least half of you draw group needs to have signed the pledge.</p>
 
                     <p>The Spelman draw is usually immensely popular, and so almost all of the Spelman rooms are typically drawn by rising senior draw groups. This is because all rooms in the Spelman draw contain four bedrooms, a kitchen, and a sizable living room. As all rooms are quads, only four person and eight person draw groups are allowed to enter the Spelman draw.  </p>
-
-
-                    <p></p>
                 </div>
             </div>
         </div>
@@ -229,8 +224,8 @@
             </div>
             <div id="collapseUpperclass" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                 <div class="card-body">
-                    <p>The Upperclass Draw is usually the final draw, occurring after the independent draws and the residential college draws. If you still haven't chosen a room by the time the draw rolls around, you will have to do so, unless you want to join the waitlist.</p>
-                    <p>Any junior or senior can apply to the upperclass draw, with no extra restrictions or bonuses. If you happen to select an Upperclass room, and were in the bottom quarter of your class year's draw times, you may apply for room improvement, which is similar to the waitlist - you express your preferences, and if they have a room that meets those preferences that wasn't drawn at all, housing might give it to you.</p>
+                    <p>The Upperclass Draw is usually the final draw, occurring after the Independent draws and the residential college draws. If you still haven't chosen a room by the time this draw rolls around, you will have to do so, unless you want to join the waitlist.</p>
+                    <p>Any junior or senior can apply to the Upperclass draw, with no extra restrictions or bonuses. If you happen to select an Upperclass room, and were in the bottom quarter of your class year's draw times, you may apply for room improvement, which is similar to the waitlist - you express your preferences, and if they have a room that meets those preferences that wasn't drawn at all or was vacated for some reason, Housing might give it to you. Note that Housing tries to meet the needs of students who apply for room improvement in the exact same order as their draw times in the Upperclass draw.</p>
                 </div>
             </div>
         </div>
@@ -255,7 +250,7 @@
                 <div class="card-body">
 
                     <p>
-                        15 minutes before your draw time, housing will allow you to search their website to see which rooms have already been drawn. That isn't a lot of time, especially as the website is notoriously slow and unintuitive, with an unfortunate tendency to crash at inopportune moments, so it's best to have a list of backup rooms your favorite is already drawn. <strong>WARD's</strong> likelihood feature can help you here, by giving you an idea of how popular rooms have been in previous years.
+                        Fifteen minutes before your draw time, Housing will allow you to search their website to see which rooms have already been drawn. That isn't a lot of time, especially as the website is notoriously slow and unintuitive, with an unfortunate tendency to crash at inopportune moments, so it's best to have a list of backup rooms your favorite is already drawn. <strong>WARD's</strong> likelihood feature can help you here, by giving you an idea of how popular rooms have been in previous years and what your chances of getting a given room are.
 
 
                     </p>
@@ -273,9 +268,9 @@
             <div id="collapseSelectingRoom" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                 <div class="card-body">
                     <p>
-                        When picking a room, everyone who is going to live there has to individually log into the housing website and pick it. This can be hard if your draw time is when you are taking a midterm or a sports practice, or any other event you cannot miss. Luckily, housing allows you to designate one other person as your proxy, who you empower to select your room for you.
+                        When picking a room, everyone who is going to live there has to individually log into the housing website and pick it. This can be hard if your draw time is during a midterm, sports practice, or any other event you cannot miss. Luckily, Housing allows you to designate one other person as your proxy, whom you empower to select your room for you.
                     </p>
-                    <p>When the time finally arrives, you log into <a href = "https://rescenter-prod.princeton.edu/undergraduate/">my undergraduate housing.</a></p>A link should pop up on the home page, inviting you to select your room. After you pick a room, you are given a chance to select a meal plan and agree to the rule's of subfree housing, if applicable. Once the room has been completely filled, you are done! Congratulations, you survived room draw.
+                    <p>When the time finally arrives, you log onto <a href="https://rescenter-prod.princeton.edu/undergraduate/">My Undergraduate Housing.</a></p><p>A link should pop up on the home page, inviting you to select your room. After you pick a room, you are given a chance to select a meal plan and agree to the rule's of subfree housing, if applicable.</p> <p>Once the room has been completely filled, you are done! <strong>Congratulations, you survived room draw.</strong></p>
                 </div>
             </div>
         </div>

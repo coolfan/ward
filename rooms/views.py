@@ -32,7 +32,7 @@ def reviews(user, db):
 
 
 @blueprint.auth_route("/faq_page")
-def about(user, db):
+def faq(user, db):
     name = user.netid
     if user.name: name = user.name
     return render_template('faq_page/faq_page.html', name=name)
@@ -45,7 +45,7 @@ def account(user, db):
     return render_template('account_page/account_page.html', name=name)
 
 @blueprint.auth_route("/about_page")
-def account(user, db):
+def about(user, db):
     name = user.netid
     if user.name: name = user.name
     return render_template('about_page/about_page.html', name=name)
