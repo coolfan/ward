@@ -12,3 +12,4 @@ Gruntfile.js
 package.json
 package-lock.json
 rooms/static/sass/
+*~
