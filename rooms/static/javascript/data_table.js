@@ -1,11 +1,11 @@
 $(document).ready(function () {
-    display_table("/static/down.png");
+    display_table("/static/welcome_image.png");
 });
 
 let table = null;
 
 function display_table(no_results_path){
-    let empty_table_img = "<img src=\"" + no_results_path + "\" style=\"margin:auto;width:50%;height:50%\">";
+    let empty_table_img = "<img src=\"" + no_results_path + "\" style=\"margin:auto;width:50%;height:35em\">";
 
         if(table !== null){
             table.destroy();
