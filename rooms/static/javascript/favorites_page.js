@@ -35,6 +35,15 @@ function click_card(order, index, step, left, avoid) {
 	}
 }
 
+function enable_lock_hint(card) {
+	card.tooltip()
+}
+
+function disable_lock_hint(card) {
+	card.removeAttr("data-toggle")
+	card.removeAttr("title")
+}
+
 function get_order() {
 	let list = $($("#cards").children()[0]).children();
 	let ret = [];
@@ -321,6 +330,10 @@ function get_card(val) {
 			}
 			val.bool_filled = !val.bool_filled
 		}
+
+		if (val.bool_locked) {
+			card.tooltip("enable")
+		}
 	});
 	card.attr("id", "card-" + val.id);
 	
@@ -342,14 +355,15 @@ function get_card(val) {
 				unlock_big_card(val)
 				toggle_button(del_btn_hitbox, true)
 				card_manager.locked_count--
+				card.tooltip("disable")
 			}
 			val.bool_locked = !val.bool_locked
 		}
 		return false
 	})
 
-//	card.attr("data-toggle", "tooltip")
-//	card.attr("title", "Favorited by " + val.creator)
+	card.attr("data-toggle", "tooltip")
+	card.attr("title", "This card is currently locked. Right click to unlock it!")
 
 	del_btn_hitbox.click(function() {
 		if (!is_sorting && !val.bool_locked) {
@@ -430,6 +444,7 @@ $(document).ready(function() {
 			ul.append(get_empty_card())
 		}
 		$('[data-toggle="tooltip"]').tooltip(); 
+		$('[data-toggle="tooltip"]').tooltip("disable"); 	
 	});
 	ul.sortable({
 		start: function(a, b, c) {
