@@ -80,17 +80,20 @@ def unfavorite(user, db):
     if not flag: return room
 
     ranked_room_list = user.getfavoritelist()
-    group_rrl = user.getfavoritelist(room=room)
+
+    group_id = request.args.get("groupid", "-1")
+    if group_id != "-1":
+        group = db.Group.get(id=group_id)
+        if group is None: return Response("Invalid groupid", 422)
+        ranked_room_list = group.getfavoritelist()
 
     ranked_room_list.remove(room)
-    if group_rrl is not None: group_rrl.remove(room)
 
     return jsonify({'success': True})
 
 
 @blueprint.auth_route("/reorder_favorites", methods=["POST"])
 def reorder_favorites(user, db):
-    print(request.form)
     group_id = request.form.get("groupid", "-1")
     ranked_room_list = user.getfavoritelist()
     if group_id != "-1":

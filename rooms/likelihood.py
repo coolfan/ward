@@ -23,7 +23,7 @@ def likelihood(user, room) -> int:
 
     mean = np.mean(times)
     stddev = np.std(times)
-    current_app.logger.debug(f"{room.building} {room.roomnum} | Mean: {mean}, Std: {stddev}, Your time: {my_time}")
+    # current_app.logger.debug(f"{room.building} {room.roomnum} | Mean: {mean}, Std: {stddev}, Your time: {my_time}")
     stddev = stddev if stddev > 0.0 else 5*60*60
     prob = 1.0 - scipy.stats.norm.cdf(my_time, mean, stddev)
     prob = int(prob * 100.0)
