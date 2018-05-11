@@ -205,6 +205,7 @@ def my_groups(my_user, db):
             d = group.to_dict(netid)
             groups_info.append(d)
 
+        groups_info.sort(key=lambda g: g["name"])
         return jsonify(groups_info)
     else:
         group = db.Group.get(id=group_id)
