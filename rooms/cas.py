@@ -98,7 +98,7 @@ def authenticated(function):
     """Decorator for functions that require CAS authentication"""
     @wraps(function)
     def wrap(*args, **kwargs):
-        if 'CAS_NETID' not in session:
+        if "CAS_TOKEN" not in session:
             session['CAS_AFTER_LOGIN_SESSION_URL'] = request.path
             return login()
         else:
