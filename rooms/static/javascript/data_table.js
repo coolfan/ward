@@ -1,12 +1,16 @@
 $(document).ready(function () {
-    $('#rooms_table').DataTable({
+    display_table();
+});
+
+function display_table(){
+        $('#rooms_table').DataTable({
         "stripeClasses": [],
         headerCallback: headerCallback,
         createdRow: call_back_handler,
         data: rooms,
         order: [[2, 'dec']], //Order based on sqft, the 3rd collumn
         language: {
-            emptyTable: "No rooms matched those search criteria"
+            emptyTable: "<img src=\"static/no_result.png\" style=\"margin:auto;width:50%;height:50%\">"
         },
         columns: [
             {
@@ -53,7 +57,7 @@ $(document).ready(function () {
         deferRender:    true,
         scroller:       true
     });
-});
+}
 
 function render_room_name(data, type, room) {
     if (room === undefined) {

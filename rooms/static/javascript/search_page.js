@@ -12,22 +12,10 @@ function un_favorite(id){
     });
 }
 
-function change_star_color(id) {
-    let elem = $("#" + id + "star");
-    let empty = elem.attr("src") === "/static/star.png";
-    if (empty) {
-        elem.attr("src", "/static/starfill.png");
-    }
-    else {
-        elem.attr("src", "/static/star.png");
-    }
-}
-
 let rooms = {undefined}; //All the rooms currently being displayed
 let prev_query = {};
 let amount_displayed = 0;
-let LOADED_PER_QUERY = 50000;
-let done_loading = false;
+let LOADED_PER_QUERY = 50000; //Arbitrarily chosen number that's more than all the rooms on campus
 
 function search_rooms(room_query) {
     room_query["limit"] = LOADED_PER_QUERY;
@@ -56,7 +44,6 @@ function search_rooms(room_query) {
 
             prev_query = room_query;
             amount_displayed = 0;
-            done_loading = false;
 
             amount_displayed = new_rooms.length;
 
@@ -65,7 +52,7 @@ function search_rooms(room_query) {
 }
 
 $(document).ready(function () {
-    search_rooms({});
+    search_rooms({}); //Load initial rooms
     setup_form();
 
     navbar_set("#nav_table");
@@ -73,6 +60,7 @@ $(document).ready(function () {
     $(".number_only").on("keypress keyup blur", function (event) {
         $(this).val($(this).val().replace(/[^\d].+/, ""));
 
+        //Only allow numbers, enter (13) and backspace (8)
         if ((event.which < 48 || event.which > 57 && event.which !==10) && event.which !==13 && event.which !== 8) {
             event.preventDefault();
         }
@@ -141,7 +129,7 @@ $(document).ready(function(){
 
     if(Cookies.get('first_time') !== 'false'){
 
-        Cookies.set('first_time', 'false',{expires:300});
+        Cookies.set('first_time', 'false',{ expires:300 });
 
 
         let btn = $(modal_popup).find("#start_guide_btn");
