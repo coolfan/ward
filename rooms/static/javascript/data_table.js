@@ -1,16 +1,24 @@
 $(document).ready(function () {
-    display_table();
+    display_table("/static/down.png");
 });
 
-function display_table(){
-        $('#rooms_table').DataTable({
+let table = null;
+
+function display_table(no_results_path){
+    let empty_table_img = "<img src=\"" + no_results_path + "\" style=\"margin:auto;width:50%;height:50%\">";
+
+        if(table !== null){
+            table.destroy();
+        }
+
+        table = $('#rooms_table').DataTable({
         "stripeClasses": [],
         headerCallback: headerCallback,
         createdRow: call_back_handler,
         data: rooms,
         order: [[2, 'dec']], //Order based on sqft, the 3rd collumn
         language: {
-            emptyTable: "<img src=\"static/no_result.png\" style=\"margin:auto;width:50%;height:50%\">"
+            emptyTable: empty_table_img
         },
         columns: [
             {

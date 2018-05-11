@@ -16,6 +16,7 @@ let rooms = {undefined}; //All the rooms currently being displayed
 let prev_query = {};
 let amount_displayed = 0;
 let LOADED_PER_QUERY = 50000; //Arbitrarily chosen number that's more than all the rooms on campus
+let first_search = true;
 
 function search_rooms(room_query) {
     room_query["limit"] = LOADED_PER_QUERY;
@@ -40,19 +41,24 @@ function search_rooms(room_query) {
                 rooms[i].college = college;
             }
 
+            if(first_search){
+                display_table("/static/ball_search_miss.gif");
+            }
+
+            first_search = false;
             redraw_table();
 
             prev_query = room_query;
             amount_displayed = 0;
 
             amount_displayed = new_rooms.length;
-
         }
     });
 }
 
 $(document).ready(function () {
-    search_rooms({}); //Load initial rooms
+    // search_rooms({}); //Load initial rooms
+
     setup_form();
 
     navbar_set("#nav_table");
