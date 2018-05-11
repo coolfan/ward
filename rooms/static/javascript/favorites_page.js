@@ -270,7 +270,7 @@ function undisplay_big_card(val) {
 }
 
 function get_empty_card() {
-	let li = $("<li>");
+	let li = $("<li>").attr("id", "elem-empty");
 	let card = $("<div>").addClass("card");
 	var container_fluid = $("<div>").addClass("container-fluid");
 	var card_body = $("<div>").addClass("card-body");
@@ -286,6 +286,7 @@ function get_empty_card() {
 	card.append(container_fluid);
 	
 	card.css("margin-bottom", "10px");
+	card.attr("id", "card-empty")
 
 	li.append(card);
 	return li
@@ -389,6 +390,52 @@ function get_card(val) {
 	return li
 }
 
+function same_order(rooms, order) {
+
+	if (order.length == 0) {
+		return false;
+	}
+
+	if (rooms.length == 0 && order[0] == "empty") {
+		return true;
+	}
+
+	if (rooms.length != order.length) {
+		return false;
+	}
+
+	for (var i = 0; i < rooms.length; i++) {
+		if (rooms[i].id != order[i]) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+function update_fav_list(ul, id) {
+	if (!is_sorting) {
+		is_sorting = true;
+		$.get("/favorites",  function(data) {
+			data = data[id]
+			if (!same_order(data, get_order())) {
+				ul.empty()
+				if (data.length > 0) {
+					$.each(data, function(i, val) {
+						let card = get_card(val);
+						ul.append(get_card(val))
+					});
+				} else {
+					ul.append(get_empty_card())
+				}
+				$('[data-toggle="tooltip"]').tooltip(); 
+				$('[data-toggle="tooltip"]').tooltip("disable"); 	
+			}
+			is_sorting = false;
+		});
+	}
+}
+
 $(document).ready(function() {
 	card_manager.big_card_bodies = [$("#big-card-0-body"), $("#big-card-1-body")];
 	card_manager.big_card_left = [$("#big-card-0-left"), $("#big-card-1-left")];
@@ -432,20 +479,9 @@ $(document).ready(function() {
 	let ul = $("<ul>").addClass("draggable no-bullets padding-0").attr("id", "fav-list");
 	ul.css("max-width: 100%")
 	$("#cards").append(ul);
-	$.get("/favorites",  function(data) {
-		ul.empty()
-		data = data["-1"]
-		if (data.length > 0) {
-			$.each(data, function(i, val) {
-				let card = get_card(val);
-				ul.append(get_card(val))
-			});
-		} else {
-			ul.append(get_empty_card())
-		}
-		$('[data-toggle="tooltip"]').tooltip(); 
-		$('[data-toggle="tooltip"]').tooltip("disable"); 	
-	});
+	
+	update_fav_list(ul, "-1")
+
 	ul.sortable({
 		start: function(a, b, c) {
 			is_sorting = true
@@ -470,21 +506,13 @@ $(document).ready(function() {
 		})
 	})
 	$("#groups").change(function() {
-		$.getJSON("/favorites", function(data) {
-			ul.empty()
-			data = data[$("#groups").val()]
-			if (data.length > 0) {
-				$.each(data, function(i, val) {
-					let card = get_card(val);
-					ul.append(get_card(val))
-				});
-			} else {
-				ul.append(get_empty_card())
-			}
-			$('[data-toggle="tooltip"]').tooltip(); 
-		});
+		update_fav_list(ul, $("#groups").val())
 		reset_big_cards()
 	})
+
+	setInterval(function() {
+		update_fav_list(ul, $("#groups").val())
+	}, 5000)
 
 	$.each(card_manager.big_card_bodies, function(i, val) {
 		var frame = get_big_card_frame(val)
