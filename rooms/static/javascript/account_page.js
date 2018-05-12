@@ -60,8 +60,8 @@ function update_groups() {
 }
 
 function update_members(data) {
+	$("#members").empty()
 	$.each(data, function(i, val) {
-		$("#members").empty()
 		var card = get_member_card(val)
 		$("#members").append(card)
 	})
