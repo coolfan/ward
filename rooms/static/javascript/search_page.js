@@ -31,14 +31,14 @@ function search_rooms(room_query) {
 
             for (let i = 0; i < rooms.length; i++){
 
-                let college = rooms[i].college;
-                let words = college.split(" ");
-                if(words[words.length - 1] === "College"){
-                    words.pop();
-                    college = words.join(" ");
-                }
-
-                rooms[i].college = college;
+                // let college = rooms[i].college;
+                // let words = college.split(" ");
+                // if(words[words.length - 1] === "College"){
+                //     words.pop();
+                //     college = words.join(" ");
+                // }
+                //
+                // rooms[i].college = college;
             }
 
             if(first_search){
@@ -96,13 +96,11 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
-    // $.fn.select2.defaults.set( "theme", "bootstrap4" );
-
     $('#draw_type_select').select2({
-        placeholder: "  e.g Independent"
+        placeholder: "  e.g. Independent"
     });
     $('#building_select').select2({
-        placeholder: "  e.g Spelman Hall"
+        placeholder: "  e.g. Spelman Hall"
     });
 });
 

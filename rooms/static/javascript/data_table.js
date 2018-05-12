@@ -5,7 +5,7 @@ $(document).ready(function () {
 let table = null;
 
 function display_table(no_results_path){
-    let empty_table_img = "<img src=\"" + no_results_path + "\" style=\"margin:auto;width:70%;height:35em\">";
+    let empty_table_img = "<img src=\"" + no_results_path + "\" style=\"margin:auto;width:70%;height:60vh\">";
 
         if(table !== null){
             table.destroy();
