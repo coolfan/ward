@@ -46,22 +46,20 @@ def favorite(user, db) -> Response:
     ranked_room_list = user.getfavoritelist()
     group_rrl = user.getfavoritelist(room=room)
 
-    if room in ranked_room_list:
-        current_app.logger.debug("Favoriting an already favorite room")
-    else:
+    if room not in ranked_room_list:
         fav_personal = db.RankedRoom(
             room=room,
             rank=len(ranked_room_list.ranked_rooms),
             ranked_room_list=ranked_room_list,
             creator=user
         )
-        if group_rrl is not None:
-            fav_group = db.RankedRoom(
-                room=room,
-                rank=len(group_rrl.ranked_rooms),
-                ranked_room_list=group_rrl,
-                creator=user
-            )
+    if (group_rrl is not None) and (room not in group_rrl):
+        fav_group = db.RankedRoom(
+            room=room,
+            rank=len(group_rrl.ranked_rooms),
+            ranked_room_list=group_rrl,
+            creator=user
+        )
 
     return jsonify({'success': True})
 
