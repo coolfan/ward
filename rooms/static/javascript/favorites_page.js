@@ -65,6 +65,7 @@ function reset_big_cards() {
 	$.each(card_manager.big_card_bodies, function(i, val) {
 		val.empty()
 		get_big_card_frame(val).removeClass("locked")
+		get_big_card_frame(val).removeClass("selected")
 	})
 
 	card_manager.lru_cache = []
@@ -390,50 +391,21 @@ function get_card(val) {
 	return li
 }
 
-function same_order(rooms, order) {
-
-	if (order.length == 0) {
-		return false;
-	}
-
-	if (rooms.length == 0 && order[0] == "empty") {
-		return true;
-	}
-
-	if (rooms.length != order.length) {
-		return false;
-	}
-
-	for (var i = 0; i < rooms.length; i++) {
-		if (rooms[i].id != order[i]) {
-			return false;
-		}
-	}
-
-	return true;
-}
-
 function update_fav_list(ul, id) {
-	if (!is_sorting) {
-		is_sorting = true;
-		$.get("/favorites",  function(data) {
-			data = data[id]
-			if (!same_order(data, get_order())) {
-				ul.empty()
-				if (data.length > 0) {
-					$.each(data, function(i, val) {
-						let card = get_card(val);
-						ul.append(get_card(val))
-					});
-				} else {
-					ul.append(get_empty_card())
-				}
-				$('[data-toggle="tooltip"]').tooltip(); 
-				$('[data-toggle="tooltip"]').tooltip("disable"); 	
-			}
-			is_sorting = false;
-		});
-	}
+	$.get("/favorites",  function(data) {
+		data = data[id]
+		ul.empty()
+		if (data.length > 0) {
+			$.each(data, function(i, val) {
+				let card = get_card(val);
+				ul.append(get_card(val))
+			});
+		} else {
+			ul.append(get_empty_card())
+		}
+		$('[data-toggle="tooltip"]').tooltip(); 
+		$('[data-toggle="tooltip"]').tooltip("disable"); 	
+	});
 }
 
 $(document).ready(function() {
@@ -509,10 +481,6 @@ $(document).ready(function() {
 		update_fav_list(ul, $("#groups").val())
 		reset_big_cards()
 	})
-
-	setInterval(function() {
-		update_fav_list(ul, $("#groups").val())
-	}, 5000)
 
 	$.each(card_manager.big_card_bodies, function(i, val) {
 		var frame = get_big_card_frame(val)
