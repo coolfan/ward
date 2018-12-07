@@ -64,4 +64,12 @@ restart the app (if files are changed or to initially start the flask app) we ne
 touch COS333/tmp/restart.txt
 ```
 
+## Setting up database
 
+Assuming that the database exists (as configured by CS staff), then we need to create and populate the tables:
+```python
+import rooms.dbmanager as dbm, rooms.generate_db as gdb, os
+os.environ['ENV'] = 'PRODUCTION'
+db = dbm.connect(create_tables=True)
+gdb._load_roomsjs(db, fname="./rooms.json")
+```
