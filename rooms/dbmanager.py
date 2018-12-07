@@ -221,7 +221,7 @@ def connect(fname: str = None,
         db.bind(
             provider="mysql",
             host="publicdb",
-            user="rooms_db",
+            user="tando",
             password="rooms[db]P455W0RD",
             db="rooms_db"
         )
