@@ -119,6 +119,7 @@ def query(user, db):
         and (room.occupancy == occupancy or occupancy is None)
         and (room.numrooms == numrooms or numrooms is None)
         and (room.subfree == subfree or subfree is None)
+        and (room.reserved == False)
     )[:]
 
     # get the ids of logged in user's favorite user
