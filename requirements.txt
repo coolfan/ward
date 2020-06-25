@@ -1,5 +1,5 @@
 pony==0.7.2
-flask==0.12.2
+flask==1.0
 numpy==1.14.5
 scipy
 mysqlclient
